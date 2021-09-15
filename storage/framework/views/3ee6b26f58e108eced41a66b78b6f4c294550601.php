@@ -39,20 +39,24 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
 														</h2>
 													</td>
 													
 													
-													<td><?php echo e($row->user->created_at); ?><br><small>02.59 AM</small></td>
+													<td><?php echo e($row->created_at->format('M j, Y')); ?><br></td>
 													
 													
 													
 													<td>
 														<div class="status-toggle d-flex justify-content-center">
-															<input type="checkbox" id="status_1" class="check" checked>
-															<label for="status_1" class="checktoggle">checkbox</label>
+															<?php if($row->user->status=="active"): ?>
+															<input type="checkbox" id="status_<?php echo e($row->mentee_id); ?>" data-id="<?php echo e($row->user->id); ?>"onchange="updateStatus(this);" class="check" checked>
+															<?php else: ?>
+															<input type="checkbox" id="status_<?php echo e($row->mentee_id); ?>"  data-id="<?php echo e($row->user->id); ?>"onchange="updateStatus(this);" class="check">
+															<?php endif; ?>
+															<label for="status_<?php echo e($row->mentee_id); ?>" class="checktoggle">checkbox</label>
 														</div>
 													</td>
 												</tr>

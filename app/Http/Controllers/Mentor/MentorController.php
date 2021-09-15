@@ -22,6 +22,8 @@ use App\Models\AdminInfo;
 
 use App\Models\Blog;
 
+use App\Models\Review;
+
 use App\Models\Comment;
 
 use File;
@@ -29,6 +31,12 @@ use File;
 use Intervention\Image\Facades\Image;
 
 use Illuminate\Support\Facades\Hash;
+
+use Stripe;
+
+use Session;
+
+use App\Models\PaymentTransaction;
 
 class MentorController extends Controller
 {
@@ -46,6 +54,10 @@ class MentorController extends Controller
 
         $mentor_details=Mentor::where('user_id',$logged_user->id)->first();
 
+        $appointments = Booking::where([['status','<>','reject'],['mentor_id',$mentor_details->mentor_id]])->get();
+
+        $appointment_counts = $appointments->count();
+
         if($mentor_details)
         {
 
@@ -56,7 +68,7 @@ else
 {
     $booking_details=[];
 }
-        $view_data=['booking_details'=> $booking_details];
+        $view_data=['booking_details'=> $booking_details,'appointment_counts'=>$appointment_counts];
 
         return view('mentor.dashboard',$view_data);
     }
@@ -190,7 +202,7 @@ else
         if($mentor_details)
         {
 
-        $booking_details=Booking::where('mentor_id',$mentor_details->mentor_id)->get()->all();
+        $booking_details=Booking::where('mentor_id',$mentor_details->mentor_id)->paginate(5);
 
 }
 else
@@ -208,9 +220,36 @@ else
 
         $booking->status=$postdata;
 
+
         //$booking->mentor_id = $booking->mentor_id;
 
         $booking->save();
+
+        if($postdata == "reject"){
+
+              $stripe = new \Stripe\StripeClient(
+  'sk_test_51JJxjTSA5lh0TiF1uJs4FZud97yTEoUKzIzyGx4tXJY9ZhqEICOXhQnxkAWx7HWgqwP7bSXmWuaVQx7EwHnWJG7500GGAjuFzY'
+);
+
+       $payer_id = PaymentTransaction::where("booking_id",$booking->booking_id)->first();
+
+       if($payer_id->payment_method == "stripe")
+       {
+
+       $response =  $stripe->refunds->create([
+  'charge' =>$payer_id->payer_id,
+]);
+        }
+
+        if($payer_id->payment_method == "paypal")
+       {
+
+       $response =  $stripe->refunds->create([
+  'charge' =>$payer_id->payer_id,
+]);
+        }
+
+    }
 
         return redirect('/mentor/appointments');
     }
@@ -443,9 +482,13 @@ else
 
         $comment_details = Comment::where([['blog_id',$blog->blog_id],['parent_comment_id',null]])->get()->all();
 
+        
+
         $mentor_details=Mentor::where('user_id',$user_detail->id)->first();
 
-        $view_data=['user_detail'=>$user_detail,'mentor_details'=>$mentor_details,'blog'=>$blog,'comment_details'=>$comment_details];
+        $blog_details = Blog::where([['blog_id','<>',$blog->blog_id],['mentor_id',$mentor_details->mentor_id]])->get()->take(5)->sortByDesc('created_at');
+
+        $view_data=['user_detail'=>$user_detail,'mentor_details'=>$mentor_details,'blog'=>$blog,'comment_details'=>$comment_details,'blog_details'=>$blog_details];
         
         return view('mentor.blog-details',$view_data);
     }
@@ -470,14 +513,68 @@ else
 
         $view_data=[];
 
-        $blog->update($request->form);
+        $user = auth()->user();
+
+        $form = $request->form;
+
+        if($request->content_file)
+        {
+            $content_file=$request->file('content_file');
+            $uploads_dir = storage_path('app/public/blogs');//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+            $uploads_dir = storage_path('app/public/blogs').'/'.$user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+   
+          //  $uploads_dir=storage_path('public').'/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            // set
+            $filename = $content_file->hashName();
+            $filename_without_ext = pathinfo($filename, PATHINFO_FILENAME);
+            $original_filename = $content_file->getClientOriginalName();
+            $file_ext = $content_file->getClientOriginalExtension();
+            $file_realpath = $content_file->getRealPath();
+            $thumb_filename = $filename_without_ext.'-thumb.'.$file_ext;
+
+                //dd($uploads_dir)
+
+            // save file
+            //$request->content_file->store($uploads_dir, 'public');
+
+            // read image from temporary file
+            $img = Image::make($content_file);
+
+            // resize image
+           $img->fit(1280, 720)->save($uploads_dir.'/'.$filename);
+
+            $img_path='/storage/blogs/'.$user->first_name.$user->id.'/'.$filename;
+             //$form['profile_image']=$img_path;
+             $form['blog_image'] = $img_path;
+
+           }
+
+        $blog->update($form);
         
         return redirect('mentor/view-blog/'.$blog->blog_id);
     }
 
-
-
-
-
     /*----Blog functions Ends----*/
+
+    public function review(){
+
+        $view_data=[];
+
+        $mentor = Mentor::where('user_id',auth()->user()->id)->first();
+        $review_details =  Review::where('mentor_id',$mentor->mentor_id)->paginate(5);
+
+        $view_data =['review_details'=>$review_details];
+
+        return view('mentor.reviews',$view_data);
+    }
 }

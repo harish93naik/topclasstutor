@@ -10,7 +10,7 @@
 				
 						<div class="row align-items-center mb-4">
 							<div class="col-md-6 col">
-								<h4>2245 Mentees found</h4>
+								<h4 id="mentor-result-heading"></h4>
 							</div>
 							
 

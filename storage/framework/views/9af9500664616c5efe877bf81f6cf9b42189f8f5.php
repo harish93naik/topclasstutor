@@ -7,22 +7,22 @@ Sidebar -->
 								<span><i class="fe fe-home"></i> Main</span>
 							</li>
 							<li class="<?php echo e(Request::is('admin/index') ? 'active' : ''); ?>"> 
-								<a href="index"><span>Dashboard</span></a>
+								<a href="/admin/index"><span>Dashboard</span></a>
 							</li>
 							<li class="<?php echo e(Request::is('admin/mentor') ? 'active' : ''); ?>"> 
-								<a href="mentor"><span>Mentor</span></a>
+								<a href="/admin/mentor"><span>Mentor</span></a>
 							</li>
 							<li class="<?php echo e(Request::is('admin/mentee') ? 'active' : ''); ?>"> 
-								<a href="mentee"><span>Mentee</span></a>
+								<a href="/admin/mentee"><span>Mentee</span></a>
 							</li>
 							<li class="<?php echo e(Request::is('admin/booking-list') ? 'active' : ''); ?>"> 
-								<a href="booking-list"><span>Booking List</span></a>
+								<a href="/admin/booking-list"><span>Booking List</span></a>
 							</li>
 							<!-- <li class="<?php echo e(Request::is('admin/categories') ? 'active' : ''); ?>"> 
 								<a href="categories"><span>Categories</span></a>
 							</li> -->
 							<li class="<?php echo e(Request::is('admin/transactions-list') ? 'active' : ''); ?>"> 
-								<a href="transactions-list"><span>Transactions</span></a>
+								<a href="/admin/transactions-list"><span>Transactions</span></a>
 							</li>
 							<!-- <li class="<?php echo e(Request::is('admin/settings') ? 'active' : ''); ?>"> 
 								<a href="settings"><span>Settings</span></a>
@@ -30,19 +30,19 @@ Sidebar -->
 							<li class="submenu">
 								<a href="#"><span> Reports</span> <span class="menu-arrow"></span></a>
 								<ul style="display: none;">
-									<li><a class="<?php echo e(Request::is('admin/invoice-report') ? 'active' : ''); ?>" href="<?php echo e(url('admin/invoice-report')); ?>">Invoice Reports</a></li>
+									<li><a class="<?php echo e(Request::is('admin/invoice-report') ? 'active' : ''); ?>" href="<?php echo e(url('/admin/invoice-report')); ?>">Invoice Reports</a></li>
 								</ul>
 							</li>
 						<!-- 	<li class="menu-title"> 
 								<span><i class="fe fe-document"></i> Pages</span>
 							</li> -->
 							<li class="<?php echo e(Request::is('admin/profile') ? 'active' : ''); ?>"> 
-								<a href="profile"><span>My Profile</span></a>
+								<a href="/admin/profile"><span>My Profile</span></a>
 							</li>
 							<li class="submenu"> 
 								<a href="#"><span>Blog</span> <span class="menu-arrow"></span></a>
 								<ul style="display: none;">
-									<li><a class="<?php echo e(Request::is('admin/blog') ? 'active' : ''); ?>" href="<?php echo e(url('admin/blog')); ?>"> Blog </a></li>
+									<li><a class="<?php echo e(Request::is('admin/blog') ? 'active' : ''); ?>" href="<?php echo e(url('/admin/blog')); ?>"> Blog </a></li>
 									<!-- <li><a class="<?php echo e(Request::is('admin/blog-details') ? 'active' : ''); ?>" href="<?php echo e(url('admin/blog-details')); ?>"> Blog Details </a></li> -->
 								<!-- 	<li><a class="<?php echo e(Request::is('admin/add-blog') ? 'active' : ''); ?>" href="<?php echo e(url('admin/add-blog')); ?>"> Add Blog </a></li>
 									<li><a class="<?php echo e(Request::is('admin/edit-blog') ? 'active' : ''); ?>" href="<?php echo e(url('admin/edit-blog')); ?>"> Edit Blog </a></li> -->

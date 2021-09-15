@@ -1,13 +1,14 @@
 <?php $page="video-call";?>
 
 <?php $__env->startSection('content'); ?>
-<video-chat :allusers="<?php echo e($users); ?>" :authUserId="<?php echo e(auth()->id()); ?>" turn_url="<?php echo e(env('TURN_SERVER_URL')); ?>"
-        turn_username="<?php echo e(env('TURN_SERVER_USERNAME')); ?>" turn_credential="<?php echo e(env('TURN_SERVER_CREDENTIAL')); ?>" />
+  <agora-chat :allusers="<?php echo e($users); ?>" authuserid="<?php echo e(auth()->user()->id); ?>" authuser="<?php echo e(auth()->user()->first_name); ?>"
+        agora_id="<?php echo e(env('AGORA_APP_ID')); ?>" />
          
          
 
 
 			<!-- /Page Content -->	
+			
 
 			
 <?php $__env->stopSection(); ?>

@@ -1,5 +1,6 @@
 
 
+<?php use App\Models\Review ?>
 <?php $__env->startSection('content'); ?>		
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -154,91 +155,38 @@
 												</tr>
 											</thead>
 											<tbody>
+												<?php $__currentLoopData = $mentor_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mentor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-08.jpg" alt="User Image"></a>
-															<a href="profile">James Amen</a>
+															<a href="/admin/mentor-profile/<?php echo e($mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($mentor->mentor_id); ?>"><?php echo e($mentor->user->first_name); ?>&nbsp;<?php echo e($mentor->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td>Maths</td>
+													<td><?php echo e($mentor->user->category_description); ?></td>
 													<td>$3200.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
+													<td class="rating">
+
+														<?php
+													$rating = Review::getRating($mentor->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
+													<i class="fas fa-star"></i>
+													<?php endfor; ?>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-07.jpg" alt="User Image"></a>
-															<a href="profile">Jessica Fogarty</a>
-														</h2>
-													</td>
-													<td>Business Maths</td>
-													<td>$3100.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-17.jpg" alt="User Image"></a>
-															<a href="profile">Jose Anderson</a>
-														</h2>
-													</td>
-													<td>Algebra</td>
-													<td>$4000.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-06.jpg" alt="User Image"></a>
-															<a href="profile">Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Integrated Sum</td>
-													<td>$3200.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-14.jpg" alt="User Image"></a>
-															<a href="profile">Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Flow chart</td>
-													<td>$3500.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+												
 											</tbody>
 										</table>
 									</div>
@@ -261,66 +209,24 @@
 												<tr>													
 													<th>Mentee Name</th>
 													<th>Phone</th>
-													<th>Last Visit</th>
+													<th>Joined</th>
 													<th>Paid</th>													
 												</tr>
 											</thead>
 											<tbody>
+												<?php $__currentLoopData = $mentee_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mentee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile">Jonathan Doe </a>
+															<a href="/admin/mentee-profile/<?php echo e($mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($mentee->mentee_id); ?>"><?php echo e($mentee->user->first_name); ?>&nbsp;<?php echo e($mentee->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td>8286329170</td>
-													<td>20 Oct 2019</td>
+													<td><?php echo e($mentee->user->phone_number); ?></td>
+													<td><?php echo e($mentee->created_at->format('M j, Y')); ?></td>
 													<td class="text-right">$100.00</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user1.jpg" alt="User Image"></a>
-															<a href="profile">Julie Pennington </a>
-														</h2>
-													</td>
-													<td>2077299974</td>
-													<td>22 Oct 2019</td>
-													<td class="text-right">$200.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user2.jpg" alt="User Image"></a>
-															<a href="profile">Tyrone Roberts</a>
-														</h2>
-													</td>
-													<td>2607247769</td>
-													<td>21 Oct 2019</td>
-													<td class="text-right">$250.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user3.jpg" alt="User Image"></a>
-															<a href="profile">Allen Davis </a>
-														</h2>
-													</td>
-													<td>5043686874</td>
-													<td>21 Sep 2019</td>
-													<td class="text-right">$150.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user4.jpg" alt="User Image"></a>
-															<a href="profile">Patricia Manzi </a>
-														</h2>
-													</td>
-													<td>9548207887</td>
-													<td>18 Sep 2019</td>
-													<td class="text-right">$350.00</td>
-												</tr>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 											</tbody>
 										</table>
 									</div>
@@ -352,21 +258,26 @@
 												</tr>
 											</thead>
 											<tbody>
+												<?php $__currentLoopData = $booking_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-08.jpg" alt="User Image"></a>
-															<a href="profile">James Amen</a>
+															<a href="/admin/mentor-profile/<?php echo e($booking->mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($booking->mentor->mentor_id); ?>"><?php echo e($booking->mentor->user->first_name); ?>&nbsp;<?php echo e($booking->mentor->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td>Maths</td>
+													<td><?php echo e($booking->mentor->user->category_description); ?></td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile">Jonathan Doe </a>
+															<a href="/admin/mentee-profile/<?php echo e($booking->mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($booking->mentee->mentee_id); ?>"><?php echo e($booking->mentee->user->first_name); ?>&nbsp;<?php echo e($booking->mentee->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td>9 Nov 2019 <span class="text-primary d-block">11.00 AM - 11.15 AM</span></td>
+													<td><?php 
+														$time = strtotime($booking->schedule_date); 
+														$newformat = date('d-M-Y',$time);
+														?>
+														<?php echo e($newformat); ?><span class="text-primary d-block"><?php echo e($booking->schedule_time); ?></span></td>
 													<td>
 														<div class="status-toggle">
 															<input type="checkbox" id="status_1" class="check" checked>
@@ -377,108 +288,8 @@
 														$200.00
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-07.jpg" alt="User Image"></a>
-															<a href="profile">Jessica Fogarty</a>
-														</h2>
-													</td>
-													<td>Business Maths</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user1.jpg" alt="User Image"></a>
-															<a href="profile">Julie Pennington </a>
-														</h2>
-													</td>
-													
-													<td>5 Nov 2019 <span class="text-primary d-block">11.00 AM - 11.35 AM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_2" class="check" checked>
-															<label for="status_2" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$300.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-17.jpg" alt="User Image"></a>
-															<a href="profile">Jose Anderson</a>
-														</h2>
-													</td>
-													<td>Algebra</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user2.jpg" alt="User Image"></a>
-															<a href="profile">Tyrone Roberts</a>
-														</h2>
-													</td>
-													<td>11 Nov 2019 <span class="text-primary d-block">12.00 PM - 12.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_3" class="check" checked>
-															<label for="status_3" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-06.jpg" alt="User Image"></a>
-															<a href="profile">Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Integrated Sum</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user3.jpg" alt="User Image"></a>
-															<a href="profile">Allen Davis </a>
-														</h2>
-													</td>
-													<td>7 Nov 2019<span class="text-primary d-block">1.00 PM - 1.20 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_4" class="check" checked>
-															<label for="status_4" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-14.jpg" alt="User Image"></a>
-															<a href="profile">Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Flow chart</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user4.jpg" alt="User Image"></a>
-															<a href="profile">Patricia Manzi </a>
-														</h2>
-													</td>
-													
-													<td>15 Nov 2019 <span class="text-primary d-block">1.00 PM - 1.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_5" class="check" checked>
-															<label for="status_5" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$200.00
-													</td>
-												</tr>
+												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+												
 											</tbody>
 										</table>
 									</div>

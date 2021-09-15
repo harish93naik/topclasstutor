@@ -6,6 +6,12 @@
                 <div class="card-header"><?php echo e(__('Login')); ?></div>
 
                 <div class="card-body">
+                    <?php if(session('error')): ?>
+   <div class="alert alert-danger">
+        <?php echo e(session('error')); ?>
+
+   </div>
+<?php endif; ?>
                     <form method="POST" action="<?php echo e(route('login')); ?>">
                         <?php echo csrf_field(); ?>
 

@@ -1,5 +1,8 @@
  <?php $page="invoices";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review; 
+	use App\Models\Mentor;
+@endphp
 @section('content')	
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -29,17 +32,29 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -91,7 +106,7 @@
 													<td>
 														<h2 class="table-avatar">
 															<a href="profile-mentee" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/user/user2.jpg" alt="User Image">
+																<img class="avatar-img rounded-circle" src="{{asset($row->booking->mentee->user->profile_image)}}" alt="User Image">
 															</a>
 															<a href="profile-mentee">{{$row->booking->mentee->user->first_name}}&nbsp;{{$row->booking->mentee->user->last_name}}</a>
 														</h2>

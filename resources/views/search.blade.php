@@ -1,5 +1,6 @@
 <?php $page="search";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review @endphp
 @section('content')		
 
 			<!-- Breadcrumb -->
@@ -13,9 +14,9 @@
 									<li class="breadcrumb-item active" aria-current="page">Search</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">2245 matches found for : Mentors In  Florida</h2>
+							<h2 class="breadcrumb-title"></h2>
 						</div>
-						<div class="col-md-4 col-12 d-md-block d-none">
+						<!-- <div class="col-md-4 col-12 d-md-block d-none">
 							<div class="sort-by">
 								<span class="sort-title">Sort by</span>
 								<span class="sortby-fliter">
@@ -28,7 +29,7 @@
 									</select>
 								</span>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -47,16 +48,18 @@
 									<h4 class="card-title mb-0">Search Filter</h4>
 								</div>
 								<div class="card-body">
-								<div class="filter-widget">
+								<!-- <div class="filter-widget">
 									<div class="cal-icon">
 										<input type="text" class="form-control datetimepicker" placeholder="Select Date">
 									</div>			
-								</div>
-								<div class="filter-widget">
+								</div> -->
+								<!-- <form action="search">
+									@csrf -->
+								<!-- <div class="filter-widget">
 									<h4>Gender</h4>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="gender_type" checked>
+											<input type="checkbox" name="gender_type">
 											<span class="checkmark"></span> Male
 										</label>
 									</div>
@@ -66,50 +69,133 @@
 											<span class="checkmark"></span> Female
 										</label>
 									</div>
-								</div>
+								</div> -->
 								<div class="filter-widget">
-									<h4>Select Courses</h4>
+									<!-- <h4>Select Courses</h4>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist" checked>
-											<span class="checkmark"></span> Digital Marketer
+											<input type="checkbox" value="english" name="select_specialist[]">
+											<span class="checkmark"></span> English
 
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist" checked>
-											<span class="checkmark"></span> UNIX, Calculus, Trigonometry
+											<input type="checkbox" value="mathematics" name="select_specialist[]">
+											<span class="checkmark"></span> Mathematics
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist">
-											<span class="checkmark"></span> Computer Programming
+											<input type="checkbox" value="physics" name="select_specialist[]">
+											<span class="checkmark"></span> Physics
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist">
-											<span class="checkmark"></span> ASP.NET,Computer Gaming
+											<input type="checkbox" value="chemistry" name="select_specialist[]">
+											<span class="checkmark"></span> Chemistry
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist">
-											<span class="checkmark"></span> HTML, Css
+											<input type="checkbox" value="technology" name="select_specialist[]">
+											<span class="checkmark"></span>Technology Education
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" name="select_specialist">
-											<span class="checkmark"></span> VB, VB.net
+											<input type="checkbox" value="science" name="select_specialist[]">
+											<span class="checkmark"></span>Science
 										</label>
 									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="sports" name="select_specialist[]">
+											<span class="checkmark"></span>Sports
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="geography" name="select_specialist[]">
+											<span class="checkmark"></span>Geography
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="history" name="select_specialist[]">
+											<span class="checkmark"></span>History
+										</label>
+									</div> -->
+									<h4>Select Segment</h4>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="primary" name="select_segment[]">
+											<span class="checkmark"></span> Primary
+
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="intermediate" name="select_segment[]">
+											<span class="checkmark"></span> Intermediate
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="secondary" name="select_segment[]">
+											<span class="checkmark"></span> Secondary
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="under_graduate" name="select_segment[]">
+											<span class="checkmark"></span> Under Graduate
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="graduate" name="select_segment[]">
+											<span class="checkmark"></span>Graduate
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="post_graduate" name="select_segment[]">
+											<span class="checkmark"></span>Post Graduate
+										</label>
+									</div>
+									<div>
+										<label class="custom_check">
+											<input type="checkbox" value="doctorate" name="select_segment[]">
+											<span class="checkmark"></span>Doctoral Study
+										</label>
+									</div>
+									<!-- <div>
+										<label class="custom_check">
+											<input type="checkbox" value="geography" name="select_specialist[]">
+											<span class="checkmark"></span>Geography
+										</label>
+									</div> -->
+									<!-- <div>
+										<label class="custom_check">
+											<input type="checkbox" value="history" name="select_specialist[]">
+											<span class="checkmark"></span>History
+										</label>
+									</div> -->
 								</div>
+
+								<form action="/search"  id="sidebar-filter-form">
+									@csrf
+									<input type="hidden" name="categories" value="" id="categories"/>
+
+							
+
 									<div class="btn-search">
-										<button type="button" class="btn btn-block">Search</button>
+										<button type="button" class="btn btn-block" onclick="filter_category()" >Search</button>
 									</div>	
+										</form>
+								<!-- </form> -->
 								</div>
 							</div>
 							<!-- /Search Filter -->
@@ -117,225 +203,22 @@
 						</div>
 						
 						<div class="col-md-12 col-lg-8 col-xl-9">
+							<div class="col-md-6 col align-items-center">
+								<h4 id="mentor-result-heading"></h4>
+							</div>
+
+							<div id="mentor-list">
 
 							<!-- Mentor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="mentor-widget">
-										<div class="user-info-left">
-											<div class="mentor-img">
-												<a href="profile">
-													<img src="assets/img/user/user.jpg" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="user-info-cont">
-												<h4 class="usr-name"><a href="profile">Ruby Perrin</a></h4>
-												<p class="mentor-type">Digital Marketer</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(17)</span>
-												</div>
-												<div class="mentor-details">
-													<p class="user-location"><i class="fas fa-map-marker-alt"></i> Florida, USA</p>
-												</div>
-											</div>
-										</div>
-										<div class="user-info-right">
-											<div class="user-infos">
-												<ul>
-													<li><i class="far fa-comment"></i> 17 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Florida, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $300 - $1000 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i> </li>
-												</ul>
-											</div>
-											<div class="mentor-booking">
-												<a class="apt-btn" href="booking">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Mentor Widget -->
+							
 
-							<!-- Mentor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="mentor-widget">
-										<div class="user-info-left">
-											<div class="mentor-img">
-												<a href="profile">
-													<img src="assets/img/user/user1.jpg" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="user-info-cont">
-												<h4 class="usr-name"><a href="profile">Darren Elder</a></h4>
-												<p class="mentor-type">Digital Marketer</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(35)</span>
-												</div>
-												<div class="mentor-details">
-													<p class="user-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA</p>
-												</div>
-											</div>
-										</div>
-										<div class="user-info-right">
-											<div class="user-infos">
-												<ul>
-													<li><i class="far fa-comment"></i> 35 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $50 - $300 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="mentor-booking">
-												<a class="apt-btn" href="booking">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Mentor Widget -->
+						</div>
+						<div class="ajax-loading"><img src="{{ asset('images/loader.gif') }}" /></div>
 
-							<!-- Mentor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="mentor-widget">
-										<div class="user-info-left">
-											<div class="mentor-img">
-												<a href="profile">
-													<img src="assets/img/user/user2.jpg" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="user-info-cont">
-												<h4 class="usr-name"><a href="profile">Deborah Angel</a></h4>
-												<p class="mentor-type">UNIX, Calculus, Trigonometry</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(27)</span>
-												</div>
-												<div class="mentor-details">
-													<p class="user-location"><i class="fas fa-map-marker-alt"></i> Georgia, USA</p>
-												</div>
-											</div>
-										</div>
-										<div class="user-info-right">
-											<div class="user-infos">
-												<ul>
-													<li><i class="far fa-comment"></i> 35 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $100 - $400 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="mentor-booking">
-												<a class="apt-btn" href="booking">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Mentor Widget -->
-
-							<!-- Mentor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="mentor-widget">
-										<div class="user-info-left">
-											<div class="mentor-img">
-												<a href="profile">
-													<img src="assets/img/user/user4.jpg" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="user-info-cont">
-												<h4 class="usr-name"><a href="profile">Sofia Brient</a></h4>
-												<p class="mentor-type">Computer Programmin</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(4)</span>
-												</div>
-												<div class="mentor-details">
-													<p class="user-location"><i class="fas fa-map-marker-alt"></i> Louisiana, USA</p>
-												</div>
-											</div>
-										</div>
-										<div class="user-info-right">
-											<div class="user-infos">
-												<ul>
-													<li><i class="far fa-comment"></i> 4 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $150 - $250 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="mentor-booking">
-												<a class="apt-btn" href="booking">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Mentor Widget -->
-
-							<!-- Mentor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="mentor-widget">
-										<div class="user-info-left">
-											<div class="mentor-img">
-												<a href="profile">
-													<img src="assets/img/user/user5.jpg" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="user-info-cont">
-												<h4 class="usr-name"><a href="profile">Katharine Berthold</a></h4>
-												<p class="mentor-type">ASP.NET, Computer Gaming</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(52)</span>
-												</div>
-												<div class="mentor-details">
-													<p class="user-location"><i class="fas fa-map-marker-alt"></i> Texas, USA</p>
-												</div>
-											</div>
-										</div>
-										<div class="user-info-right">
-											<div class="user-infos">
-												<ul>
-													<li><i class="far fa-comment"></i> 52 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Texas, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $100 - $500 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="mentor-booking">
-												<a class="apt-btn" href="booking">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Mentor Widget -->
-
+						
 							<div class="load-more text-center">
-								<a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>	
-							</div>	
+						<a class="btn btn-primary btn-sm" onclick="load_mentor_page()">Load More</a>	
+					</div>
 						</div>
 					</div>
 

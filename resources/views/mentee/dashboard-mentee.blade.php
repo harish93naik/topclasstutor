@@ -29,17 +29,17 @@
 						<!-- Sidebar -->
 						<div class="profile-sidebar">
 							<div class="user-widget">
-								<div class="pro-avatar">JD</div>
-								<div class="rating">
+								<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
+								<!-- <div class="rating">
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star"></i>
-								</div>
+								</div> -->
 								<div class="user-info-cont">
 									<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
-									<p class="mentor-type">English Literature (M.A)</p>
+									<!-- <p class="mentor-type">English Literature (M.A)</p> -->
 								</div>
 							</div>
 							<!-- <div class="progress-bar-custom">
@@ -78,7 +78,7 @@
 											</div>
 										</div>
 										<div class="dash-widget-info">
-											<h3>23</h3>
+											<h3>{{$appointment_counts}}</h3>
 											<h6>Appointments</h6>															
 										</div>
 									</div>
@@ -134,8 +134,8 @@
 														<tr>
 															<td>
 																<h2 class="table-avatar">
-																	<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/user/user14.jpg" alt="User Image"></a>
-																	<a href="profile">{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}<span>{{$row->mentor->user->email}}</span></a>				
+																	<a href="/profile/{{$row->mentor->mentor_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{$row->mentor->user->profile_image}}" alt="User Image"></a>
+																	<a href="/profile/{{$row->mentor->mentor_id}}">{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}<span>{{$row->mentor->user->email}}</span></a>				
 																</h2>
 															</td>
 															<td>{{$row->created_at}}</td>

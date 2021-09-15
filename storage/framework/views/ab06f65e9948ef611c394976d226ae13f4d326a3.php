@@ -1,3 +1,4 @@
++
 
 <?php $__env->startSection('content'); ?>	
 <!-- Page Wrapper -->
@@ -16,12 +17,28 @@
 								</ul>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-sm-6">
+							<li class="nav-item dropdown has-arrow">
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						Actions
+					</a>
+					<div class="dropdown-menu">
+						
+						<a class="dropdown-item" href="/admin/mentor/add">Add Mentor</a>
+						<!-- <a class="dropdown-item" href="settings">Settings</a> -->
+						
 					</div>
+				</li>
+							</div>
+					</div>
+				</div>
 					<!-- /Page Header -->
 					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="card">
+								
 								<div class="card-body">
 									<div class="table-responsive">
 										<table class="datatable table table-hover table-center mb-0">
@@ -40,20 +57,24 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-08.jpg" alt="User Image"></a>
-															<a href="profile"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($row->course); ?></td>
 													
-													<td><?php echo e($row->user->created_at); ?><br><small>02.59 AM</small></td>
+													<td><?php echo e($row->created_at->format('M j, Y')); ?><br></td>
 													
 													<td>$3100</td>
 													
 													<td>
 														<div class="status-toggle d-flex justify-content-center">
-															<input type="checkbox" id="status_1" class="check" checked>
-															<label for="status_1" class="checktoggle">checkbox</label>
+															<?php if($row->user->status=="active"): ?>
+															<input type="checkbox" id="status_<?php echo e($row->mentor_id); ?>" data-id="<?php echo e($row->user->id); ?>"onchange="updateStatus(this);" class="check" checked>
+															<?php else: ?>
+															<input type="checkbox" id="status_<?php echo e($row->mentor_id); ?>" data-id="<?php echo e($row->user->id); ?>"onchange="updateStatus(this);" class="check">
+															<?php endif; ?>
+															<label for="status_<?php echo e($row->mentor_id); ?>" class="checktoggle">checkbox</label>
 														</div>
 													</td>
 												</tr>

@@ -30,14 +30,8 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
-									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-									</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
+									
 									<div class="user-info-cont">
 											<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
 										<!-- <p class="mentee-type">English Literature (M.A)</p> -->
@@ -112,14 +106,14 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-12 col-md-6">
+											<!-- <div class="col-12 col-md-6">
 												<div class="form-group">
 													
 													<label>Course Name</label>
 													<input type="text" name="mentee_form[course_name]" class="form-control" value="{{$mentee_details->course_name}}">
 												
 												</div>
-											</div>
+											</div> -->
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>Email ID</label>

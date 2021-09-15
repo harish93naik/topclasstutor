@@ -24,6 +24,8 @@ use App\Models\Blog;
 
 use App\Models\Comment;
 
+use App\Models\Review;
+
 use File;
 
 use Intervention\Image\Facades\Image;
@@ -45,6 +47,10 @@ class MenteeController extends Controller
 
         $mentee_details=Mentee::where('user_id',$logged_user->id)->first();
 
+        $appointments = Booking::where([['status','<>','reject'],['mentor_id',$mentee_details->mentee_id]])->get();
+
+        $appointment_counts = $appointments->count();
+
         if($mentee_details)
         {
 
@@ -55,7 +61,7 @@ else
 {
     $booking_details=[];
 }
-        $view_data=['booking_details'=> $booking_details];
+        $view_data=['booking_details'=> $booking_details,'appointment_counts'=>$appointment_counts];
 
         return view('mentee.dashboard-mentee',$view_data);
     }
@@ -127,29 +133,38 @@ else
         $view_data=['mentor_details'=>$mentor_details];
         
         return view('mentee.map-list',$view_data);*/
+        $no_of_mentors = Mentor::all();
+        $count_of_mentors = sizeof($no_of_mentors);
         $mentors = Mentor::paginate(2);        
         $data = '';
         if ($request->ajax()) {
             foreach ($mentors as $mentor) {
+                 $star = '';
+    $default_star = '';
+                                                $rating = Review::getRating($mentor->mentor_id);
+                                                    $count = sizeof($rating);
+                                                    $avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+                                                for ($i=0;$i<$avg;$i++) { 
+                                                   $star.='<i class="fas fa-star filled"></i>';
+                                                }
+                                                for ($i=0;$i<5-$avg;$i++) { 
+                                                   $default_star.='<i class="fas fa-star"></i>';
+                                                }
                 $data.='<div class="card">
                             <div class="card-body">
                                 <div class="mentor-widget">
                                     <div class="user-info-left">
                                         <div class="mentor-img">
-                                            <a href="profile">
+                                            <a href="/profile/'.$mentor->mentor_id.'">
                                                 <img src="'.$mentor->user->profile_image.'" class="img-fluid" alt="User Image">
                                             </a>
                                         </div>
                                         <div class="user-info-cont">
-                                            <h4 class="usr-name"><a href="profile">'.$mentor->user->first_name.' &nbsp;'.$mentor->user->last_name.'</a></h4>
-                                            <p class="mentor-type">Digital Marketer</p>
+                                            <h4 class="usr-name"><a href="/profile/'.$mentor->mentor_id.'">'.$mentor->user->first_name.' &nbsp;'.$mentor->user->last_name.'</a></h4>
+                                            <p class="mentor-type">'.$mentor->user->category_description.'</p>
                                             <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">(17)</span>
+                                               '.$star.$default_star.'
+                                                <span class="d-inline-block average-rating">('.$count.')</span>
                                             </div>
                                             <div class="mentor-details">
                                                 <p class="user-location"><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.' </p>
@@ -159,6 +174,7 @@ else
                                     <div class="user-info-right">
                                         <div class="user-infos">
                                             <ul>
+                                                <input type="hidden" value="'.$count_of_mentors.'" id="mentor-result"/>
                                                 <li><i class="far fa-comment"></i> 17 Feedback</li>
                                                 <li><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.'</li>
                                                 <li><i class="far fa-money-bill-alt"></i>$500<i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i> </li>
@@ -421,9 +437,11 @@ else
 
         $view_data=[];
 
+        $blog_details = Blog::where('blog_id','<>',$blog->blog_id)->get()->take(5)->sortByDesc('created_at');
+
         $comment_details = Comment::where([['blog_id',$blog->blog_id],['parent_comment_id',null]])->get()->all();
 
-        $view_data=['blog'=>$blog,'comment_details'=>$comment_details];
+        $view_data=['blog'=>$blog,'comment_details'=>$comment_details,'blog_details'=>$blog_details];
         
         return view('mentee.blog-details',$view_data);
     }

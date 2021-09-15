@@ -1,5 +1,6 @@
 <?php $page="profile";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review @endphp
 @section('content')		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -31,13 +32,24 @@
 									<div class="mentor-widget">
 										<div class="user-info-left align-items-center">
 											<div class="mentor-img d-flex flex-wrap justify-content-center">
-												<div class="pro-avatar">JD</div>
+												<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 												<div class="rating text-center">
+														@php
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
 													<i class="fas fa-star filled"></i>
 													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
 													<i class="fas fa-star"></i>
+													@endfor
 												</div>
 												<div class="mentor-details m-0">
 													<p class="user-location m-0"><i class="fas fa-map-marker-alt"></i> {{$mentor_details->state}},{{$mentor_details->country}}</p>
@@ -45,7 +57,7 @@
 											</div>
 											<div class="user-info-cont">
 												<h4 class="usr-name">{{$user_detail->first_name}}&nbsp;{{$user_detail->last_name}}</h4>
-												<p class="mentor-type">{{$mentor_details->course_name}}</p>
+												<p class="mentor-type">{{auth()->user()->category_description}}&nbsp;({{auth()->user()->degree}})</p>
 												<div class="mentor-action">
 													<p class="mentor-type social-title">Contact Me</p>
 													<a href="javascript:void(0)" class="btn-blue">

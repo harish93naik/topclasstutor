@@ -9,7 +9,7 @@
               class="btn btn-primary mr-2"
               v-for="user in allusers"
               :key="user.id"
-              @click="placeVideoCall(user.id, user.frist_name)"
+              @click="placeVideoCall(, user.frist_name)"
             >
                {{ user.name }}
               <span class="badge badge-light">{{

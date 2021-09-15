@@ -40,7 +40,7 @@
 									</div>
 									<div class="user-info-cont">
 											<h4 class="usr-name"><?php echo e(auth()->user()->first_name); ?>&nbsp;<?php echo e(auth()->user()->last_name); ?></h4>
-										<p class="mentee-type">English Literature (M.A)</p>
+										<!-- <p class="mentee-type">English Literature (M.A)</p> -->
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -114,17 +114,10 @@
 											</div>
 											<!-- <div class="col-12 col-md-6">
 												<div class="form-group">
-													<label>Blood Group</label>
-													<select class="form-control select" name="mentee_form[blood_group]">
-														<option>A-</option>
-														<option>A+</option>
-														<option>B-</option>
-														<option>B+</option>
-														<option>AB-</option>
-														<option>AB+</option>
-														<option>O-</option>
-														<option>O+</option>
-													</select>
+													
+													<label>Course Name</label>
+													<input type="text" name="mentee_form[course_name]" class="form-control" value="<?php echo e($mentee_details->course_name); ?>">
+												
 												</div>
 											</div> -->
 											<div class="col-12 col-md-6">

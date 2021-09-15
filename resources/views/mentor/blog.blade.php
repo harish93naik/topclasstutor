@@ -1,5 +1,6 @@
 <?php $page="blog";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review @endphp
 @section('content')	
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -29,17 +30,28 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
-										<p class="mentor-type">{{$mentor_details->course_name}}</p>
+										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -110,9 +122,9 @@
 														<a href="blog-details"><img class="img-fluid" src="{{asset($row->blog_image) }}" alt="Post Image"></a>
 													</div>
 													<div class="course-content">
-														<span class="date">{{$row->created_at}}</span>
+														<span class="date">{{ $row->created_at->format('M j, Y') }}</span>
 														<span class="course-title">{{$row->blog_title}}</span>
-														<p>{{$row->description}}</p>
+														<p>{{substr($row->description,0,250)}}</p>
 														<div class="row">
 															<div class="col">
 																<a href="/mentor/edit-blog/{{$row->blog_id}}" class="text-success"><i class="far fa-edit"></i> Edit</a>
@@ -140,158 +152,7 @@
 									</div>
 									<!-- /Active Content -->
 									
-									<!-- Inactive Content -->
-									<div role="tabpanel" id="inactiveservice" class="tab-pane fade">
 									
-										<div class="row">
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-04.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-05.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-06.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-07.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-08.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-6 col-xl-4">
-												<div class="course-box blog grid-blog">
-													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-09.jpg" alt="Post Image"></a>
-													</div>
-													<div class="course-content">
-														<span class="date">April 09 2020</span>
-														<span class="course-title">Abacus Study for beginner - Part III</span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-														<div class="row">
-															<div class="col">
-																<a href="edit-blog" class="text-success">
-																	<i class="far fa-edit"></i> Edit
-																</a>
-															</div>
-															<div class="col text-right">
-																<a href="javascript:void(0);" class="text-success">
-																	<i class="fas fa-toggle-on"></i> Active
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-									<!-- /Inactive Content -->
 
 								</div>
 								<!-- /Tab Content -->

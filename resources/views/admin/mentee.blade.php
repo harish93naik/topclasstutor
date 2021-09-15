@@ -39,20 +39,24 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a>
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($row->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a>
 														</h2>
 													</td>
 													
 													
-													<td>{{$row->user->created_at}}<br><small>02.59 AM</small></td>
+													<td>{{ $row->created_at->format('M j, Y') }}<br></td>
 													
 													
 													
 													<td>
 														<div class="status-toggle d-flex justify-content-center">
-															<input type="checkbox" id="status_1" class="check" checked>
-															<label for="status_1" class="checktoggle">checkbox</label>
+															@if($row->user->status=="active")
+															<input type="checkbox" id="status_{{$row->mentee_id}}" data-id="{{$row->user->id}}"onchange="updateStatus(this);" class="check" checked>
+															@else
+															<input type="checkbox" id="status_{{$row->mentee_id}}"  data-id="{{$row->user->id}}"onchange="updateStatus(this);" class="check">
+															@endif
+															<label for="status_{{$row->mentee_id}}" class="checktoggle">checkbox</label>
 														</div>
 													</td>
 												</tr>

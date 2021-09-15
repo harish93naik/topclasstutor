@@ -1,5 +1,8 @@
 <?php $page="dashboard";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review;
+use App\Models\Mentor;
+ @endphp
 @section('content')	
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -29,17 +32,29 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
-										<h4 class="usr-name"><h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4></h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
+										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -70,7 +85,7 @@
 						<div class="col-md-7 col-lg-8 col-xl-9">
 
 							<div class="row">
-								<div class="col-md-12 col-lg-4 dash-board-list blue">
+								<!-- <div class="col-md-12 col-lg-4 dash-board-list blue">
 									<div class="dash-widget">
 										<div class="circle-bar">
 											<div class="icon-col">
@@ -82,7 +97,7 @@
 											<h6>Members</h6>															
 										</div>
 									</div>
-								</div>
+								</div> -->
 								
 								<div class="col-md-12 col-lg-4 dash-board-list yellow">
 									<div class="dash-widget">
@@ -92,7 +107,7 @@
 											</div>
 										</div>
 										<div class="dash-widget-info">
-											<h3>33</h3>
+											<h3>{{$appointment_counts}}</h3>
 											<h6>Appointments</h6>															
 										</div>
 									</div>

@@ -1,5 +1,8 @@
 <?php $page="add-blog";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review;
+	use App\Models\Mentor;
+ @endphp
 @section('content')	
 	<!-- Breadcrumb -->
     <div class="breadcrumb-bar">
@@ -29,17 +32,29 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name">{{$user_detail->first_name}}&nbsp;{{$user_detail->last_name}}</h4>
-										<p class="mentor-type">{{$mentor_details->course_name}}</p>
+										<p class="mentor-type">{{$user_detail->category}}({{$user_detail->degree}}</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -134,7 +149,7 @@
 														<div class="col-lg-12">
 															<div class="service-upload">
 																<i class="fas fa-cloud-upload-alt"></i>
-																<span>Upload Bog Image *</span>
+																<span>Upload Blog Image *</span>
 																<input type="file" name="content_file" id="images" required>
 															
 															</div>	

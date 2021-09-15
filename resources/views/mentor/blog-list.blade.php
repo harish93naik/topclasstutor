@@ -1,5 +1,6 @@
 <?php $page="blog-list";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review @endphp
 @section('content')		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">

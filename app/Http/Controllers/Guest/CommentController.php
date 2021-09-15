@@ -40,7 +40,7 @@ class CommentController extends Controller
 
         $comment=Comment::create($form);
         
-        return redirect('mentor/view-blog/'.$blog->blog_id);
+        return redirect('/blog-details/'.$blog->blog_id);
     }
 
 

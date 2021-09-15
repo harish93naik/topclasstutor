@@ -1,4 +1,5 @@
 
+<?php use App\Models\Review ?>
 <?php $__env->startSection('content'); ?>		
 		<!-- Home Banner -->
 		<section class="section section-search">
@@ -10,7 +11,7 @@
 						</div>
                          
 						<!-- Search -->
-						<div class="search-box">
+					<!-- 	<div class="search-box">
 							<form action="search">
 								<div class="form-group search-location">
 									<input type="text" class="form-control" placeholder="Search Location">
@@ -20,7 +21,7 @@
 								</div>
 								<button type="submit" class="btn btn-primary search-btn"><i><img src="assets/img/search-submit.png" alt=""></i> <span>Search</span></button>
 							</form>
-						</div>
+						</div> -->
 						<!-- /Search -->
 						
 					</div>
@@ -91,360 +92,54 @@
 						<p class="sub-title">Do you want to move on next step? Choose your most popular leaning mentors, it will help you to achieve your professional goals.</p>
 					</div>
 					<div class="owl-carousel owl-theme">
+
+						<?php $__currentLoopData = $mentor_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				
 						<div class="course-box">
 							<div class="product">
 								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user1.jpg" width="600" height="300">
+									<a href="/profile/<?php echo e($row->mentor_id); ?>">
+										<img class="img-fluid" alt="" src="<?php echo e(asset($row->user->profile_image)); ?>" width="600" height="300">
 									</a>
 								</div>
 								<div class="product-content">
-									<h3 class="title"><a href="profile">Donna Yancey</a></h3>
+									<h3 class="title"><a href="/profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a></h3>
 									<div class="author-info">
 										<div class="author-name">
-											Digital Marketer
+											<?php echo e($row->user->category_description); ?>(<?php echo e($row->user->degree); ?>)
 										</div>
 									</div>
 									<div class="rating">							
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
+										<?php
+													$rating = Review::getRating($row->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
+													<i class="fas fa-star"></i>
+													<?php endfor; ?>
+										<span class="d-inline-block average-rating"><?php echo e($avg); ?></span>
 									</div>
 									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
+										<p class="mb-0"><i class="fas fa-map-marker-alt"></i><?php echo e($row->state); ?>, <?php echo e($row->country); ?></p>
 									</div>
 								</div>
 							</div>
 						</div>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user2.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">James Amen</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											UNIX, Calculus, Trigonometry
-										</div>
-									</div>
-									<div class="rating">						
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user3.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title">Marvin Downey</h3>
-									<div class="author-info">
-										<div class="author-name">
-											ASP.NET,Computer Gaming
-										</div>
-									</div>
-									<div class="rating">						
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user4.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Betty Hairston</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											Computer Programming
-										</div>
-									</div>
-									<div class="rating">						
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Jose Anderson</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											Digital Marketer
-										</div>
-									</div>
-									<div class="rating">							
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star "></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user6.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Aaron Pietrzak</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											UNIX,Calculus,Trigonometry
-										</div>
-									</div>
-									<div class="rating">						
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user7.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Brian Martinez</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											ASP.NET,Computer Gaming
-										</div>
-									</div>
-									<div class="rating">						
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user15.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Misty Lundy</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											Computer Programming
-										</div>
-									</div>
-									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user9.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Vern Campbell</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											Digital Marketer
-										</div>
-									</div>
-									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user13.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Jessica Fogarty</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											UNIX,Calculus,Trigonometry
-										</div>
-									</div>
-									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user11.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Evelyn Stafford</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											ASP.NET,Computer Gaming
-										</div>
-									</div>
-									<div class="rating">
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star "></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
 					
-						<div class="course-box">
-							<div class="product">
-								<div class="product-img">
-									<a href="profile">
-										<img class="img-fluid" alt="" src="assets/img/user/user12.jpg" width="600" height="300">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3 class="title"><a href="profile">Christopher Carroll</a></h3>
-									<div class="author-info">
-										<div class="author-name">
-											Computer Programming
-										</div>
-									</div>
-									<div class="rating">
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star filled"></i>
-										<i class="fa fa-star"></i>
-										<span class="d-inline-block average-rating">4.4</span>
-									</div>
-									<div class="author-country">
-										<p class="mb-0"><i class="fas fa-map-marker-alt"></i> Paris, France</p>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</section>
 
 			<!-- Path section start -->
-			<section class="section path-section">
+			<!-- <section class="section path-section">
 				<div class="section-header text-center">
 					<div class="container">
 						<span>Choose the</span>
@@ -457,11 +152,11 @@
 						<div class="row">
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?segment=intermediate" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img1.jpg" alt="">
+											<img src="assets/img/english.png" alt="">
 											<div class="text-col">
-												<h5>Digital Marketer</h5>
+												<h5>Primary</h5>
 											</div>
 										</div>
 									</a>
@@ -469,11 +164,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=mathematics" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img2.jpg" alt="">
+											<img src="assets/img/mathematics.jpeg" alt="">
 											<div class="text-col">
-												<h5>Ui designer</h5>
+												<h5>Mathematics</h5>
 											</div>
 										</div>
 									</a>
@@ -481,11 +176,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=physics" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img3.jpg" alt="">
+											<img src="assets/img/physics.png" alt="">
 											<div class="text-col">
-												<h5>IT Security</h5>
+												<h5>Physics</h5>
 											</div>
 										</div>
 									</a>
@@ -493,11 +188,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=chemistry" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img4.jpg" alt="">
+											<img src="assets/img/chemistry.jpg" alt="">
 											<div class="text-col">
-												<h5>Front-End Developer</h5>
+												<h5>Chemistry</h5>
 											</div>
 										</div>
 									</a>
@@ -505,11 +200,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=technology" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img5.jpg" alt="">
+											<img src="assets/img/edtech.png" alt="">
 											<div class="text-col">
-												<h5>Web Developer</h5>
+												<h5>Technology-Education</h5>
 											</div>
 										</div>
 									</a>
@@ -517,11 +212,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=science" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img6.jpg" alt="">
+											<img src="assets/img/science.jpg" alt="">
 											<div class="text-col">
-												<h5>Administrator</h5>
+												<h5>Science</h5>
 											</div>
 										</div>
 									</a>
@@ -529,11 +224,11 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=sports" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img7.jpg" alt="">
+											<img src="assets/img/sports.jpg" alt="">
 											<div class="text-col">
-												<h5>Project Manager</h5>
+												<h5>Sports</h5>
 											</div>
 										</div>
 									</a>
@@ -541,22 +236,126 @@
 							</div>
 							<div class="col-12 col-md-4 col-lg-3">
 								<div class="large-col">
-									<a href="search" class="large-col-image">
+									<a href="search?category=geography" class="large-col-image">
 										<div class="image-col-merge">
-											<img src="assets/img/path-img8.jpg" alt="">
+											<img src="assets/img/geography.jpg" alt="">
 											<div class="text-col">
-												<h5>PHP Developer</h5>
+												<h5>Geography</h5>
 											</div>
 										</div>
 									</a>
 								</div>
 							</div>
 						</div>
-						<div class="view-all text-center"><a href="#" class="btn btn-primary">View All</a></div>						
+						<div class="view-all text-center"><a href="search" class="btn btn-primary">View All</a></div>						
+					</div>
+				</div>
+			</section> -->
+
+			<section class="section path-section">
+				<div class="section-header text-center">
+					<div class="container">
+						<span>Choose the</span>
+						<h2>Different All Learning Paths</h2>
+						
+					</div>
+				</div>
+				<div class="learning-path-col">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=primary" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/english.png" alt="">
+											<div class="text-col">
+												<h5>Primary</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=intermediate" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/mathematics.jpeg" alt="">
+											<div class="text-col">
+												<h5>Intermediate</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=secondary" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/physics.png" alt="">
+											<div class="text-col">
+												<h5>Secondary</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=under_graduate" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/chemistry.jpg" alt="">
+											<div class="text-col">
+												<h5>Under Graduate</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=graduate" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/edtech.png" alt="">
+											<div class="text-col">
+												<h5>Graduate</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=post_graduate" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/science.jpg" alt="">
+											<div class="text-col">
+												<h5>Post Graduate</h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3">
+								<div class="large-col">
+									<a href="search?segment=doctorate" class="large-col-image">
+										<div class="image-col-merge">
+											<img src="assets/img/sports.jpg" alt="">
+											<div class="text-col">
+												<h5>Doctoral Study </h5>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							
+						</div>
+						<div class="view-all text-center"><a href="search" class="btn btn-primary">View All</a></div>						
 					</div>
 				</div>
 			</section>
 			<!-- Path section end -->
+
+
 			
 			<!-- Blog Section -->
 		   <section class="section section-blogs">
@@ -564,105 +363,41 @@
 				
 					<!-- Section Header -->
 					<div class="section-header text-center">
-						<span>Lorem ipsum dolor</span>
+						
 						<h2>The Blogs & News</h2>
-						<p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						
 					</div>
 					<!-- /Section Header -->
 					
 					<div class="row blog-grid-row">
+						<?php $__currentLoopData = $blog_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<div class="col-md-6 col-lg-3 col-sm-12">
 						
 							<!-- Blog Post -->
+							
 							<div class="blog grid-blog">
 								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+									<a href="/blog-details/<?php echo e($row->blog_id); ?>"><img class="img-fluid" src="<?php echo e(asset($row->blog_image)); ?>" alt="Post Image"></a>
 								</div>
 								<div class="blog-content">
 									<ul class="entry-meta meta-item">
 										<li>
 											<div class="post-author">
-												<a href="blog-details"><span>Tyrone Roberts</span></a>
+												<a href="/profile/<?php echo e($row->mentor_id); ?>"><span><?php echo e($row->mentor->user->first_name); ?>&nbsp;<?php echo e($row->mentor->user->last_name); ?></span></a>
 											</div>
 										</li>
-										<li><i class="far fa-clock"></i> 4 Dec 2019</li>
+										<li><i class="far fa-clock"></i><?php echo e($row->created_at->format('M j, Y')); ?></li>
 									</ul>
-									<h3 class="blog-title"><a href="blog-details">What is Lorem Ipsum? Lorem Ipsum is simply</a></h3>
-									<p class="mb-0">Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
+									<h3 class="blog-title"><a href="/blog-details/<?php echo e($row->blog_id); ?>"><?php echo e($row->blog_title); ?></a></h3>
+									<p class="mb-0"><?php echo e($row->blog_description); ?></p>
 								</div>
 							</div>
+							
 							<!-- /Blog Post -->
 							
 						</div>
-						<div class="col-md-6 col-lg-3 col-sm-12">
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						
-							<!-- Blog Post -->
-							<div class="blog grid-blog">
-								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="Post Image"></a>
-								</div>
-								<div class="blog-content">
-									<ul class="entry-meta meta-item">
-										<li>
-											<div class="post-author">
-												<a href="blog-details"><span>Brittany Garcia</span></a>
-											</div>
-										</li>
-										<li><i class="far fa-clock"></i> 3 Dec 2019</li>
-									</ul>
-									<h3 class="blog-title"><a href="blog-details">Contrary to popular belief, Lorem Ipsum is</a></h3>
-									<p class="mb-0">Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-							
-						</div>
-						<div class="col-md-6 col-lg-3 col-sm-12">
-						
-							<!-- Blog Post -->
-							<div class="blog grid-blog">
-								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="Post Image"></a>
-								</div>
-								<div class="blog-content">
-									<ul class="entry-meta meta-item">
-										<li>
-											<div class="post-author">
-												<a href="blog-details"><span>Allen Davis</span></a>
-											</div>
-										</li>
-										<li><i class="far fa-clock"></i> 3 Dec 2019</li>
-									</ul>
-									<h3 class="blog-title"><a href="blog-details">The standard chunk of Lorem Ipsum used</a></h3>
-									<p class="mb-0">Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-							
-						</div>
-						<div class="col-md-6 col-lg-3 col-sm-12">
-						
-							<!-- Blog Post -->
-							<div class="blog grid-blog">
-								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-04.jpg" alt="Post Image"></a>
-								</div>
-								<div class="blog-content">
-									<ul class="entry-meta meta-item">
-										<li>
-											<div class="post-author">
-												<a href="blog-details"><span>William Lawrence</span></a>
-											</div>
-										</li>
-										<li><i class="far fa-clock"></i> 2 Dec 2019</li>
-									</ul>
-									<h3 class="blog-title"><a href="blog-details">The standard Lorem Ipsum passage, used</a></h3>
-									<p class="mb-0">Lorem ipsum dolor sit amet, consectetur em adipiscing elit, sed do eiusmod tempor.</p>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-							
-						</div>
 					</div>
 					<div class="view-all text-center"> 
 						<a href="blog-list" class="btn btn-primary">View All</a>

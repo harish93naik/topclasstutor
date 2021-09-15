@@ -30,6 +30,9 @@ use Intervention\Image\Facades\Image;
 
 use Illuminate\Support\Facades\Hash;
 
+
+use Illuminate\Support\Facades\Validator;
+
 class AdminController extends Controller
 {
    
@@ -49,9 +52,15 @@ class AdminController extends Controller
 
         $appointment_counts = $appointments->count();
 
+        $mentor_list = Mentor::all()->take(5);
+
+        $mentee_list = Mentee::all()->take(5);
+
         $user_counts = $users->count();
 
-        $view_data = ['user_counts' => $user_counts,'appointment_counts'=>$appointment_counts];
+        $booking_list = Booking::all()->take(5)->sortByDesc('created_at');
+
+        $view_data = ['user_counts' => $user_counts,'appointment_counts'=>$appointment_counts,'mentor_list'=>$mentor_list,'mentee_list'=>$mentee_list,'booking_list'=>$booking_list];
         
         return view('admin.index_admin',$view_data);
     }
@@ -242,4 +251,119 @@ class AdminController extends Controller
         return redirect('/admin/profile/');
 
     }
+
+    public function menteeProfileView(Request $request,Mentee $mentee){
+
+        $view_data = [];
+
+        $view_data = ['mentee'=>$mentee];
+
+        return view('admin.mentee-profile',$view_data);
+    }
+     public function mentorProfileView(Request $request,Mentor $mentor){
+
+        $view_data = [];
+
+        $view_data = ['mentor'=>$mentor];
+
+        return view('admin.mentor-profile',$view_data);
+    }
+
+    public function mentorAdd(Request $request){
+
+         return view('admin.mentor-add');
+       /*  $user=User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'role' => $data['role'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'password' => Hash::make($data['password']),
+            'status' => $data['status'],
+      
+        ]);*/
+    }
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8','required_with:password_confirmation', 'same:password_confirmation'],
+             'password_confirmation' => ['required', 'string', 'min:6', 'max:50'],
+           //'role'=>['required'],
+        'phone_number'=>['required'],
+
+        ]);
+    }
+     public function mentorSave(Request $request){
+
+        $form = [];
+        $form = $request->form;
+
+        $this->validator($request->user_form)->validate();
+
+        //$this->validator($request->mentor_form)->validate();
+
+
+        /* request()->validate($form,[
+            'first_name' => ['required', 'max:150'],
+            'last_name' => ['required', 'max:150'],
+           'email' =>  ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'max:50', 'required_with:password_confirmation', 'same:password_confirmation'],
+            'password_confirmation' => ['required', 'string', 'min:6', 'max:50'],
+          
+        ], [], [
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'email' => 'E-Mail',
+            'password' => 'Password',
+        ]);
+*/
+
+
+        // update
+        $request = $request->merge([
+                'form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
+            ]);
+        
+
+ // Hash::make($request->form['password']);
+
+
+
+
+
+        $user=User::create($request->user_form);
+        $mentor_details = $request->mentor_form;
+        $mentor_details['user_id']=$user->id;
+        Mentor::create($mentor_details);
+
+         
+       /*  $user=User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'role' => $data['role'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'password' => Hash::make($data['password']),
+            'status' => $data['status'],
+        ]);*/
+
+        return redirect('/admin/mentor');
+    }
+
+    public function mentorStatusUpdate($postdata,$status){
+        if(Auth()->user()->role=="admin"){
+        $user = User::where('id',$postdata)->first();
+        $user->status = $status;
+        $user->save();
+
+        return true;
+    }
+    else
+    {
+        return view("security");
+    }
+}
+
 }

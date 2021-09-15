@@ -1,4 +1,7 @@
 
+<?php use App\Models\Review;
+	use App\Models\Mentor;
+ ?>
 <?php $__env->startSection('content'); ?>		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -28,17 +31,29 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar"><?php echo e(auth()->user()->first_name[0]); ?><?php echo e(auth()->user()->last_name[0]); ?></div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										<?php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
+													<i class="fas fa-star"></i>
+													<?php endfor; ?>
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name"><h4 class="usr-name"><?php echo e(auth()->user()->first_name); ?>&nbsp;<?php echo e(auth()->user()->last_name); ?></h4></h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type"><?php echo e(auth()->user()->category_description); ?>(<?php echo e(auth()->user()->degree); ?>)</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -103,6 +118,16 @@
 									</div>
 								</div>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+								<div class="row">
+								<div class="col-md-12">
+									<div class="blog-pagination">
+										<div class="d-flex justify-content-center">
+    								<?php echo $booking_details->links(); ?>
+
+										</div>
+									</div>
+								</div>
+							</div>
 								<!-- /Appointment List -->
 							
 								

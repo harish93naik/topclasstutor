@@ -18,9 +18,13 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('presence-video-channel', function ($user) {
-    return ['id' => $user->id, 'name' => $user->first_name];
+    return ['id' => auth()->user()->id, 'name' => $user->first_name];
 });
 
 Broadcast::channel('private-chat-channel.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
+});
+
+Broadcast::channel('test-video', function ($user) {
+    return ['id' => auth()->user()->id, 'name' => $user->first_name];
 });

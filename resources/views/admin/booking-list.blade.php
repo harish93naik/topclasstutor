@@ -40,15 +40,15 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-08.jpg" alt="User Image"></a>
-															<a href="profile">{{$row->mentor->user->first_name}}</a>
+															<a href="/admin/mentor-profile/{{$row->mentor_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($row->mentor->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentor-profile/{{$row->mentor_id}}">{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}</a>
 														</h2>
 													</td>
-													<td>{{$row->mentor->course}}</td>
+													<td>{{$row->mentor->user->category_description}}</td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile">{{$row->mentee->user->first_name}}</a>
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($row->mentee->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}">{{$row->mentee->user->first_name}}&nbsp;{{$row->mentee->user->last_name}}</a>
 														</h2>
 													</td>
 													<td>{{$row->schedule_date}} <span class="text-primary d-block">{{$row->schedule_time}}</span></td>

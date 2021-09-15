@@ -29,17 +29,17 @@
 						<!-- Sidebar -->
 						<div class="profile-sidebar">
 							<div class="user-widget">
-								<div class="pro-avatar">JD</div>
-								<div class="rating">
+								<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
+								<!-- <div class="rating">
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star filled"></i>
 									<i class="fas fa-star"></i>
-								</div>
+								</div> -->
 								<div class="user-info-cont">
 									<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
-									<p class="mentor-type">English Literature (M.A)</p>
+									<!-- <p class="mentor-type">English Literature (M.A)</p> -->
 								</div>
 							</div>
 							<!-- <div class="progress-bar-custom">
@@ -91,10 +91,10 @@
 													</td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile-mentee" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/user/user2.jpg" alt="User Image">
+															<a href="/profile/{{$row->booking->mentor->mentor_id}}" class="avatar avatar-sm mr-2">
+																<img class="avatar-img rounded-circle" src="{{$row->booking->mentor->user->profile_image}}" alt="User Image">
 															</a>
-															<a href="profile-mentee">{{$row->booking->mentor->user->first_name}}&nbsp;{{$row->booking->mentor->user->last_name}}</a>
+															<a href="/profile/{{$row->booking->mentor->mentor_id}}">{{$row->booking->mentor->user->first_name}}&nbsp;{{$row->booking->mentor->user->last_name}}</a>
 														</h2>
 													</td>
 													<td>${{$row->amount}}</td>

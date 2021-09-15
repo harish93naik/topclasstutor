@@ -40,15 +40,15 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/profiles/avatar-08.jpg" alt="User Image"></a>
-															<a href="profile"><?php echo e($row->mentor->user->first_name); ?></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->mentor->user->first_name); ?>&nbsp;<?php echo e($row->mentor->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td><?php echo e($row->mentor->course); ?></td>
+													<td><?php echo e($row->mentor->user->category_description); ?></td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile"><?php echo e($row->mentee->user->first_name); ?></a>
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>"><?php echo e($row->mentee->user->first_name); ?>&nbsp;<?php echo e($row->mentee->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($row->schedule_date); ?> <span class="text-primary d-block"><?php echo e($row->schedule_time); ?></span></td>

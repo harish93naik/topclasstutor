@@ -1,5 +1,8 @@
 <?php $page="edit-blog";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review;
+	use App\Models\Mentor;
+ @endphp
 @section('content')		
 	<!-- Breadcrumb -->
     <div class="breadcrumb-bar">
@@ -8,7 +11,7 @@
 						<div class="col-md-12 col-12">
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index">Home</a></li>
+									<li class="breadcrumb-item"><a href="/mentor/index">Home</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Edit Blog</li>
 								</ol>
 							</nav>
@@ -29,37 +32,49 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name">{{$user_detail->first_name}}&nbsp;{{$user_detail->last_name}}</h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type">{{auth()->user()->course_name}}</p>
 									</div>
 								</div>
-								<div class="progress-bar-custom">
+								<!-- <div class="progress-bar-custom">
 									<h6>Complete your profiles ></h6>
 									<div class="pro-progress">
 										<div class="tooltip-toggle" tabindex="0"></div>
 										<div class="tooltip">80%</div>
 									</div>
-								</div>
+								</div> -->
 								<div class="custom-sidebar-nav">
 									<ul>
-										<li><a href="dashboard"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="bookings"><i class="fas fa-clock"></i>Bookings <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="schedule-timings"><i class="fas fa-hourglass-start"></i>Schedule Timings <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="chat"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="invoices"><i class="fas fa-file-invoice"></i>Invoices <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="reviews"><i class="fas fa-eye"></i>Reviews <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="blog" class="active"><i class="fab fa-blogger-b"></i>Blog <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="profile"><i class="fas fa-user-cog"></i>Profile <span><i class="fas fa-chevron-right"></i></span></a></li>
-										<li><a href="login"><i class="fas fa-sign-out-alt"></i>Logout <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/dashboard"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/appointments"><i class="fas fa-clock"></i>Bookings <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/schedule-timings"><i class="fas fa-hourglass-start"></i>Schedule Timings <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/chat"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/invoices"><i class="fas fa-file-invoice"></i>Invoices <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/reviews"><i class="fas fa-eye"></i>Reviews <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/blog"  class="active"><i class="fab fa-blogger-b"></i>Blog <span><i class="fas fa-chevron-right"></i></span></a></li>
+										<li><a href="/mentor/profile"><i class="fas fa-user-cog"></i>Profile <span><i class="fas fa-chevron-right"></i></span></a></li>
+										
 									</ul>
 								</div>
 							</div>
@@ -75,7 +90,8 @@
 										<div class="card-body">	
 											<h3 class="pb-3">Edit Blog</h3>
 							
-											<form action="/mentor/update-blog/{{$blog->blog_id}}">
+											<form method="POST" action="/mentor/update-blog/{{$blog->blog_id}}"  enctype="multipart/form-data">
+												@csrf
 												<div class="service-fields mb-3">
 													<h4 class="heading-2">Service Information</h4>
 													<div class="row">
@@ -94,7 +110,8 @@
 														<div class="col-lg-6">
 															<div class="form-group">
 																<label>Category <span class="text-danger">*</span></label>
-																<select class="form-control select" name="form[blog_category]"> 
+																<input type="hidden" id="category_id" value="{{$blog->blog_category}}">
+																<select class="form-control select" name="form[blog_category]" id="category_select"> 
 																	<option value="">Select Category..</option>
 																	<option value="english">English</option>
 																	<option value="mathematics">Mathematics</option>
@@ -132,32 +149,11 @@
 														<div class="col-lg-12">
 															<div class="service-upload">
 																<i class="fas fa-cloud-upload-alt"></i>
-																<span>Upload Service Images *</span>
-																<input type="file" name="images[]" id="images" multiple="">
+																<span>Upload Blog Image *</span>
+																<input type="file" name="content_file" id="images">
 															
 															</div>	
-															<div id="uploadPreview">
-																<ul class="upload-wrap">
-																	<li>
-																		<div class="upload-images">
-
-																			<img alt="" src="assets/img/blog/blog-thumb-01.jpg">
-																		</div>
-																	</li>
-																	<li>
-																		<div class="upload-images">
-
-																			<img alt="" src="assets/img/blog/blog-thumb-02.jpg">
-																		</div>
-																	</li>
-																	<li>
-																		<div class="upload-images">
-
-																			<img alt="" src="assets/img/blog/blog-thumb-03.jpg">
-																		</div>
-																	</li>
-																</ul>
-															</div>
+															
 															
 														</div>
 													</div>

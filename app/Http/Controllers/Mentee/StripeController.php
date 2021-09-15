@@ -87,6 +87,7 @@ $stripe_details=$stripe->tokens->create([
             $payment_array['payment_id']=$stripe_details->id;
             $payment_array['amount'] = $request->get('amount');
             $payment_array['token'] = $stripe_details->id;
+            $payment_array['payment_method'] = "stripe";
 
             $payment_transaction=PaymentTransaction::create($payment_array);
 
@@ -110,5 +111,20 @@ $stripe_details=$stripe->tokens->create([
       }
           
         return redirect('/mentee/mentor');
+    }
+
+    public function refundAmount(Booking $booking){
+
+          $stripe = new \Stripe\StripeClient(
+  'sk_test_51JJxjTSA5lh0TiF1uJs4FZud97yTEoUKzIzyGx4tXJY9ZhqEICOXhQnxkAWx7HWgqwP7bSXmWuaVQx7EwHnWJG7500GGAjuFzY'
+);
+
+       $payer_id = Transaction::where("booking_id",$booking_id)->first();
+
+       $response =  $stripe->refunds->create([
+  'charge' =>$payer_id->payer_id,
+]);
+
+
     }
 }

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','phone_number','email', 'password','status','role','profile_image'
+        'first_name','last_name','category','degree','phone_number','email', 'password','status','role','profile_image','segment'
     ];
 
     /**
@@ -36,4 +36,39 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     public function getCategoryDescriptionAttribute(){
+
+        $category=$this->category;
+        if ($category=='english'){
+            return 'English';
+        }
+        elseif ($category=='mathematics'){
+            return 'Mathematics';
+        }
+        elseif ($category=='physics'){
+            return 'Physics';
+        }
+         elseif ($category=='chemistry'){
+            return 'Chemistry';
+        }
+        elseif ($category=='technology'){
+            return 'Technology Education';
+        }
+         elseif ($category=='science'){
+            return 'Science';
+        }
+        elseif ($category=='education'){
+            return 'Education';
+        }
+         elseif ($category=='sports'){
+            return 'Sports';
+        }
+        elseif ($category=='geography'){
+            return 'Geography';
+        }
+        else{
+            return "History";
+        }
+    }
 }

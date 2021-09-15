@@ -1,5 +1,7 @@
 <?php $page="blog-details";?>
-@php use App\Models\Comment; @endphp
+@php use App\Models\Comment; 
+		use App\Models\Blog;
+@endphp
 @extends('layout.mainlayout')
 @section('content')		
 	<!-- Breadcrumb -->
@@ -9,7 +11,7 @@
 						<div class="col-md-12 col-12">
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/mentor/index">Home</a></li>
+									<li class="breadcrumb-item"><a href="/mentee/index">Home</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Blog</li>
 								</ol>
 							</nav>
@@ -29,7 +31,7 @@
 							<div class="blog-view">
 								<div class="blog blog-single-post">
 									<div class="blog-image">
-										<a href="javascript:void(0);"><img alt="" src="assets/img/blog/blog-01.jpg" class="img-fluid"></a>
+										<a href="javascript:void(0);"><img alt="" src="{{asset($blog->blog_image) }}" class="img-fluid"></a>
 									</div>
 									<h3 class="blog-title">{{$blog->blog_title}}</h3>
 									<div class="blog-info clearfix">
@@ -37,11 +39,11 @@
 											<ul>
 												<li>
 													<div class="post-author">
-														<a href="profile"><img src="assets/img/user/user.jpg" alt="Post Author"> <span>{{$blog->mentor->user->first_name}} &nbsp;{{$blog->mentor->user->last_name}}</span></a>
+														<a href="/profile/{{$blog->mentor->mentor_id}}"><img src="{{$blog->mentor->user->profile_image}}" alt="Post Author"> <span>{{$blog->mentor->user->first_name}} &nbsp;{{$blog->mentor->user->last_name}}</span></a>
 													</div>
 												</li>
-												<li><i class="far fa-calendar"></i>{{$blog->created_at}}</li>
-												<li><i class="far fa-comments"></i>12 Comments</li>
+												<li><i class="far fa-calendar"></i>{{ $blog->created_at->format('M j, Y') }}</li>
+												<li><i class="far fa-comments"></i>@php $count = Blog::getCount($blog->blog_id)@endphp({{$count}})Comments</li>
 												<li><i class="fa fa-tags"></i></li>
 											</ul>
 										</div>
@@ -199,78 +201,29 @@
 								</div>
 								<div class="card-body">
 									<ul class="latest-posts">
+										@foreach($blog_details as $row)
 										<li>
 											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-01.jpg" alt="">
+												<a href="/blog-details/{{$row->blog_id}}">
+													<img class="img-fluid" src="{{asset($row->blog_image) }}" alt="">
 												</a>
 											</div>
 											<div class="post-info">
 												<h4>
-													<a href="blog-details">Lorem Ipsum is simply dummy text of the printing</a>
+													<a href="/blog-details/{{$row->blog_id}}">{{substr($row->description,0,20)}}</a>
 												</h4>
-												<p>4 Dec 2019</p>
+												<p>{{ $row->created_at->format('M j, Y') }}</p>
 											</div>
 										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-02.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">It is a long established fact that a reader will be</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-03.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">here are many variations of passages of Lorem Ipsum</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-04.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">The standard chunk of Lorem Ipsum used since the</a>
-												</h4>
-												<p>2 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-05.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">to generate Lorem Ipsum which looks reasonable.</a>
-												</h4>
-												<p>1 Dec 2019</p>
-											</div>
-										</li>
+										@endforeach
+										
 									</ul>
 								</div>
 							</div>
 							<!-- /Latest Posts -->
 
 							<!-- Categories -->
-							<div class="card category-widget">
+							<!-- <div class="card category-widget">
 								<div class="card-header">
 									<h4 class="card-title">Blog Categories</h4>
 								</div>
@@ -284,11 +237,11 @@
 										<li><a href="#">VB <span>(07)</span></a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 							<!-- /Categories -->
 
 							<!-- Tags -->
-							<div class="card tags-widget">
+							<!-- <div class="card tags-widget">
 								<div class="card-header">
 									<h4 class="card-title">Tags</h4>
 								</div>
@@ -313,7 +266,7 @@
 										<li><a href="#" class="tag">Asp.net</a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 							<!-- /Tags -->
 							
 						</div>

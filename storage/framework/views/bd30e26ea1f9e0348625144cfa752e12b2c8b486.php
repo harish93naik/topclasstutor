@@ -41,7 +41,7 @@
 														<a href="profile"><img src="<?php echo e($user_detail->profile_image); ?>" alt="Post Author"> <span><?php echo e($user_detail->first_name); ?> &nbsp;<?php echo e($user_detail->last_name); ?></span></a>
 													</div>
 												</li>
-												<li><i class="far fa-calendar"></i><?php echo e($blog->created_at); ?></li>
+												<li><i class="far fa-calendar"></i><?php echo e($blog->created_at->format('M j, Y')); ?></li>
 												<li><i class="far fa-comments"></i><?php echo e($comment_no); ?> Comments</li>
 												<li><i class="fa fa-tags"></i></li>
 											</ul>
@@ -200,71 +200,21 @@
 								</div>
 								<div class="card-body">
 									<ul class="latest-posts">
+										<?php $__currentLoopData = $blog_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<li>
 											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-01.jpg" alt="">
+												<a href="/blog-details/<?php echo e($row->blog_id); ?>">
+													<img class="img-fluid" src="<?php echo e(asset($row->blog_image)); ?>" alt="">
 												</a>
 											</div>
 											<div class="post-info">
 												<h4>
-													<a href="blog-details">Lorem Ipsum is simply dummy text of the printing</a>
+													<a href="/blog-details/<?php echo e($row->blog_id); ?>"><?php echo e(substr($row->description,0,20)); ?></a>
 												</h4>
-												<p>4 Dec 2019</p>
+												<p><?php echo e($row->created_at->format('M j, Y')); ?></p>
 											</div>
 										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-02.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">It is a long established fact that a reader will be</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-03.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">here are many variations of passages of Lorem Ipsum</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-04.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">The standard chunk of Lorem Ipsum used since the</a>
-												</h4>
-												<p>2 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-05.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">to generate Lorem Ipsum which looks reasonable.</a>
-												</h4>
-												<p>1 Dec 2019</p>
-											</div>
-										</li>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</ul>
 								</div>
 							</div>

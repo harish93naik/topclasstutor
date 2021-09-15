@@ -12,12 +12,16 @@ class VideoChatController extends Controller
 
     public function callUser(Request $request)
     {
+
+
         $data['userToCall'] = $request->user_to_call;
         $data['signalData'] = $request->signal_data;
         $data['from'] = Auth::id();
         $data['type'] = 'incomingCall';
 
-        broadcast(new StartVideoChat($data))->toOthers();
+        
+
+       broadcast(new StartVideoChat($data))->toOthers();
     }
     public function acceptCall(Request $request)
     {
@@ -28,7 +32,7 @@ class VideoChatController extends Controller
     }
     public function videoCall(Request $request, User $user){
 
-     $users = User::where('id',2)->get();
+     $users = User::where('id','<>',Auth::id())->get();
 
         return view('video-call', ['users' => $users]);
     //return view('video-call');

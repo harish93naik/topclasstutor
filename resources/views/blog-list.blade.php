@@ -1,5 +1,8 @@
 <?php $page="blog-list";?>
 @extends('layout.mainlayout')
+@php
+use App\Models\Blog;
+@endphp
 @section('content')		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -28,140 +31,45 @@
 						<div class="col-lg-8 col-md-12">
 
 							<!-- Blog Post -->
+							@foreach($blog_details as $row)
 							<div class="blog">
 								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+									<a href="blog-details/{{$row->blog_id}}"><img class="img-fluid" src="{{asset($row->blog_image) }}" alt="Post Image"></a>
 								</div>
-								<h3 class="blog-title"><a href="blog-details">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</a></h3>
+								<h3 class="blog-title"><a href="blog-details">{{$row->blog_title}}</a></h3>
 								<div class="blog-info clearfix">
 									<div class="post-left">
 										<ul>
 											<li>
 												<div class="post-author">
-													<a href="profile"><img src="assets/img/user/user.jpg" alt="Post Author"> <span>Ruby Perrin</span></a>
+													<a href="profile"><img src="{{$row->mentor->user->profile_image}}" alt="Post Author"> <span>{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}</span></a>
 												</div>
 											</li>
-											<li><i class="far fa-clock"></i>4 Dec 2019</li>
-											<li><i class="far fa-comments"></i>12 Comments</li>
-											<li><i class="fa fa-tags"></i>HTML</li>
+											<li><i class="far fa-clock"></i>{{ $row->created_at->format('M j, Y') }}</li>
+											<li><i class="far fa-comments"></i>@php $count = Blog::getCount($row->blog_id)@endphp({{$count}})Comments</li>
+											<li><i class="fa fa-tags"></i>{{$row->blog_category}}</li>
 										</ul>
 									</div>
 								</div>
 								<div class="blog-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco sit laboris ullamco laborisut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a href="blog-details" class="read-more">Read More</a>
+									<p>
+            	{{substr($row->description,0,250)}}</p>
+									<a href="blog-details/{{$row->blog_id}}" class="read-more">Read More</a>
 								</div>
 							</div>
+							@endforeach
+
+
 							<!-- /Blog Post -->
 
-							<!-- Blog Post -->
-							<div class="blog">
-								<div class="blog-image">
-									<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt=""></a>
-								</div>
-								<h3 class="blog-title"><a href="blog-details">1914 translation by H. Rackham</a></h3>
-								<div class="blog-info clearfix">
-									<div class="post-left">
-										<ul>
-											<li>
-												<div class="post-author">
-													<a href="profile"><img src="assets/img/user/user1.jpg" alt="Post Author"> <span>Darren Elder</span></a>
-												</div>
-											</li>
-											<li><i class="far fa-clock"></i>3 Dec 2019</li>
-											<li><i class="far fa-comments"></i>7 Comments</li>
-											<li><i class="fa fa-tags"></i>Java Script</li>
-										</ul>
-									</div>
-								</div>
-								<div class="blog-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco sit laboris ullamco laborisut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a href="blog-details" class="read-more">Read More</a>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-
-							<!-- Blog Post -->
-							<div class="blog">
-								<div class="blog-image">
-									<div class="video">
-										<iframe width="940" src="https://www.youtube.com/embed/ZMty6R0Bn0I" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-									</div>
-								</div>
-								<h3 class="blog-title"><a href="blog-details">The standard Lorem Ipsum passage, used since the</a></h3>
-								<div class="blog-info clearfix">
-									<div class="post-left">
-										<ul>
-											<li>
-												<div class="post-author">
-													<a href="profile"><img src="assets/img/user/user2.jpg" alt="Post Author"> <span>Deborah Angel</span></a>
-												</div>
-											</li>
-											<li><i class="far fa-clock"></i>3 Dec 2019</li>
-											<li><i class="far fa-comments"></i>2 Comments</li>
-											<li><i class="fa fa-tags"></i>C++</li>
-										</ul>
-									</div>
-								</div>
-								<div class="blog-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco sit laboris ullamco laborisut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a href="blog-details" class="read-more">Read More</a>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-
-							<!-- Blog Post -->
-							<div class="blog">
-								<div class="blog-image">
-									<div class="video">
-										<iframe width="940" src="https://www.youtube.com/embed/svmGQhQLuBQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-									</div>
-								</div>
-								<h3 class="blog-title"><a href="blog-details">Section 1.10.32 of "de Finibus Bonorum et Malorum</a></h3>
-								<div class="blog-info clearfix">
-									<div class="post-left">
-										<ul>
-											<li>
-												<div class="post-author">
-													<a href="profile"><img src="assets/img/user/user3.jpg" alt="Post Author"> <span>Sofia Brient</span></a>
-												</div>
-											</li>
-											<li><i class="far fa-clock"></i>2 Dec 2019</li>
-											<li><i class="far fa-comments"></i>41 Comments</li>
-											<li><i class="fa fa-tags"></i>Css</li>
-										</ul>
-									</div>
-								</div>
-								<div class="blog-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco sit laboris ullamco laborisut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a href="blog-details" class="read-more">Read More</a>
-								</div>
-							</div>
-							<!-- /Blog Post -->
-
+							
 							<!-- Blog Pagination -->
 							<div class="row">
 								<div class="col-md-12">
 									<div class="blog-pagination">
-										<nav>
-											<ul class="pagination justify-content-center">
-												<li class="page-item disabled">
-													<a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#">1</a>
-												</li>
-												<li class="page-item active">
-													<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#">3</a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
-												</li>
-											</ul>
-										</nav>
+										<div class="d-flex justify-content-center">
+    								{!! $blog_details->links() !!}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -194,78 +102,30 @@
 								</div>
 								<div class="card-body">
 									<ul class="latest-posts">
+										@foreach($latest_blog as $row)
 										<li>
 											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-01.jpg" alt="">
+												<a href="/blog-details/{{$row->blog_id}}">
+													<img class="img-fluid" src="{{asset($row->blog_image) }}" alt="">
 												</a>
 											</div>
 											<div class="post-info">
 												<h4>
-													<a href="blog-details">Lorem Ipsum is simply dummy text of the printing</a>
+													<a href="/blog-details/{{$row->blog_id}}">{{substr($row->description,0,20)}}</a>
 												</h4>
-												<p>4 Dec 2019</p>
+												<p>{{ $row->created_at->format('M j, Y') }}</p>
 											</div>
 										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-02.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">It is a long established fact that a reader will be</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-03.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">here are many variations of passages of Lorem Ipsum</a>
-												</h4>
-												<p>3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-04.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">The standard chunk of Lorem Ipsum used since the</a>
-												</h4>
-												<p>2 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="blog-details">
-													<img class="img-fluid" src="assets/img/blog/blog-thumb-05.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="blog-details">generate Lorem Ipsum which looks reasonable</a>
-												</h4>
-												<p>1 Dec 2019</p>
-											</div>
-										</li>
+										@endforeach
+										
 									</ul>
 								</div>
+								
 							</div>
 							<!-- /Latest Posts -->
 
 							<!-- Categories -->
-							<div class="card category-widget">
+							<!-- <div class="card category-widget">
 								<div class="card-header">
 									<h4 class="card-title">Blog Categories</h4>
 								</div>
@@ -279,11 +139,11 @@
 										<li><a href="#">VB <span>(07)</span></a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 							<!-- /Categories -->
 
 							<!-- Tags -->
-							<div class="card tags-widget">
+							<!-- <div class="card tags-widget">
 								<div class="card-header">
 									<h4 class="card-title">Tags</h4>
 								</div>
@@ -308,7 +168,7 @@
 										<li><a href="#" class="tag">Asp.net</a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 							<!-- /Tags -->
 							
 						</div>

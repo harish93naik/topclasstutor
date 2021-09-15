@@ -18,14 +18,18 @@ use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
+use PayPal\Api\Refund;
+use PayPal\Api\Sale;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
+use PayPal\Api\RefundRequest;
 use PayPal\Api\Transaction;
 use App\Models\PaymentTransaction;
 use App\Models\Booking;
 use App\Models\Mentee;
 use App\Models\Invoice;
+
 
 class PaypalController extends Controller
 {
@@ -155,12 +159,18 @@ class PaypalController extends Controller
         $execution = new PaymentExecution();
         $execution->setPayerId($_GET['PayerID']);        
         $result = $payment->execute($execution, $this->_api_context);
+
+        
+        //var_dump($test_sale);
         
         if ($result->getState() == 'approved') {  
 
             $booking_array=[];
             $payment_array=[];
             $invoice_array=[];
+
+            $sale_transact = $result->getTransactions();
+            $sale_id = $sale_transact[0]->getRelatedResources()[0]->getSale()->getId();
 
             //Creating Booking information
 
@@ -180,7 +190,8 @@ class PaypalController extends Controller
             $payment_array['payment_id']=$payment_id;
             $payment_array['amount'] = $amount;
             $payment_array['token'] = $request->input('token');
-
+            $payment_array['payment_method'] ="paypal";
+            $payment_array['sale_id'] = $sale_id;   
             $payment_transaction=PaymentTransaction::create($payment_array);
 
             //Creating Invoice information
@@ -192,8 +203,16 @@ class PaypalController extends Controller
             $invoice_details = Invoice::create($invoice_array);
 
 
+            /*$sale = Sale::get($sale_id, $this->_api_context);        
+            $refund_request = new RefundRequest();
+        //$refund_request->setPayerId($_GET['PayerID']);        
+            $refund_status = $sale->refundSale($refund_request, $this->_api_context);
 
-           // \Session::put('success','Payment success !!');
+            var_dump($refund_status);*/
+
+
+
+           \Session::put('success','Payment success !!');
 
             return redirect('/mentee/booking-success/'.$invoice_details->invoice_id);
         }

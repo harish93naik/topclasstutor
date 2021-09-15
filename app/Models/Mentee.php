@@ -12,7 +12,7 @@ class Mentee extends Model
     use SoftDeletes;
     protected $table = 'mentee';
     protected $fillable = [
-                    'dob','course_name','address1','address2','city','state','zipcode','country','profile_image','gender','user_id'
+                    'dob','address1','address2','city','state','zipcode','country','profile_image','gender','user_id'
         ];
    // protected $hidden = ['password'];
     protected $primaryKey = 'mentee_id';

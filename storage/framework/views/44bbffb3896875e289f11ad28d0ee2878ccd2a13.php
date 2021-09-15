@@ -29,7 +29,7 @@
 								<div class="card-body">
 								
 									<!-- Checkout Form -->
-									<form id="payment-form" method="POST">
+									<form id="payment-form" name="payment-submit-form" method="POST" class="stripe-validation">
 										<?php echo csrf_field(); ?>
 									
 									<!--Booking Information values -->
@@ -96,7 +96,7 @@
 													<div class="col-md-6">
 														<div class="form-group card-label">
 															<label for="card_number">Card Number</label>
-															<input class="form-control" name="form[card_number]" id="card_number" placeholder="1234  5678  9876  5432" type="text">
+															<input autocomplete="off" class="form-control" name="form[card_number]" id="card_number" placeholder="1234  5678  9876  5432" type="text">
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -114,9 +114,10 @@
 													<div class="col-md-4">
 														<div class="form-group card-label">
 															<label for="cvv">CVV</label>
-															<input class="form-control" name="form[cvv]" id="cvv" type="text">
+															<input autocomplete="off" class="form-control" name="form[cvv]" id="cvv" type="text">
 														</div>
 													</div>
+													
 												</div>
 											</div>
 											<!-- /Credit Card Payment -->

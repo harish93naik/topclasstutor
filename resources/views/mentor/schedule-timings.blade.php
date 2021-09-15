@@ -1,5 +1,8 @@
 <?php $page="schedule-timings";?>
-@php use App\Models\ScheduleTimings; @endphp
+@php use App\Models\ScheduleTimings; 
+	use App\Models\Review;
+	use App\Models\Mentor;
+@endphp
 @extends('layout.mainlayout')
 @section('content')		
 	<!-- Breadcrumb -->
@@ -32,15 +35,27 @@
 								<div class="user-widget">
 									<div class="pro-avatar">JD</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name"><h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4></h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">

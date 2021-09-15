@@ -1,5 +1,6 @@
 <?php $page="profile-settings";?>
 
+<?php use\App\Models\Review; ?>
 <?php $__env->startSection('content'); ?>	
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -30,17 +31,28 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar"><?php echo e(auth()->user()->first_name[0]); ?><?php echo e(auth()->user()->last_name[0]); ?></div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										<?php
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
+													<i class="fas fa-star"></i>
+													<?php endfor; ?>
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name"><?php echo e(auth()->user()->first_name); ?>&nbsp;<?php echo e(auth()->user()->last_name); ?></h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type"><?php echo e(auth()->user()->course_name); ?></p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -113,10 +125,33 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-12 col-md-6">
+											<div class="col-6 col-md-3">
 												<div class="form-group">
-													<label>Course Name</label>
-													<input type="text" name="mentor_form[course_name]" class="form-control" value="<?php echo e($mentor_details->course_name); ?>">
+													
+													
+																<label>Category</label>
+																<input type="hidden" id="category_id" value="<?php echo e($user_detail->category); ?>">
+																<select class="form-control select" name="user_form[category]" id="category_select"> 
+																	<option value="">Select Category..</option>
+																	<option value="english">English</option>
+																	<option value="mathematics">Mathematics</option>
+																	<option value="physics">Physics</option>
+																	<option value="chemistry">Chemistry</option>
+																	<option value="technology">Technoogy-Education</option>
+																	<option value="science">Science</option>
+																	<option value="education">Education</option>
+																	<option value="sports">Sports</option>
+																	<option value="geography">Geography</option>
+																	<option value="history">History</option>
+																	
+																</select>
+															
+												</div>
+											</div>
+											<div class="col-6 col-md-3">
+												<div class="form-group">
+													<label>Degree</label>
+													<input type="text" name="user_form[degree]" class="form-control" value="<?php echo e($user_detail->degree); ?>">
 												</div>
 											</div>
 											<div class="col-12 col-md-6">

@@ -42,8 +42,8 @@
 													<td>#{{$row->booking->mentee->mentee_id}}</td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="profile" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="../assets_admin/img/user/user.jpg" alt="User Image"></a>
-															<a href="profile">{{$row->booking->mentee->user->first_name}}</a>
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($row->booking->mentee->user->profile_image)}}" alt="User Image"></a>
+															<a href="profile">{{$row->booking->mentee->user->first_name}}&nbsp;{{$row->booking->mentee->user->last_name}}</a>
 														</h2>
 													</td>
 													<td>{{$row->amount}}</td>

@@ -44,9 +44,14 @@ Route::post('/stripe-payment','Mentee\StripeController@handlePost')->name('strip
     });
 
     // Endpoints to alert call or receive call.
-    Route::middleware($middleware)->post('/video/call-user', 'App\Http\Controllers\VideoChatController@callUser');
-    Route::middleware($middleware)->post('/video/accept-call', 'App\Http\Controllers\VideoChatController@acceptCall');
-Route::middleware($middleware)->get('/video-call/{user}','VideoChatController@videoCall')->name('video-call');
+    Route::middleware($middleware)->post('/video/call-user', 'VideoChatController@callUser');
+    Route::middleware($middleware)->post('/video/accept-call', 'VideoChatController@acceptCall');
+//Route::middleware($middleware)->get('/video-call','@videoCall')->name('video-call');
+
+//Agora video call
+Route::middleware($middleware)->get('/video-call', 'AgoraVideoController@index')->name('video-call');
+    Route::middleware($middleware)->post('/agora/token', 'AgoraVideoController@token');
+    Route::middleware($middleware)->post('/agora/call-user', 'AgoraVideoController@callUser');
 
 Route::middleware($middleware)->prefix('admin')->group(function(){
 
@@ -72,6 +77,16 @@ Route::get('view-blog/{blog}','Admin\AdminController@blogView');
 
 Route::post('password-reset','Admin\AdminController@resetPassword');
 
+Route::get('mentee-profile/{mentee}','Admin\AdminController@menteeProfileView');
+
+Route::get('mentor-profile/{mentor}','Admin\AdminController@mentorProfileView');
+
+Route::get('mentor/add','Admin\AdminController@mentorAdd');
+
+Route::post('mentor/save','Admin\AdminController@mentorSave');
+
+Route::get('user/status-change/{postdata}/{status}','Admin\AdminController@mentorStatusUpdate');
+
 
 
 
@@ -87,6 +102,14 @@ Route::middleware($middleware)->prefix('mentor')->group(function(){
 
     Route::get('dashboard','Mentor\MentorController@index');
     Route::get('index','Mentor\MentorController@index');
+
+    /*---------Review Route Starts---------------*/
+
+
+    Route::get('reviews','Mentor\MentorController@review');
+
+
+    /*---------Review Route Ends---------------*/
 
 
 
@@ -119,7 +142,7 @@ Route::get('profile','Mentor\MentorController@profileView');
 
 Route::post('profile/update','Mentor\MentorController@profileUpdate');
 
-Route::get('profile-settings','Mentor\MentorController@profileEdit');
+Route::get('profile-settings','Mentor\MentorController@profileEdit')->name('mentor-profile-setting');
 
 /*-----------Profile Route Ends---------------*/
 
@@ -131,9 +154,9 @@ Route::get('blog','Mentor\MentorController@blogList');
 
 Route::get('add-blog','Mentor\MentorController@blogCreate');
 
-Route::get('edit-blog/{blog}','Mentor\MentorController@blogEdit');
+Route::get('edit-blog/{blog}','Mentor\MentorController@blogEdit')->name('edit-blog');
 
-Route::get('update-blog/{blog}','Mentor\MentorController@blogUpdate');
+Route::post('update-blog/{blog}','Mentor\MentorController@blogUpdate');
 
 Route::get('view-blog/{blog}','Mentor\MentorController@blogView');
 
@@ -260,17 +283,13 @@ Route::get('paypal', array('as' => 'status','uses' => 'Mentee\PaypalController@g
 
 
 
-Route::get('/', function () {
-        return view('index');
-    })->name('pagee');
-    
-    Route::get('/home', function () {
-        return view('index');
-    })->name('pagee');
 
-Route::get('/index', function () {
-    return view('index');
-})->name('pagee');
+    
+   /* Route::get('/home', function () {
+        return view('index');
+    })->name('pagee');*/
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -320,12 +339,10 @@ Route::get('/map-grid', function () {
 Route::get('/map-list', function () {
     return view('map-list');
 })->name('map-list');
-Route::get('/search', function () {
+/*Route::get('/search', function () {
     return view('search');
-})->name('search');
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
+})->name('search');*/
+
 Route::get('/bookings-mentee', function () {
     return view('bookings-mentee');
 })->name('bookings-mentee');
@@ -372,9 +389,7 @@ Route::get('/register', function () {
 Route::get('/forgot-password', function () {
     return view('forgot-password');
 })->name('forgot-password');
-Route::get('/blog-list', function () {
-    return view('blog-list');
-})->name('blog-list');
+
 Route::get('/blog-grid', function () {
     return view('blog-grid');
 })->name('blog-grid');
@@ -488,3 +503,11 @@ return view('admin.invoice');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('pagee');
+Route::get('/index','HomeController@index')->name('pagee');
+Route::get('/search','HomeController@search')->name('search');
+//Route::post('/filter/mentor','HomeController@filterMentor')->name('search');
+Route::get('/blog-list','HomeController@blogList')->name('blog-list');
+Route::get('/blog-details/{blog}','HomeController@blogDetail')->name('blog-details');
+Route::get('/profile/{mentor}','HomeController@profileView')->name('profile');
+Route::get('/mentor-review/{mentor}/{postdata}/{feedback}','HomeController@mentorReview')->name('review');

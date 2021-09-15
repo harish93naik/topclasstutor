@@ -93,6 +93,7 @@
 		
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="{{asset('assets_admin/css/font-awesome.min.css')}}">
+        <link rel="stylesheet" href="{{asset('assets_admin/plugins/fontawesome/css/all.min.css')}}">
         @if(Route::is(['add-blog','blog-details','blog','edit-blog']))
         <link rel="stylesheet" href="{{asset('assets_admin/plugins/fontawesome/css/fontawesome.min.css')}}">
         <link rel="stylesheet" href="{{asset('assets_admin/plugins/fontawesome/css/all.min.css')}}">

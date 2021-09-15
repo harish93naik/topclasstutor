@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -32,10 +33,26 @@ class LoginController extends Controller
     //$user ="mentor";//auth()->user()->role;
 
     public function authenticated($request , $user){
-    if($user->role=='admin'){
-        return redirect('/admin/dashboard') ;
+          if($user->status=="inactive"){
+            
+           Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        //$request->session()->regenerateToken();
+
+      
+
+        return redirect()->route('login')->with('error', 'Your Account need to be approved by the Admin');
+}
+    elseif($user->role=='admin'){
+        return redirect('/admin/dashboard');
     }elseif($user->role=='mentor'){
-        return redirect('/mentor/dashboard');
+          
+      
+
+     return redirect('/mentor/dashboard');
+    
     }
     else{
         return redirect('/mentee/dashboard');

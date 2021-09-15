@@ -1,5 +1,8 @@
 <?php $page="add-blog";?>
 
+<?php use App\Models\Review;
+	use App\Models\Mentor;
+ ?>
 <?php $__env->startSection('content'); ?>	
 	<!-- Breadcrumb -->
     <div class="breadcrumb-bar">
@@ -31,15 +34,27 @@
 								<div class="user-widget">
 									<div class="pro-avatar">JD</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										<?php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
+													<i class="fas fa-star"></i>
+													<?php endfor; ?>
 									</div>
 									<div class="user-info-cont">
 										<h4 class="usr-name"><?php echo e($user_detail->first_name); ?>&nbsp;<?php echo e($user_detail->last_name); ?></h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<p class="mentor-type"><?php echo e($user_detail->course_name); ?></p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -134,7 +149,7 @@
 														<div class="col-lg-12">
 															<div class="service-upload">
 																<i class="fas fa-cloud-upload-alt"></i>
-																<span>Upload Bog Image *</span>
+																<span>Upload Blog Image *</span>
 																<input type="file" name="content_file" id="images" required>
 															
 															</div>	

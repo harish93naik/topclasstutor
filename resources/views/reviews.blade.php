@@ -225,6 +225,8 @@
 												</div>
 											</div>
 										</div>
+
+										<div id="search-results"></div>
 									</li>
 									<!-- /Comment List -->
 									

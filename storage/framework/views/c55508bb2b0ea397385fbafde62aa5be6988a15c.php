@@ -6,10 +6,10 @@
 		
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="index_admin" class="logo">
+				<a href="/index" class="logo">
 					<img src="../assets_admin/img/logo.png" alt="Logo">
 				</a>
-				<a href="index_admin" class="logo logo-small">
+				<a href="/index" class="logo logo-small">
 					<img src="../assets_admin/img/logo-small.png" alt="Logo" width="30" height="30">
 				</a>
 			</div>

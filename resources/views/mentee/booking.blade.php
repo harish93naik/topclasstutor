@@ -1,4 +1,5 @@
 @extends('layout.mainlayout')
+@php use App\Models\Review @endphp
 @section('content')		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -28,18 +29,26 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="booking-user-info">
-										<a href="profile" class="booking-user-img">
-											<img src="assets/img/user/user2.jpg" alt="User Image">
+										<a href="/profile/{{$mentor->mentor_id}}" class="booking-user-img">
+											<img src="{{$mentor->user->profile_image}}" alt="User Image">
 										</a>
 										<div class="booking-info">
-											<h4><a href="profile">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</a></h4>
+											<h4><a href="/profile/{{$mentor->mentor_id}}">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</a></h4>
 											<div class="rating">
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star"></i>
-												<span class="d-inline-block average-rating">35</span>
+												@php
+													$rating = Review::getRating($mentor->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?floor(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
+												<span class="d-inline-block average-rating">{{$count}}</span>
 											</div>
 											<p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i>{{$mentor->state}},{{$mentor->country}}</p>
 										</div>
@@ -162,7 +171,7 @@
 							
 							<!-- Submit Section -->
 							<div class="submit-section proceed-btn text-right">
-								<button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Proceed to Pay</button>
+								<button class="btn btn-primary submit-btn" id="proceed-btn" type="submit" name="form_submit" value="submit" disabled="true">Proceed to Pay</button>
 							</div>
 						</form>
 							<!-- /Submit Section -->

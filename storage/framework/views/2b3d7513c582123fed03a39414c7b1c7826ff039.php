@@ -1,5 +1,6 @@
 <?php $page="profile";?>
 
+<?php use App\Models\Review ?>
 <?php $__env->startSection('content'); ?>		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -31,13 +32,24 @@
 									<div class="mentor-widget">
 										<div class="user-info-left align-items-center">
 											<div class="mentor-img d-flex flex-wrap justify-content-center">
-												<div class="pro-avatar">JD</div>
+												<div class="pro-avatar"><?php echo e(auth()->user()->first_name[0]); ?><?php echo e(auth()->user()->last_name[0]); ?></div>
 												<div class="rating text-center">
+														<?php
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													?>
+
+													<?php for($i=0;$i<$avg;$i++): ?>
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
 													<i class="fas fa-star filled"></i>
 													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													<?php endfor; ?>
+													<?php for($i=0;$i<5-$avg;$i++): ?>
 													<i class="fas fa-star"></i>
+													<?php endfor; ?>
 												</div>
 												<div class="mentor-details m-0">
 													<p class="user-location m-0"><i class="fas fa-map-marker-alt"></i> <?php echo e($mentor_details->state); ?>,<?php echo e($mentor_details->country); ?></p>
@@ -45,7 +57,7 @@
 											</div>
 											<div class="user-info-cont">
 												<h4 class="usr-name"><?php echo e($user_detail->first_name); ?>&nbsp;<?php echo e($user_detail->last_name); ?></h4>
-												<p class="mentor-type"><?php echo e($mentor_details->course_name); ?></p>
+												<p class="mentor-type"><?php echo e(auth()->user()->category_description); ?>&nbsp;(<?php echo e(auth()->user()->degree); ?>)</p>
 												<div class="mentor-action">
 													<p class="mentor-type social-title">Contact Me</p>
 													<a href="javascript:void(0)" class="btn-blue">

@@ -1,6 +1,5 @@
 <?php $__env->startSection('content'); ?>
-    <!-- <video-chat :allusers="<?php echo e($users); ?>" :authUserId="<?php echo e(auth()->id()); ?>" turn_url="<?php echo e(env('TURN_SERVER_URL')); ?>"
-        turn_username="<?php echo e(env('TURN_SERVER_USERNAME')); ?>" turn_credential="<?php echo e(env('TURN_SERVER_CREDENTIAL')); ?>" /> -->
+    
 
 
   <div>
@@ -11,12 +10,11 @@
             <button
               type="button"
               class="btn btn-primary mr-2"
-              data-key="user.id"
-              onclick="placeVideoCall(user.id, user.first_name)"
-            >
-              Call <?php echo e(user.first_name); ?>
+              data-key="<?php echo e($user->id); ?>"
+              onclick="placeVideoCall(<?php echo e($user->id, $user->first_name); ?>)">
+              Call <?php echo e($user->first_name); ?>
 
-              <span class="badge badge-light"><?php echo e(getUserOnlineStatus(user.id)); ?></span>
+              <span class="badge badge-light"><?php echo e(getUserOnlineStatus($user->id)); ?></span>
             </button>
           </div>
         </div>

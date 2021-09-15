@@ -12,7 +12,7 @@ class PaymentTransaction extends Model
     use SoftDeletes;
     protected $table = 'transaction';
     protected $fillable = [
-                    'payer_id','payment_id','token','amount','booking_id'
+                    'payer_id','payment_id','token','amount','booking_id','payment_method','sale_id'
         ];
    // protected $hidden = ['password'];
     protected $primaryKey = 'transaction_id';

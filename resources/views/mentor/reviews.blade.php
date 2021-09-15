@@ -1,5 +1,8 @@
 <?php $page="reviews";?>
 @extends('layout.mainlayout')
+@php use App\Models\Review;
+	use App\Models\Mentor;
+ @endphp
 @section('content')		
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -29,26 +32,38 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
 									<div class="rating">
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star"></i>
+										@php
+													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
+													$rating = Review::getRating($mentor_details->mentor_id);
+													$count = sizeof($rating);
+													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
+													@endphp
+
+													@for($i=0;$i<$avg;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$avg;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
 									</div>
 									<div class="user-info-cont">
-										<h4 class="usr-name">Jonathan Doe</h4>
-										<p class="mentor-type">English Literature (M.A)</p>
+										<h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4>
+										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
 									</div>
 								</div>
-								<div class="progress-bar-custom">
+								<!-- <div class="progress-bar-custom">
 									<h6>Complete your profiles ></h6>
 									<div class="pro-progress">
 										<div class="tooltip-toggle" tabindex="0"></div>
 										<div class="tooltip">80%</div>
 									</div>
-								</div>
+								</div> -->
 								<div class="custom-sidebar-nav">
 									<ul>
 										<li><a href="/mentor/dashboard"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
@@ -71,168 +86,57 @@
 							
 								<!-- Review Listing -->
 								<ul class="comments-list">
+
+									@foreach($review_details as $row)
 								
 									<!-- Comment List -->
 									<li>
 										<div class="comment">
-											<img class="avatar rounded-circle" alt="User Image" src="assets/img/user/user.jpg">
+											<img class="avatar rounded-circle" alt="User Image" src="{{asset($row->mentee->user->profile_image)}}">
 											<div class="comment-body">
 												<div class="meta-data">
-													<span class="comment-author">Richard Wilson</span>
-													<span class="comment-date">Reviewed 2 Days ago</span>
+													<span class="comment-author">{{$row->mentee->user->first_name}}&nbsp;{{$row->mentee->user->last_name}}</span>
+													<span class="comment-date">Reviewed on {{$row->created_at->format('M j, Y') }}</span>
 													<div class="review-count rating">
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star"></i>
+														
+
+													@for($i=0;$i<$row->rating;$i++)
+													<i class="fas fa-star filled"></i>
+													<!-- <i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star filled"></i>
+													<i class="fas fa-star"></i> -->
+													@endfor
+													@for($i=0;$i<5-$row->rating;$i++)
+													<i class="fas fa-star"></i>
+													@endfor
+
 													</div>
 												</div>
-												<p class="recommended"><i class="far fa-thumbs-up"></i> I recommend the consectetur</p>
+												<!-- <p class="recommended"><i class="far fa-thumbs-up"></i> I recommend the consectetur</p> -->
 												<p class="comment-content">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-													sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-													Ut enim ad minim veniam, quis nostrud exercitation.
-													Curabitur non nulla sit amet nisl tempus
+													{{$row->review}}
 												</p>
-												<div class="comment-reply">
-													<a class="comment-btn" href="#">
-														<i class="fas fa-reply"></i> Reply
-													</a>
-												   <p class="recommend-btn">
-													<span>Recommend?</span>
-													<a href="#" class="like-btn">
-														<i class="far fa-thumbs-up"></i> Yes
-													</a>
-													<a href="#" class="dislike-btn">
-														<i class="far fa-thumbs-down"></i> No
-													</a>
-												</p>
-												</div>
-											</div>
-										</div>
-										
-										<!-- Comment Reply -->
-										<ul class="comments-reply">
-										
-											<!-- Comment Reply List -->
-											<li>
-												<div class="comment">
-													<img class="avatar rounded-circle" alt="User Image" src="assets/img/user/user.jpg">
-													<div class="comment-body">
-														<div class="meta-data">
-															<span class="comment-author">Dr. Darren Elder</span>
-															<span class="comment-date">Reviewed 3 Days ago</span>
-														</div>
-														<p class="comment-content">
-															Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-															sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-															Ut enim ad minim veniam.
-															Curabitur non nulla sit amet nisl tempus
-														</p>
-														<div class="comment-reply">
-															<a class="comment-btn" href="#">
-																<i class="fas fa-reply"></i> Reply
-															</a>
-														</div>
-													</div>
-												</div>
-											</li>
-											<!-- /Comment Reply List -->
 											
-										</ul>
-										<!-- /Comment Reply -->
+											</div>
+										</div>
+										@endforeach
 										
-									</li>
-									<!-- /Comment List -->
-									
-									<!-- Comment List -->
-									<li>
-										<div class="comment">
-											<img class="avatar rounded-circle" alt="User Image" src="assets/img/user/user.jpg">
-											<div class="comment-body">
-												<div class="meta-data">
-													<span class="comment-author">Travis Trimble</span>
-													<span class="comment-date">Reviewed 4 Days ago</span>
-													<div class="review-count rating">
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-													</div>
-												</div>
-												<p class="comment-content">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-													sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-													Ut enim ad minim veniam, quis nostrud exercitation.
-													Curabitur non nulla sit amet nisl tempus
-												</p>
-												<div class="comment-reply">
-													<a class="comment-btn" href="#">
-														<i class="fas fa-reply"></i> Reply
-													</a>
-													<p class="recommend-btn">
-														<span>Recommend?</span>
-														<a href="#" class="like-btn">
-															<i class="far fa-thumbs-up"></i> Yes
-														</a>
-														<a href="#" class="dislike-btn">
-															<i class="far fa-thumbs-down"></i> No
-														</a>
-													</p>
-												</div>
-											</div>
-										</div>
-									</li>
-									<!-- /Comment List -->
-									
-									<!-- Comment List -->
-									<li>
-										<div class="comment">
-											<img class="avatar rounded-circle" alt="User Image" src="assets/img/user/user3.jpg">
-											<div class="comment-body">
-												<div class="meta-data">
-													<span class="comment-author">Carl Kelly</span>
-													<span class="comment-date">Reviewed 5 Days ago</span>
-													<div class="review-count rating">
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-														<i class="fas fa-star filled"></i>
-													</div>
-												</div>
-												<p class="comment-content">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-													sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-													Ut enim ad minim veniam, quis nostrud exercitation.
-													Curabitur non nulla sit amet nisl tempus
-												</p>
-												<div class="comment-reply">
-													<a class="comment-btn" href="#">
-														<i class="fas fa-reply"></i> Reply
-													</a>
-													<p class="recommend-btn">
-														<span>Recommend?</span>
-														<a href="#" class="like-btn">
-															<i class="far fa-thumbs-up"></i> Yes
-														</a>
-														<a href="#" class="dislike-btn">
-															<i class="far fa-thumbs-down"></i> No
-														</a>
-													</p>
-												</div>
-											</div>
-										</div>
-									</li>
-									<!-- /Comment List -->
 									
 								</ul>
 								<!-- /Comment List -->
 								
 							</div>
 						</div>
+						<div class="row">
+								<div class="col-md-12">
+									<div class="blog-pagination">
+										<div class="d-flex justify-content-center">
+    								{!! $review_details->links() !!}
+										</div>
+									</div>
+								</div>
+							</div>
 					</div>
 				</div>
 
