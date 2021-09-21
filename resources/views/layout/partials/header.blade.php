@@ -13,8 +13,34 @@
 	<header class="header">
 				<div class="header-fixed">
 				<nav class="navbar navbar-expand-lg header-nav">
-					<div class="navbar-header col-lg-4">
-						<!-- <a id="mobile_btn" href="javascript:void(0);">
+
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="/index" class="menu-logo">
+								<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li class="{{ Request::is('index') ? 'active' : '' }}">
+								<a href="/index">Home</a>
+							</li>
+							<li class="{{ Request::is('about') ? 'active' : '' }}">
+								<a href="/about">About Us</a>
+							</li>
+							
+							<li class="{{ Request::is('contact') ? 'active' : '' }}">
+								<a href="/contact-us">Contact Us</a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- <div class="navbar-header col-lg-4">
+
+
+						<a id="mobile_btn" href="javascript:void(0);">
 							<span class="bar-icon">
 								<span></span>
 								<span></span>
@@ -23,8 +49,8 @@
 						</a>
 						<a href="/index" class="navbar-brand logo">
 							<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
-						</a> -->
-					</div>
+						</a>
+					</div> -->
 					<div class="navbar-header col-lg-4 logo-web-class">
 						<a id="mobile_btn" href="javascript:void(0);">
 							<span class="bar-icon">
@@ -37,7 +63,7 @@
 							<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
 						</a>
 					</div>
-					<div class="main-menu-wrapper">
+				<!-- 	<div class="main-menu-wrapper">
 						<div class="menu-header">
 							<a href="/index" class="menu-logo">
 								<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
@@ -46,6 +72,17 @@
 								<i class="fas fa-times"></i>
 							</a>
 						</div>
+						<ul class="main-nav">
+							<li class="{{ Request::is('about') ? 'active' : '' }}">
+								<a href="/about">About Us</a>
+							</li>
+							<li class="{{ Request::is('index') ? 'active' : '' }}">
+								<a href="index">Home</a>
+							</li>
+							<li class="{{ Request::is('index') ? 'active' : '' }}">
+								<a href="index">Home</a>
+							</li>
+						</ul> -->
 
 						@if(!auth()->user())
 
@@ -135,20 +172,32 @@
 							</li>
 						</ul>	 -->
 						@endif		 
-					</div>		 
+					<!-- </div>	 -->
+					
 					<ul class="nav header-navbar-rht">
-					@if(Route::is(['pagee','mentor-register','mentee-register']))
+					@if(Route::is(['pagee','mentor-register','mentee-register','about']))
 						@if(!auth()->user())
+
+						<a class="nav-link header-login  home-menu {{ Request::is('mentee-register') ? 'active' : '' }}" href="/mentee-register">Mentee Register</a>
+						
+
+						<a class="nav-link header-login  home-menu {{ Request::is('mentor-register') ? 'active' : '' }}" href="/mentor-register">Become a Mentor?</a>
+
 						<li class="nav-item">
-							<a class="nav-link" href="login">Login</a>
+							<a class="nav-link header-login" href="login">Login</a>
 						</li>
-						<li class="nav-item">
+					
+
+						<!-- <li class="nav-item">
 							<a class="nav-link header-login" href="register">Register</a>
-						</li>
+
+						</li> -->
+
 						@endif
 						@endif
 						@if(!Route::is(['mentor-register','mentee-register']))
 						@if(auth()->user())
+						
 						<li class="nav-item dropdown has-arrow logged-item">
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 
@@ -197,7 +246,13 @@
 						@endif
 					</ul>
 					
+					
+
+
+					
 				</nav>
+
+
 				</div>
 			</header>
 			<!-- /Header -->

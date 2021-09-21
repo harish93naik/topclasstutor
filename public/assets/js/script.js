@@ -8,7 +8,9 @@ Version      : 1.0
 
 (function($) {
     "use strict";
-
+    $('#login-info').css('display','none');
+    $('#address-info').css('display','none');
+    $('#qualification-info').css('display','none');
     
 		
 	if($('.toggle-password').length > 0) {
@@ -37,6 +39,25 @@ Version      : 1.0
 			  additionalMarginTop: 30
 			});
 		}
+	}
+
+	if($('.datetimepicker').length > 0 ){
+		var now = new Date();
+		$('.datetimepicker').datetimepicker({
+			format: 'DD/MM/YYYY',
+			maxDate: new Date(now.getFullYear() - 18, now.getMonth(), now.getDate()),
+			icons: {
+				up: "fa fa-angle-up",
+				down: "fa fa-angle-down",
+				next: 'fa fa-angle-right',
+				previous: 'fa fa-angle-left'
+			}
+		});
+		$('.datetimepicker').on('dp.show',function() {
+			$(this).closest('.table-responsive').removeClass('table-responsive').addClass('temp');
+		}).on('dp.hide',function() {
+			$(this).closest('.temp').addClass('table-responsive').removeClass('temp')
+		});
 	}
 	
 	// Sidebar
@@ -489,6 +510,265 @@ function reviewSubmit(){debugger;
 
 			});
 
+}
+
+function passwordVerify(){
+    if($('#password').val().length<=6)
+    {
+        $("#password-message").text('Password should be greater than 6 characters');
+        $("#password-message").css('color','red');
+        $('#password').val("");
+        return false;
+    }
+}
+function confirmPasswordVerify(){
+    if($('#password').val()!=$('#password-confirm').val())
+    {
+        $("#pwd-message").text('Password did not match');
+        $("#pwd-message").css('color','red');
+        $('#password-confirm').val("");
+        return false;
+    }
+}
+function emailVerify(){debugger;
+    
+    var userinput = $('#email').val();
+    var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+
+    if(!pattern.test(userinput)) {
+        $("#email-id").text('Enter valid email address');
+        $("#email-id").css('color','red');
+        return false;
+    }
+    else
+    {
+  
+        sessionStorage.setItem("ajax-return",true);
+        $.ajax({
+            type:'get',
+            url:'/user/emailcheck/'+userinput,
+            dataType:'json',
+            async:false
+        }).done(function(view_data){
+           if(view_data!=1) {
+               $("#email-id").text('Email already taken');
+               $("#email-id").css('color', 'red');
+                $("#email").val("");
+               sessionStorage.setItem("ajax-return",false);
+           }
+
+        });
+        if(sessionStorage.getItem('ajax-return')=="false"){
+            return false;
+    }
+
+    
+}
+}
+function emailMessageClear(){
+        $('#email-id').text("");
+}
+function passwordMessageClear(){
+    $("#password-message").text('');
+}
+function confirmPasswordMessageClear(){
+    $("#pwd-message").text('');
+}
+
+function basicInfoToggle()
+{
+    if(!$("#login-info").is(":visible")){debugger;
+      if($('#first_name').val()!="" && $('#last_name').val()!="" && $('#date_of_birth').val()!="" && $('#phone_number').val()!="" ){
+
+           
+            	 $('#basic-info').css('display', 'none');
+                $('#login-info').css('display', 'block');
+        }
+        else{
+            $('.mandatory-fields').text('**Mandatory fields needs to be filled');
+            $(".mandatory-fields").css('color','red');
+            return false;
+        }
+    }
+    else{
+        //$('.mandatory-fields').text('');
+        $('#basic-info').css('display','block');
+        $('#login-info').css('display','none');
+    }
+}
+
+    function loginInfoNextToggle()
+	{
+    if($("#login-info").is(":visible")){
+    	  if($('#email').val()!="" && $('#password').val()!="" && $('#password-confirm').val()!=""){
+            var resultEmail = emailVerify();
+            var resultPassword=passwordVerify();
+            var confirmPassword = confirmPasswordVerify();
+            //var resultPhone= phoneNumberVerify();
+            //var resultPassword=passwordVerify();
+            if(resultEmail!=false && resultPassword!=false ) {
+               	
+               	$('#login-info').css('display', 'none');
+                $('#address-info').css('display', 'block');
+            }
+            else
+            {
+            $('.login-fields').text('**Mandatory fields needs to be filled');
+            $(".login-fields").css('color','red');
+                return false;
+            }
+        
+         
+    }
+}
+    else{
+        //$('.mandatory-fields').text('');
+        $('#login-info').css('display','block');
+        $('#address-info').css('display','none');
+    }
+}
+
+    function loginInfoPreviousToggle()
+{
+    if($("#login-info").is(":visible")){
+       /* if($('.first-name').val()!="" && $('.last-name').val()!="" && $('.date-of-birth').val()!="" && $('.email-input').val()!="" && $('.password').val()!="" && $('.confirm-password').val()!=""){
+            var resultEmail = emailVerify();
+            var resultPassword=passwordVerify();
+            //var resultPhone= phoneNumberVerify();
+            //var resultPassword=passwordVerify();
+            if(resultEmail!=false && resultPassword!=false ) {
+               
+            }
+            else
+            {
+                return false;
+            }*/
+             $('#login-info').css('display', 'none');
+                $('#basic-info').css('display', 'block');
+        }
+        /*else{
+            $('.mandatory-fields').text('**Mandatory fields needs to be filled');
+            $(".mandatory-fields").css('color','red');
+            return false;
+        }*/
+    //}
+    else{
+        //$('.mandatory-fields').text('');
+        $('#login-info').css('display','block');
+        $('#basic-info').css('display','none');
+    }
+
+}
+  function addressInfoNextToggle()
+{
+    if($("#address-info").is(":visible")){
+        if($('#address1').val()!="" && $('#address2').val()!="" && $('#city').val()!="" && $('#state').val()!="" && $('#zipcode').val()!="" && $('#country').val()!=""){
+            
+             $('#address-info').css('display', 'none');
+                $('#qualification-info').css('display', 'block');
+        }
+        else{
+            $('.address-fields').text('**Mandatory fields needs to be filled');
+            $(".address-fields").css('color','red');
+            return false;
+        }
+    }
+    else{
+        //$('.mandatory-fields').text('');
+        $('#address-info').css('display','block');
+        $('#qualification-info').css('display','none');
+    }
+
+
+}
+
+function addressInfoPreviousToggle()
+{
+    if($("#address-info").is(":visible")){
+       /* if($('.first-name').val()!="" && $('.last-name').val()!="" && $('.date-of-birth').val()!="" && $('.email-input').val()!="" && $('.password').val()!="" && $('.confirm-password').val()!=""){
+            var resultEmail = emailVerify();
+            var resultPassword=passwordVerify();
+            //var resultPhone= phoneNumberVerify();
+            //var resultPassword=passwordVerify();
+            if(resultEmail!=false && resultPassword!=false ) {
+               
+            }
+            else
+            {
+                return false;
+            }*/
+             $('#address-info').css('display', 'none');
+                $('#login-info').css('display', 'block');
+        }
+        /*else{
+            $('.mandatory-fields').text('**Mandatory fields needs to be filled');
+            $(".mandatory-fields").css('color','red');
+            return false;
+        }*/
+    //}
+    else{
+        //$('.mandatory-fields').text('');
+        $('#address-info').css('display','block');
+        $('#login-info').css('display','none');
+    }
+
+}
+function qualificationPreviousInfoToggle()
+{
+    if($("#qualification-info").is(":visible")){
+       /* if($('.first-name').val()!="" && $('.last-name').val()!="" && $('.date-of-birth').val()!="" && $('.email-input').val()!="" && $('.password').val()!="" && $('.confirm-password').val()!=""){
+            var resultEmail = emailVerify();
+            var resultPassword=passwordVerify();
+            //var resultPhone= phoneNumberVerify();
+            //var resultPassword=passwordVerify();
+            if(resultEmail!=false && resultPassword!=false ) {
+               
+            }
+            else
+            {
+                return false;
+            }*/
+             $('#qualification-info').css('display', 'none');
+                $('#address-info').css('display', 'block');
+        }
+        /*else{
+            $('.mandatory-fields').text('**Mandatory fields needs to be filled');
+            $(".mandatory-fields").css('color','red');
+            return false;
+        }*/
+    //}
+    else{
+        //$('.mandatory-fields').text('');
+        $('#qualification-info').css('display','block');
+        $('#address-info').css('display','none');
+    }
+
+}
+
+function onlyCharacters(e, t) {
+    try {
+        var RegEx=/^[\sA-Za-z]+$/;
+        if (window.event) {
+            var charCode = window.event.keyCode;
+        }
+        else if (e) {
+            var charCode = e.which;
+        }
+        else { return true; }
+        /*if (charCode > 31 && (charCode < 65  || charCode > 90 )) {
+            console.log(window.event);
+            return false;
+        }*/
+        if (window.event.key.match(RegEx)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (err) {
+        alert(err.Description);
+    }
 }
 
 

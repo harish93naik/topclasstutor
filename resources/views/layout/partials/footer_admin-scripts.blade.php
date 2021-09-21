@@ -29,3 +29,18 @@
 		<script src="/assets_admin/plugins/datatables/datatables.min.js"></script>
 		<!-- Custom JS -->
 		<script  src="/assets_admin/js/script.js"></script>
+		@if(\Route::current()->getName() == "edit-blog")
+
+		<script>
+			$(document).ready(
+    function(){debugger;
+        var theValue = $('#category_id').val();
+        var category = "";
+         $("#category_select option[value="+theValue+"]").attr('selected', 'selected');
+         category = $( "#category_select option:selected" ).text();
+
+         $("#select2-category_select-container").attr('title',category);
+         $("#select2-category_select-container").text(category);
+    });
+		</script>
+		@endif

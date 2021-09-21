@@ -10,6 +10,13 @@ use App\Models\User;
 use Symfony\Component\Console\Input\Input;
 use App\Models\Comment;
 use App\Models\Review;
+use Illuminate\Support\Facades\Hash;
+use Session;
+
+use File;
+
+
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -247,4 +254,145 @@ public function mentorReview(Request $request,Mentor $mentor,$postdata,$feedback
 
     return json_encode($review_details);
 }
+  protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8','required_with:password_confirmation', 'same:password_confirmation'],
+             'password_confirmation' => ['required', 'string', 'min:6', 'max:50'],
+           //'role'=>['required'],
+        'phone_number'=>['required'],
+
+        ]);
+    }
+ public function mentorSave(Request $request){
+
+        $form = [];
+        $form = $request->form;
+
+        $this->validator($request->user_form)->validate();
+
+          if($request->content_file)
+        {
+
+            $content_file=$request->file('content_file');
+            if ($content_file->getClientMimeType() !== 'application/pdf')
+{
+    $message = "Please upload the Pdf file only"; 
+                 session()->flash('message-alert', $message); 
+   return redirect('/mentor-register');
+}
+}
+else{
+     $message = "Please attach your Resume"; 
+                 session()->flash('message-alert', $message); 
+  return redirect('/mentor-register');
+}
+
+ $request = $request->merge([
+                'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
+            ]);
+
+ $user=User::create($request->user_form);
+        
+  $uploads_dir = $user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+         
+
+        $fileName = time().'_'.$request->content_file->getClientOriginalName();
+            $filePath = $request->file('content_file')->storeAs($uploads_dir, $fileName,'public');
+
+            //$fileModel->name = time().'_'.$request->content_file->getClientOriginalName();
+            $user->resume = '/storage/'.$filePath;
+            $user->save();
+
+
+
+        
+        $mentor_details = $request->mentor_form;
+        $mentor_details['user_id']=$user->id;
+        Mentor::create($mentor_details);
+
+        $message ="Thank you for registering. You will get a activation e-mail from the Admin.";
+
+        session()->flash('message-success', $message); 
+    return  redirect('/mentor-register');
+
+      
+}
+/*Mentee Save */
+public function menteeSave(Request $request){
+
+        $form = [];
+        $form = $request->form;
+
+        $this->validator($request->user_form)->validate();
+
+          if($request->content_file)
+        {
+
+            $content_file=$request->file('content_file');
+            if ($content_file->getClientMimeType() !== 'application/pdf')
+{
+    $message = "Please upload the Pdf file only"; 
+                 session()->flash('message-alert', $message); 
+   return redirect('/mentee-register');
+}
+}
+else{
+     $message = "Please attach your College Certificate"; 
+                 session()->flash('message-alert', $message); 
+  return redirect('/mentee-register');
+}
+
+ $request = $request->merge([
+                'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
+            ]);
+
+ $user=User::create($request->user_form);
+        
+  $uploads_dir = $user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+           
+
+
+        $fileName = time().'_'.$request->content_file->getClientOriginalName();
+            $filePath = $request->file('content_file')->storeAs($uploads_dir, $fileName,'public');
+        
+        $mentee_details = $request->mentee_form;
+        $mentee_details['user_id']=$user->id;
+        $mentee_details['certificate'] = '/storage/'.$filePath;
+        Mentee::create($mentee_details);
+
+        $message ="Thank you for Registering. You will get a activation e-mail from the Admin.";
+
+        session()->flash('message-success', $message); 
+    return  redirect('/mentee-register');
+
+      
+}
+public function emailCheck($postData)
+    {
+        // data
+        $email_check=User::where('email',$postData)->get()->all();
+        if($email_check!=null)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+
+    }
+
+/*About Page */
+public function about(){
+    return view('about');
+}
+
+/*Contact Page */
+public function contact(){
+    return view('contact');
+}
+
 }

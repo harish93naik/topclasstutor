@@ -31,10 +31,10 @@
 											<span class="course-title">{{$blog->blog_title}}</span>
 											<div class="d-flex flex-wrap date-col">
 												<span class="date"><i class="fas fa-calendar-check"></i>{{$blog->created_at}}</span>
-												<span class="author"><i class="fe fe-user"></i> By {{$blog->mentor->user->first_name}}&nbsp;{{$blog->mentor->user->last_name}}</span>
+												<span class="author"><i class="fe fe-user"></i> By {{$blog->admin_info->user->first_name}}&nbsp;{{$blog->admin_info->user->last_name}}</span>
 											</div>
 											<div class="blog-details-img">
-												<img class="img-fluid" src="../assets_admin/img/blog/blog-01.jpg" alt="Post Image">
+												<img class="img-fluid" src="{{asset($blog->blog_image) }}" alt="Post Image">
 											</div>
 											<div class="blog-content">
 												{{$blog->description}}

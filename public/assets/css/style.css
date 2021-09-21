@@ -1568,8 +1568,8 @@ button.bg-danger:hover {
 }
 .main-nav li a {
 	display: block;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 900;
 	color: #36ba2a;
 }
 .main-nav li.login-link {
@@ -1985,7 +1985,7 @@ html.menu-opened body {
 	background-color: #fff;
 }
 .account-page .content {
-    padding: 50px 0;
+    padding: 10% 0;
 }
 .login-header {
 	margin-bottom: 20px;
@@ -7910,5 +7910,16 @@ position: absolute;
 .review-area{
 	width: 100%;
 }
-
-
+.mandatory_fields{
+	color:red;
+}
+.become-mentor{
+    color:#009245 !important;
+}
+.home-menu{
+	font-size: 18px;
+    font-weight: 900;
+}
+.nav > a.active {
+    color: #1e88e5;
+}

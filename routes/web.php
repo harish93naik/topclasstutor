@@ -19,6 +19,8 @@ $middleware = ['auth'];
 
 
 Route::post('/register', 'Auth\RegisterController@create')->name('register');
+Route::get('/about','HomeController@about')->name('about');
+Route::get('/contact','HomeController@contact')->name('contact');
 
 
 /*---------------comment routes starts----------------*/
@@ -31,6 +33,10 @@ Route::post('/comment-save/{blog}','Guest\CommentController@save');
 
 Route::get('/stripe-payment','Mentee\StripeController@handleGet');
 Route::post('/stripe-payment','Mentee\StripeController@handlePost')->name('stripe.payment');
+
+Route::post('user/save','HomeController@mentorSave');
+Route::post('/mentee/save','HomeController@menteeSave');
+Route::get('user/emailcheck/{postdata}','HomeController@emailCheck');
 
 /*--------------Stripe payment ends--------------------*/
 
@@ -71,9 +77,21 @@ Route::get('profile','Admin\AdminController@profileView');
 
 Route::post('profile/update','Admin\AdminController@profileUpdate');
 
+/*-----------Blog Route Starts---------------*/
+
 Route::get('blog','Admin\AdminController@blogList');
 
+Route::get('add-blog','Admin\AdminController@blogCreate');
+
+Route::get('edit-blog/{blog}','Admin\AdminController@blogEdit')->name('edit-blog');
+
+Route::post('update-blog/{blog}','Admin\AdminController@blogUpdate');
+
 Route::get('view-blog/{blog}','Admin\AdminController@blogView');
+
+Route::post('save-blog','Admin\AdminController@blogSave');
+
+/*-----------Blog Route Ends---------------*/
 
 Route::post('password-reset','Admin\AdminController@resetPassword');
 
@@ -154,7 +172,7 @@ Route::get('blog','Mentor\MentorController@blogList');
 
 Route::get('add-blog','Mentor\MentorController@blogCreate');
 
-Route::get('edit-blog/{blog}','Mentor\MentorController@blogEdit')->name('edit-blog');
+Route::get('edit-blog/{blog}','Mentor\MentorController@blogEdit');
 
 Route::post('update-blog/{blog}','Mentor\MentorController@blogUpdate');
 
@@ -311,9 +329,9 @@ Route::get('/blog', function () {
 Route::get('/blog-details', function () {
     return view('blog-details');
 })->name('blog-details');
-Route::get('/add-blog', function () {
+/*Route::get('/add-blog', function () {
     return view('add-blog');
-})->name('add-blog');
+})->name('add-blog');*/
 Route::get('/edit-blog', function () {
     return view('edit-blog');
 })->name('edit-blog');
@@ -441,12 +459,12 @@ return view('admin.blog');
 /*Route::get('/blog-details', function () {
 return view('admin.blog-details');
 })->name('blog-details');*/
-Route::get('/add-blog', function () {
+/*Route::get('/add-blog', function () {
 return view('admin.add-blog');
-})->name('add-blog');
-Route::get('/edit-blog', function () {
+})->name('add-blog');*/
+/*Route::get('/edit-blog', function () {
 return view('admin.edit-blog');
-})->name('edit-blog');
+})->name('edit-blog');*/
 /*Route::get('/login', function () {
 return view('admin.login');
 })->name('login');*/

@@ -29,7 +29,9 @@
 											<thead>
 												<tr>
 													<th>Mentee Name</th>
-													<th>Member Since</th>
+													<th>E-mail</th>
+													<!-- <th>Member Since</th> -->
+													<th>College Certificate</th>
 													<th class="text-center">Account Status</th>
 													
 												</tr>
@@ -43,9 +45,11 @@
 															<a href="/admin/mentee-profile/{{$row->mentee_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a>
 														</h2>
 													</td>
+													<td>{{$row->user->email}}</td>
+
+													<td><a href="{{asset($row->certificate)}}" target="_blank">View|<a href="{{asset($row->certificate)}}" download>Download</td>
 													
-													
-													<td>{{ $row->created_at->format('M j, Y') }}<br></td>
+													<!-- <td>{{ $row->created_at->format('M j, Y') }}<br></td> -->
 													
 													
 													

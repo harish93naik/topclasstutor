@@ -31,19 +31,21 @@
 											<div class="col-12 col-md-6 col-xl-4">
 												<div class="course-box blog grid-blog">
 													<div class="blog-image mb-0">
-														<a href="blog-details"><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+														<a href="blog-details"><img class="img-fluid" src="{{asset($row->blog_image) }}" alt="Post Image"></a>
 													</div>
 													<div class="course-content">
-														<span class="date">{{$row->created_at}}</span>
+														<span class="date">{{ $row->created_at->format('M j, Y') }}</span>
 														<span class="course-title">{{$row->blog_title}}</span>
-														<p>{{$row->description}}</p>
+														<p>{{substr($row->description,0,250)}}</p>
 														<div class="row">
+															<div class="col">
+																<a href="/admin/edit-blog/{{$row->blog_id}}" class="text-success"><i class="far fa-edit"></i> Edit</a>
+															</div>
 															<div class="col text-right">
 																<a href="/admin/view-blog/{{$row->blog_id}}" class="text-danger">
 																	<i class="far fa-eye"></i> View
 																</a>
 															</div>
-															
 														</div>
 													</div>
 												</div>

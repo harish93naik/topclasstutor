@@ -30,6 +30,9 @@ use Intervention\Image\Facades\Image;
 
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\StatusUpdateMail;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -196,30 +199,7 @@ class AdminController extends Controller
         return redirect('/admin/profile');
     }
 
-    public function blogList(){
-        $blog_details = Blog::all();
-        $view_data = ['blog_details' => $blog_details];
-        return view('admin.blog',$view_data);
-    }
-
-    public function blogView(Request $request,Blog $blog)
-    {
-
-        /*$view_data=[];
-
-        $user_detail=auth()->user();*/
-
-
-        $comment_details = Comment::where([['blog_id',$blog->blog_id],['parent_comment_id',null]])->get()->all();
-
-        $mentor_details=Mentor::where('mentor_id',$blog->mentor_id)->first();
-
-        $user_detail = User::where('id',$mentor_details->user_id)->first();
-
-        $view_data=['user_detail'=>$user_detail,'mentor_details'=>$mentor_details,'blog'=>$blog,'comment_details'=>$comment_details];
-        
-        return view('admin.blog-details',$view_data);
-    }
+    
 
     public function resetPassword(Request $request){
 
@@ -357,6 +337,8 @@ class AdminController extends Controller
         $user = User::where('id',$postdata)->first();
         $user->status = $status;
         $user->save();
+        $username = $user->first_name;
+       Mail::to("harishknaik93@gmail.com")->send(new StatusUpdateMail($username,$status,$user->email));
 
         return true;
     }
@@ -365,5 +347,196 @@ class AdminController extends Controller
         return view("security");
     }
 }
+
+ public function blogList()
+    {
+
+        $view_data=[];
+
+        $user_detail=auth()->user();
+
+        $admin_info = AdminInfo::where('user_id',$user_detail->id)->first();
+        
+
+        $blog_details=Blog::all();
+
+        $view_data=['blog_details'=>$blog_details,'user_detail'=>$user_detail,'admin_info'=>$admin_info];
+        
+        return view('admin.blog',$view_data);
+    }
+
+    public function blogCreate()
+    {
+
+        $view_data=[];
+
+        $user_detail=auth()->user();
+
+        $admin_info = AdminInfo::where('user_id',$user_detail->id)->first();
+
+        if($user_detail->role=="admin")
+        {
+
+        
+        $view_data=['user_detail'=>$user_detail,'admin_info'=>$admin_info];
+
+       // var_dump($admin_info);
+        
+        return view('admin.add-blog',$view_data);
+    }
+    }
+
+    public function blogSave(Request $request)
+    {
+
+        $view_data=[];
+
+        $user = auth()->user();
+
+        $form = $request->form;
+
+        if($request->content_file)
+        {
+            $content_file=$request->file('content_file');
+            $uploads_dir = storage_path('app/public/blogs');//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+            $uploads_dir = storage_path('app/public/blogs').'/'.$user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+   
+          //  $uploads_dir=storage_path('public').'/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            // set
+            $filename = $content_file->hashName();
+            $filename_without_ext = pathinfo($filename, PATHINFO_FILENAME);
+            $original_filename = $content_file->getClientOriginalName();
+            $file_ext = $content_file->getClientOriginalExtension();
+            $file_realpath = $content_file->getRealPath();
+            $thumb_filename = $filename_without_ext.'-thumb.'.$file_ext;
+
+                //dd($uploads_dir)
+
+            // save file
+            //$request->content_file->store($uploads_dir, 'public');
+
+            // read image from temporary file
+            $img = Image::make($content_file);
+
+            // resize image
+           $img->fit(1280, 720)->save($uploads_dir.'/'.$filename);
+
+            $img_path='/storage/app/public/blogs/'.$user->first_name.$user->id.'/'.$filename;
+             //$form['profile_image']=$img_path;
+             $form['blog_image'] = $img_path;
+
+           }
+
+        $blog=Blog::create($form);
+        
+        return redirect('admin/view-blog/'.$blog->blog_id);
+    }
+
+    public function blogView(Request $request,Blog $blog)
+    {
+
+        $view_data=[];
+
+        $user_detail=auth()->user();
+
+        $comment_details = Comment::where([['blog_id',$blog->blog_id],['parent_comment_id',null]])->get()->all();
+
+        
+
+        $admin_info=AdminInfo::where('user_id',$user_detail->id)->first();
+
+        $blog_details = Blog::where('blog_id','<>',$blog->blog_id)->get()->take(5)->sortByDesc('created_at');
+
+        $view_data=['user_detail'=>$user_detail,'admin_info'=>$admin_info,'blog'=>$blog,'comment_details'=>$comment_details,'blog_details'=>$blog_details];
+        
+        return view('admin.blog-details',$view_data);
+    }
+
+
+    public function blogEdit(Request $request, Blog $blog)
+    {
+
+        $view_data=[];
+
+        $user_detail=auth()->user();
+
+        if($user_detail->role=="admin")
+        {
+
+        //$mentor_details=Mentor::where('user_id',$user_detail->id)->first();
+
+        $view_data=['user_detail'=>$user_detail,'blog'=>$blog];
+        
+        return view('admin.edit-blog',$view_data);
+    }
+    }
+
+     public function blogUpdate(Request $request, Blog $blog)
+    {
+
+        $view_data=[];
+
+        $user = auth()->user();
+
+        $form = $request->form;
+
+        if($request->content_file)
+        {
+            $content_file=$request->file('content_file');
+            $uploads_dir = storage_path('app/public/blogs');//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+            $uploads_dir = storage_path('app/public/blogs').'/'.$user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($uploads_dir)){
+            File::makeDirectory($uploads_dir);
+
+            
+                }
+   
+          //  $uploads_dir=storage_path('public').'/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            // set
+            $filename = $content_file->hashName();
+            $filename_without_ext = pathinfo($filename, PATHINFO_FILENAME);
+            $original_filename = $content_file->getClientOriginalName();
+            $file_ext = $content_file->getClientOriginalExtension();
+            $file_realpath = $content_file->getRealPath();
+            $thumb_filename = $filename_without_ext.'-thumb.'.$file_ext;
+
+                //dd($uploads_dir)
+
+            // save file
+            //$request->content_file->store($uploads_dir, 'public');
+
+            // read image from temporary file
+            $img = Image::make($content_file);
+
+            // resize image
+           $img->fit(1280, 720)->save($uploads_dir.'/'.$filename);
+
+            $img_path='/storage/app/public/blogs/'.$user->first_name.$user->id.'/'.$filename;
+             //$form['profile_image']=$img_path;
+             $form['blog_image'] = $img_path;
+
+           }
+
+        $blog->update($form);
+        
+        return redirect('admin/view-blog/'.$blog->blog_id);
+    }
+
+    /*----Blog functions Ends----*/
 
 }

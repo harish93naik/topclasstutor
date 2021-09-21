@@ -13,14 +13,14 @@ class Blog extends Model
     use SoftDeletes;
     protected $table = 'blog';
     protected $fillable = [
-                    'mentor_id','blog_category','blog_title','description','blog_image','status'
+                    'admin_info_id','blog_category','blog_title','description','blog_image','status'
         ];
    // protected $hidden = ['password'];
     protected $primaryKey = 'blog_id';
 
-    public function mentor()
+    public function admin_info()
     {
-        return $this->belongsTo('App\Models\Mentor', 'mentor_id', 'mentor_id');
+        return $this->belongsTo('App\Models\AdminInfo', 'admin_info_id', 'admin_info_id');
     }
 
     public static function getCount($id){

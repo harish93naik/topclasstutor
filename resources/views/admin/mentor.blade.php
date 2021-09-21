@@ -47,7 +47,9 @@
 													<th>Mentor Name</th>
 													<th>Course</th>
 													<th>Member Since</th>
-													<th>Earned</th>
+													<th>E-mail</th>
+													<!-- <th>Earned</th> -->
+													<th>Resume</th>
 													<th class="text-center">Account Status</th>
 													
 												</tr>
@@ -61,11 +63,16 @@
 															<a href="/admin/mentor-profile/{{$row->mentor_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a>
 														</h2>
 													</td>
-													<td>{{$row->course}}</td>
+													<td>{{$row->user->degree}}</td>
 													
 													<td>{{ $row->created_at->format('M j, Y') }}<br></td>
+
+													<td>{{$row->user->email}}</td>
+
+													<td><a href="{{asset($row->user->resume)}}" target="_blank">View|<a href="{{asset($row->user->resume)}}" download>Download</td>
 													
-													<td>$3100</td>
+													<!-- <td>{{$row->user->resume}}</td> -->
+													<!-- <td>$3100</td> -->
 													
 													<td>
 														<div class="status-toggle d-flex justify-content-center">

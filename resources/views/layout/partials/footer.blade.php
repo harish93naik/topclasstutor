@@ -81,7 +81,7 @@
 									<div class="footer-contact-info">
 										<div class="footer-address">
 											<span><i class="fas fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+											<p> Auckland </p>
 										</div>
 										<p>
 											<i class="fas fa-phone-alt"></i>

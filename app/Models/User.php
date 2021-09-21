@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','category','degree','phone_number','email', 'password','status','role','profile_image','segment'
+        'first_name','last_name','category','degree','phone_number','email', 'password','status','role','profile_image','segment','description','resume'
     ];
 
     /**
@@ -71,4 +71,5 @@ class User extends Authenticatable
             return "History";
         }
     }
+   
 }

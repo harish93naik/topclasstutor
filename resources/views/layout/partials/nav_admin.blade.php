@@ -43,6 +43,7 @@ Sidebar -->
 								<a href="#"><span>Blog</span> <span class="menu-arrow"></span></a>
 								<ul style="display: none;">
 									<li><a class="{{ Request::is('admin/blog') ? 'active' : '' }}" href="{{ url('/admin/blog') }}"> Blog </a></li>
+									<li><a class="{{ Request::is('admin/add-blog') ? 'active' : '' }}" href="{{ url('/admin/add-blog') }}"> Add Blog </a></li>
 									<!-- <li><a class="{{ Request::is('admin/blog-details') ? 'active' : '' }}" href="{{ url('admin/blog-details') }}"> Blog Details </a></li> -->
 								<!-- 	<li><a class="{{ Request::is('admin/add-blog') ? 'active' : '' }}" href="{{ url('admin/add-blog') }}"> Add Blog </a></li>
 									<li><a class="{{ Request::is('admin/edit-blog') ? 'active' : '' }}" href="{{ url('admin/edit-blog') }}"> Edit Blog </a></li> -->

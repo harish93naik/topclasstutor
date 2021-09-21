@@ -383,7 +383,7 @@
 									<ul class="entry-meta meta-item">
 										<li>
 											<div class="post-author">
-												<a href="/profile/{{$row->mentor_id}}"><span>{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}</span></a>
+												<a href="/profile/{{$row->mentor_id}}"><span>{{$row->admin_info->user->first_name}}&nbsp;{{$row->admin_info->user->last_name}}</span></a>
 											</div>
 										</li>
 										<li><i class="far fa-clock"></i>{{ $row->created_at->format('M j, Y') }}</li>
