@@ -47,7 +47,11 @@
 													</td>
 													<td><?php echo e($row->user->email); ?></td>
 
+													<?php if($row->certificate!=null): ?>
 													<td><a href="<?php echo e(asset($row->certificate)); ?>" target="_blank">View|<a href="<?php echo e(asset($row->certificate)); ?>" download>Download</td>
+													<?php else: ?>
+													<td>No Preview</td>
+													<?php endif; ?>
 													
 													<!-- <td><?php echo e($row->created_at->format('M j, Y')); ?><br></td> -->
 													

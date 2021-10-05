@@ -40,7 +40,7 @@ use App\Models\Comment;
 											<ul>
 												<li>
 													<div class="post-author">
-														<a href="profile"><img src="{{$blog->mentor->user->profile_image}}" alt="Post Author"> <span>{{$blog->mentor->user->first_name}}&nbsp;{{$blog->mentor->user->last_name}}</span></a>
+														<a href="profile"><img src="{{$blog->admin_info->user->profile_image}}" alt="Post Author"> <span>{{$blog->admin_info->user->first_name}}&nbsp;{{$blog->admin_info->user->last_name}}</span></a>
 													</div>
 												</li>
 												<li><i class="far fa-calendar"></i>{{ $blog->created_at->format('M j, Y') }}</li>
@@ -76,11 +76,11 @@ use App\Models\Comment;
 									<div class="about-author">
 										<div class="about-author-img">
 											<div class="author-img-wrap">
-												<a href="/profile/{{$blog->mentor->mentor_id}}"><img class="img-fluid rounded-circle" alt="" src="{{$blog->mentor->user->profile_image}}"></a>
+												<a href="/profile/{{$blog->admin_info->admin_info_id}}"><img class="img-fluid rounded-circle" alt="" src="{{$blog->admin_info->user->profile_image}}"></a>
 											</div>
 										</div>
 										<div class="author-details">
-											<a href="/profile/{{$blog->mentor->mentor_id}}" class="blog-author-name">{{$blog->mentor->user->first_name}}&nbsp;{{$blog->mentor->user->last_name}}</a>
+											<a href="/profile/{{$blog->admin_info->admin_info_id}}" class="blog-author-name">{{$blog->admin_info->user->first_name}}&nbsp;{{$blog->admin_info->user->last_name}}</a>
 											<!-- <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p> -->
 										</div>
 									</div>

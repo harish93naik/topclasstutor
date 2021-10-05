@@ -16,7 +16,7 @@
 
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
-							<a href="/index" class="menu-logo">
+							<a href="/" class="menu-logo">
 								<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
 							</a>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
@@ -25,15 +25,35 @@
 						</div>
 						<ul class="main-nav">
 							<li class="{{ Request::is('index') ? 'active' : '' }}">
-								<a href="/index">Home</a>
+								<a href="/">Home</a>
 							</li>
 							<li class="{{ Request::is('about') ? 'active' : '' }}">
 								<a href="/about">About Us</a>
 							</li>
 							
-							<li class="{{ Request::is('contact') ? 'active' : '' }}">
+							<!-- <li class="{{ Request::is('contact') ? 'active' : '' }}">
 								<a href="/contact-us">Contact Us</a>
-							</li>
+							</li> -->
+							@if(Route::is(['pagee','mentor-register','mentee-register','about','login-topclasstutors']))
+						@if(!auth()->user())
+						<li class="mobile-menu-items {{ Request::is('mentee-register') ? 'active' : '' }}">
+						<a  href="/mentee-register">Mentee Register</a>
+						</li>
+						<li class="mobile-menu-items {{ Request::is('mentor-register') ? 'active' : '' }}">
+
+						<a  href="/mentor-register">Become a Mentor?</a></li>
+
+						<li class="nav-item mobile-menu-items">
+							<a class="nav-link header-login" href="/login-topclasstutors">Login</a>
+						</li>
+					
+						@endif
+						<!-- <li class="nav-item">
+							<a class="nav-link header-login" href="register">Register</a>
+
+						</li> -->
+
+						@endif
 						</ul>
 					</div>
 
@@ -59,7 +79,7 @@
 								<span></span>
 							</span>
 						</a>
-						<a href="/index" class="navbar-brand logo">
+						<a href="/" class="navbar-brand logo web-logo">
 							<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
 						</a>
 					</div>
@@ -175,7 +195,7 @@
 					<!-- </div>	 -->
 					
 					<ul class="nav header-navbar-rht">
-					@if(Route::is(['pagee','mentor-register','mentee-register','about']))
+					@if(Route::is(['pagee','mentor-register','mentee-register','about','login-topclasstutors']))
 						@if(!auth()->user())
 
 						<a class="nav-link header-login  home-menu {{ Request::is('mentee-register') ? 'active' : '' }}" href="/mentee-register">Mentee Register</a>
@@ -184,7 +204,7 @@
 						<a class="nav-link header-login  home-menu {{ Request::is('mentor-register') ? 'active' : '' }}" href="/mentor-register">Become a Mentor?</a>
 
 						<li class="nav-item">
-							<a class="nav-link header-login" href="login">Login</a>
+							<a class="nav-link header-login" href="/login-topclasstutors">Login</a>
 						</li>
 					
 

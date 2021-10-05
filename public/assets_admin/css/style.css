@@ -5028,3 +5028,19 @@ table.table-inbox tbody tr.checked {
 }
 
 /*rating star css ends */
+
+.accept {
+    background-color: #04AE1B;
+    border-radius: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 3px 10px;
+}
+
+.reject {
+    background-color: #FF0000;
+    border-radius: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 3px 10px;
+}

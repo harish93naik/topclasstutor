@@ -47,7 +47,11 @@
 													</td>
 													<td>{{$row->user->email}}</td>
 
+													@if($row->certificate!=null)
 													<td><a href="{{asset($row->certificate)}}" target="_blank">View|<a href="{{asset($row->certificate)}}" download>Download</td>
+													@else
+													<td>No Preview</td>
+													@endif
 													
 													<!-- <td>{{ $row->created_at->format('M j, Y') }}<br></td> -->
 													

@@ -69,7 +69,12 @@
 
 													<td><?php echo e($row->user->email); ?></td>
 
+													<?php if($row->user->resume!=null): ?>
+
 													<td><a href="<?php echo e(asset($row->user->resume)); ?>" target="_blank">View|<a href="<?php echo e(asset($row->user->resume)); ?>" download>Download</td>
+													<?php else: ?>
+													<td>No Preview</td>
+													<?php endif; ?>
 													
 													<!-- <td><?php echo e($row->user->resume); ?></td> -->
 													<!-- <td>$3100</td> -->

@@ -43,7 +43,7 @@ class LoginController extends Controller
 
       
 
-        return redirect()->route('login')->with('error', 'Your Account need to be approved by the Admin');
+        return redirect()->route('login-topclasstutors')->with('error', 'Your Account need to be approved by the Admin');
 }
     elseif($user->role=='admin'){
         return redirect('/admin/dashboard');

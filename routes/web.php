@@ -71,6 +71,8 @@ Route::get('mentee','Admin\AdminController@menteeList');
 
 Route::get('booking-list','Admin\AdminController@bookingList');
 
+Route::get('appointments/{booking}/{postdata}','Admin\AdminController@bookingStatus');
+
 Route::get('invoice-report','Admin\AdminController@invoiceList');
 
 Route::get('profile','Admin\AdminController@profileView');
@@ -135,7 +137,7 @@ Route::middleware($middleware)->prefix('mentor')->group(function(){
 
 Route::get('appointments','Mentor\MentorController@bookingList');
 
-Route::get('appointments/{booking}/{postdata}','Mentor\MentorController@bookingStatus');
+
 
 /*-----------Appointements Route Ends---------------*/
 
@@ -398,9 +400,9 @@ Route::get('/invoice-view', function () {
 Route::get('/blank-page', function () {
     return view('blank-page');
 })->name('blank-page');
-Route::get('/login', function () {
+Route::get('/login-topclasstutors', function () {
     return view('login');
-})->name('login');
+})->name('login-topclasstutors');
 Route::get('/register', function () {
     return view('register');
 })->name('register');

@@ -15,7 +15,7 @@
 									<div class="footer-about-content">
 										<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> -->
 										<div class="social-icon">
-											<ul>
+											<ul class="footer-social-icon">
 												<li>
 													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
 												</li>
@@ -30,6 +30,9 @@
 												</li>
 												<li>
 													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-quora"></i> </a>
 												</li>
 											</ul>
 										</div>
@@ -85,11 +88,11 @@
 										</div>
 										<p>
 											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
+											+64211027304/ +64221991039
 										</p>
 										<p class="mb-0">
 											<i class="fas fa-envelope"></i>
-											mentoring@example.com
+											topclasstutors7@gmail.com
 										</p>
 									</div>
 								</div>
@@ -104,7 +107,7 @@
 				
 				<!-- Footer Bottom -->
                 <div class="footer-bottom">
-					<div class="container-fluid">
+					<div>
 					
 						<!-- Copyright -->
 						<div class="copyright">

@@ -7,7 +7,7 @@
   <?php if(Route::is(['map-grid'])): ?>
   <body class="map-page">
   <?php endif; ?>
-  <?php if(Route::is(['mentor-register','login','register','mentee-register'])): ?>
+  <?php if(Route::is(['mentor-register','login-topclasstutors','register','mentee-register'])): ?>
   <body class="account-page">
   <?php endif; ?>
   <?php if(Route::is(['chat-mentee','chat'])): ?>

@@ -42,7 +42,7 @@ use App\Models\Blog;
 										<ul>
 											<li>
 												<div class="post-author">
-													<a href="profile"><img src="{{$row->mentor->user->profile_image}}" alt="Post Author"> <span>{{$row->mentor->user->first_name}}&nbsp;{{$row->mentor->user->last_name}}</span></a>
+													<a href="profile"><img src="{{$row->admin_info->user->profile_image}}" alt="Post Author"> <span>{{$row->admin_info->user->first_name}}&nbsp;{{$row->admin_info->user->last_name}}</span></a>
 												</div>
 											</li>
 											<li><i class="far fa-clock"></i>{{ $row->created_at->format('M j, Y') }}</li>

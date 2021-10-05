@@ -1,12 +1,12 @@
 
 <?php $__env->startSection('content'); ?>		
 		<!-- Home Banner -->
-		<section class="section section-search">
+		<section class="section section-about">
 				<div class="container">
 					<div class="banner-wrapper m-auto text-center">
 						<div class="banner-header">
 							<!-- <h1>Search Teacher in <span>Mentoring Appointment</span></h1> -->
-							<h1>Coming Soon!!</h1>
+							<!-- <h1>Coming Soon!!</h1> -->
 							<!-- <p>Discover the best Mentors & institutions the city nearest to you.</p> -->
 						</div>
                          
@@ -29,28 +29,70 @@
 			</section>
 			<!-- /Home Banner -->
 
-		<!-- 	<section class="section how-it-works">
+			<section class="section how-it-works">
 				<div class="container">
-					<div class="section-header text-center">
+					<div class="section-header text-center ">
 
-						<span>Mentoring Flow</span>
-						<h2>How does it works ?</h2>
-						<p class="sub-title">Are you looking to join online institutions? Now it's very simple, Sign up with mentoring</p>
-					</div>
+						
+						<h2>About Top class tutors</h2>
+						</div>
+						<div class="about-content">
+						<p>Top Class Tutors are highly qualified and experienced tutors selected from a range of Subjects and Pathways specialized in the New Zealand and Australian Education system. Our goal is to direct students through careful coaching and subject mentoring into their study pathways through expert mentoring and guidance.</p>
+
+<p>Mentors undergo a rigorous selection process before induction into the mentoring process. These experts are the mentors we put forward for selection.</p>
+
+<p>Students invited to select any Tutor they wish will pay an introductory fee, and if, approved will proceed to the first session.</p>
+
+<p>Our fees reflect expert quality coaches. We will not offer anything less than you expect.</p>
+
+<p>All coaching is New Zealand-based before we expand globally. Services offered are both online and offline.</p>
+
+<p>We comprise a group of administrators and Mentors who walk with you through your journey. Don’t hesitate to contact the CEO or any of the Mentors to create this journey.</p>
+
+<p>Feel welcomed at all times. We are waiting for your contact- email, Whatsapp, phone, or messenger at any time.  
+
+The lines are open.</p></div>
+
+<div class="section-header text-center about-content"><h2>About Marshall E Gass(CEO/Founder)</h2></div>
+				
+
+		<div class="about-content">			
+			<div class="row">
+				<div class="col-lg-2">
+				<img src="/assets/img/author.png" alt="author" /></div>
+				<div class="col-lg-10 about-content">
+					<p class="author-content">
+				Marshall Gass is the CEO/Founder of TopClassTutors. He comes to  Mentoring with twenty years of coaching experience. Marshall has four specialized Masters' Degrees in English Literature, Science and Technology Education, Teaching, and Information Technology. These qualifications have seen him rise to top management all through his career.	
+
+				</p>
+				<p class="author-content">
+				Marshall is also an Entrepreneur with over a dozen companies to his credit. From Import/Export, Manufacturing, Mentoring, Education, and Consulting to Hospitality and International Trade.	
 					
+				</p>
 				</div>
+			</div>
+			
+				<div class="about-content">
+				
+				
+				<p>
+				Further Marshall is also a Novelist and Poet <a href="https://www.marshallgass.com" target="_blank">( www.marshallgass.com) </a>with twenty-five books published to his credit. He is a prolific writer and is well known in literary circles for his quality writing. He has a Social Media presence that is nearing fourteen million viewers on Quora, Facebook, Twitter,  and Linkedin.
+	
+					
+				</p>
+				<p>
+				Marshall often says ": Every journey begins with your first step!"<br>
+				What are you waiting for?<br>
+				Sign In. Sign up. It's that simple. 
+					
+				</p>
+			</div>
+		</div>
+				
+</div>
 			</section>
 
-			<section class="section popular-courses">
-				<div class="container">
-					<div class="section-header text-center">
-						<span>Mentoring Goals</span>
-						<h2>Popular Mentors</h2>
-						<p class="sub-title">Do you want to move on next step? Choose your most popular leaning mentors, it will help you to achieve your professional goals.</p>
-					</div>
-					
-				</div>
-			</section> -->
+			
 
 			<!-- Path section start -->
 			<!-- <section class="section path-section">

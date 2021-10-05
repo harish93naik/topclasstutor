@@ -53,10 +53,21 @@
 													</td>
 													<td>{{$row->schedule_date}} <span class="text-primary d-block">{{$row->schedule_time}}</span></td>
 													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_1" class="check" checked>
-															<label for="status_1" class="checktoggle">checkbox</label>
-														</div>
+														<div class="appointment-action">
+										@if($row->status=="pending")
+										<a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+											<i class="far fa-eye"></i> View
+										</a>
+										<a href="/admin/appointments/{{$row->booking_id}}/accept" class="btn btn-sm bg-success-light">
+											<i class="fas fa-check"></i> Accept
+										</a>
+										<a href="/admin/appointments/{{$row->booking_id}}/reject" class="btn btn-sm bg-danger-light">
+											<i class="fas fa-times"></i> Cancel
+										</a>
+										@else
+										<a class="{{$row->status}}">{{$row->status_description}}</a>
+										@endif
+									</div>
 													</td>
 													<td class="text-center">
 														$200

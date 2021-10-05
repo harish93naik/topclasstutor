@@ -61,7 +61,7 @@ class MentorController extends Controller
         if($mentor_details)
         {
 
-        $booking_details=Booking::where('mentor_id',$mentor_details->mentor_id)->get()->all();
+        $booking_details=Booking::where([['mentor_id',$mentor_details->mentor_id],['status','accept']])->get()->all();
 
 }
 else
@@ -202,7 +202,8 @@ else
         if($mentor_details)
         {
 
-        $booking_details=Booking::where('mentor_id',$mentor_details->mentor_id)->paginate(5);
+        $booking_details=Booking::where([['mentor_id',$mentor_details->mentor_id],['status','accept']])->paginate(5);
+        //$booking_details=Booking::where('mentor_id',$mentor_details->mentor_id)->paginate(5);
 
 }
 else
@@ -271,7 +272,7 @@ else
 
         $mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
 
-        $booking_ids = Booking::where('mentor_id',$mentor_details->mentor_id)->pluck('booking_id')->toArray();
+        $booking_ids = Booking::where([['mentor_id',$mentor_details->mentor_id],['status','accept']])->pluck('booking_id')->toArray();
 
         $invoice_details = Invoice::whereIn('booking_id',$booking_ids)->get()->all();
 

@@ -69,7 +69,12 @@
 
 													<td>{{$row->user->email}}</td>
 
+													@if($row->user->resume!=null)
+
 													<td><a href="{{asset($row->user->resume)}}" target="_blank">View|<a href="{{asset($row->user->resume)}}" download>Download</td>
+													@else
+													<td>No Preview</td>
+													@endif
 													
 													<!-- <td>{{$row->user->resume}}</td> -->
 													<!-- <td>$3100</td> -->

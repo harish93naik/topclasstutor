@@ -7,7 +7,7 @@
   @if(Route::is(['map-grid']))
   <body class="map-page">
   @endif
-  @if(Route::is(['mentor-register','login','register','mentee-register']))
+  @if(Route::is(['mentor-register','login-topclasstutors','register','mentee-register']))
   <body class="account-page">
   @endif
   @if(Route::is(['chat-mentee','chat']))

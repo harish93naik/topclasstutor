@@ -57,8 +57,8 @@
 											</div>
 											<div class="user-info-cont">
 												<h4 class="usr-name">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</h4>
-												<p class="mentor-type">{{$mentor->user->category_description}} ({{$mentor->user->degree}})</p>
-												<div class="mentor-action">
+												<p class="mentor-type"> ({{$mentor->user->degree}})</p>
+												<!-- <div class="mentor-action">
 													<p class="mentor-type social-title">Contact Me</p>
 													<a href="javascript:void(0)" class="btn-blue">
 														<i class="fas fa-comments"></i>
@@ -69,7 +69,7 @@
 													<a href="javascript:void(0)" class="btn-blue" data-toggle="modal" data-target="#voice_call">
 														<i class="fas fa-phone-alt"></i>
 													</a>
-												</div>
+												</div> -->
 											</div>
 										</div>
 										<div class="user-info-right d-flex align-items-end flex-wrap">
@@ -149,11 +149,11 @@
 									<!-- /About Details -->
 								</div>
 							</div>
-
+<!-- 
 							<div class="card">
 								<div class="card-body custom-border-card pb-0">
 
-									<!-- Personal Details -->
+									Personal Details
 									<div class="widget education-widget mb-0">
 										<h4 class="widget-title">Personal Details</h4>
 										<hr/>
@@ -175,21 +175,21 @@
 														</div>
 													</div>
 												</li>
-												<!-- <li>
+												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
 															<span>Where did you hear about us?</span>
 															<div class="row-result">Through web search</div>
 														</div>
 													</div>
-												</li> -->
+												</li>
 											</ul>
 										</div>
 									</div>
-									<!-- /Personal Details -->
+									/Personal Details
 
 								</div>
-							</div>
+							</div> -->
 
 							<!-- <div class="card">
 								<div class="card-body custom-border-card pb-0">

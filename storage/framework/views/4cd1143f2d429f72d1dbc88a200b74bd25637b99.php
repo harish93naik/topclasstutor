@@ -16,12 +16,17 @@
 		<!-- Sticky Sidebar JS -->
         <script src="<?php echo e(asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js')); ?>"></script>
         <script src="<?php echo e(asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')); ?>"></script>
+        <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"
+    type="text/javascript"></script>
        
 
 		<!-- Circle Progress JS -->
 		<!-- <script src="assets/js/circle-progress.min.js"></script> -->
 		<!-- Custom JS -->
 		<script src="<?php echo e(asset('assets/js/script.js')); ?>"></script>
+
+
+
 
 		<script>
         window.Laravel = {

@@ -45,14 +45,14 @@
 						
 							
 					<div class="load-more text-center">
-						<a class="btn btn-primary btn-sm" onclick="load_page()">Load More</a>	
+						<a href = "#" class="btn btn-primary btn-sm" onclick="load_page()">Load More</a>	
 					</div>
 	            </div>
 	            <!-- /content-left-->
-	            <div class="col-xl-5 col-lg-12 map-right">
+	            <!-- <div class="col-xl-5 col-lg-12 map-right">
 	                <div id="map" class="map-listing"></div>
 	                <!-- map-->
-	            </div>
+	          <!--   </div> --> 
 	            <!-- /map-right-->
 	        </div>
 

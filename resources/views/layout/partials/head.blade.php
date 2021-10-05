@@ -23,7 +23,12 @@
 		<link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
 
 		<!-- Main CSS -->
-		<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+		<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css"
+    rel="stylesheet" type="text/css" />
 		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
+		
+		
 		
   

@@ -135,12 +135,12 @@
 
 										</label>
 									</div>
-									<div>
+								<!-- 	<div>
 										<label class="custom_check">
 											<input type="checkbox" value="intermediate" name="select_segment[]">
 											<span class="checkmark"></span> Intermediate
 										</label>
-									</div>
+									</div> -->
 									<div>
 										<label class="custom_check">
 											<input type="checkbox" value="secondary" name="select_segment[]">
@@ -149,8 +149,8 @@
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="under_graduate" name="select_segment[]">
-											<span class="checkmark"></span> Under Graduate
+											<input type="checkbox" value="trade_school" name="select_segment[]">
+											<span class="checkmark"></span> Trade & Apprenticeships
 										</label>
 									</div>
 									<div>
@@ -217,7 +217,7 @@
 
 						
 							<div class="load-more text-center">
-						<a class="btn btn-primary btn-sm" onclick="load_mentor_page()">Load More</a>	
+						<a class="btn btn-primary btn-sm" href="#" onclick="load_mentor_page()">Load More</a>	
 					</div>
 						</div>
 					</div>

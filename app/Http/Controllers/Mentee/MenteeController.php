@@ -133,9 +133,10 @@ else
         $view_data=['mentor_details'=>$mentor_details];
         
         return view('mentee.map-list',$view_data);*/
-        $no_of_mentors = Mentor::all();
+        $user_details = User::where('status','active')->pluck('id')->toArray();
+        $no_of_mentors = Mentor::whereIn('user_id',$user_details)->get()->all();
         $count_of_mentors = sizeof($no_of_mentors);
-        $mentors = Mentor::paginate(2);        
+        $mentors = Mentor::whereIn('user_id',$user_details)->paginate(2);        
         $data = '';
         if ($request->ajax()) {
             foreach ($mentors as $mentor) {

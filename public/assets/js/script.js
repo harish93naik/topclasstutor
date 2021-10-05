@@ -11,6 +11,42 @@ Version      : 1.0
     $('#login-info').css('display','none');
     $('#address-info').css('display','none');
     $('#qualification-info').css('display','none');
+
+   
+function isVisible($el) {
+  var winTop = $(window).scrollTop();
+  var winBottom = winTop + $(window).height();
+  var elTop = $el.offset().top;
+  var elBottom = elTop + $el.height();
+  return ((elBottom<= winBottom) && (elTop >= winTop));
+}
+
+
+$(window).scroll(function() {
+
+ if(isVisible($("#statistics-counter"))){
+
+ 
+  
+
+    $('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).data("count")
+    }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+      });
+    }
+
+});
+	
+	/*$('#category_select').multiselect({
+            includeSelectAllOption: true
+        });	*/
     
 		
 	if($('.toggle-password').length > 0) {
@@ -24,6 +60,8 @@ Version      : 1.0
 			}
 		});
 	}
+
+
 
 
 
@@ -46,6 +84,25 @@ Version      : 1.0
 		$('.datetimepicker').datetimepicker({
 			format: 'DD/MM/YYYY',
 			maxDate: new Date(now.getFullYear() - 18, now.getMonth(), now.getDate()),
+			icons: {
+				up: "fa fa-angle-up",
+				down: "fa fa-angle-down",
+				next: 'fa fa-angle-right',
+				previous: 'fa fa-angle-left'
+			}
+		});
+		$('.datetimepicker').on('dp.show',function() {
+			$(this).closest('.table-responsive').removeClass('table-responsive').addClass('temp');
+		}).on('dp.hide',function() {
+			$(this).closest('.temp').addClass('table-responsive').removeClass('temp')
+		});
+	}
+
+	if($('.menteedatetimepicker').length > 0 ){
+		var now = new Date();
+		$('.menteedatetimepicker').datetimepicker({
+			format: 'DD/MM/YYYY',
+			maxDate: new Date(now.getFullYear() - 5, now.getMonth(), now.getDate()),
 			icons: {
 				up: "fa fa-angle-up",
 				down: "fa fa-angle-down",
@@ -113,6 +170,8 @@ Version      : 1.0
 			}
 		});
 	}
+
+
 
 	if($('.datepicker').length > 0) {
 		$('.datepicker').datetimepicker({
@@ -409,7 +468,7 @@ Version      : 1.0
 	
 })(jQuery);
 
-function getSelected(t){debugger;
+function getSelected(t){
 
 //$(".timing").on("click",function(){
 
@@ -437,7 +496,7 @@ function getCommentId(t){
 	$("#parent-commentor-id").val($(t).attr('data-comment'));
 }
 
-function getURL(){debugger;
+function getURL(){
 	var radioValue = $("input[name='payment-type']:checked").val();
             if(radioValue == "Paypal"){
             	$("#payment-form").attr("action","/paypal");
@@ -491,7 +550,7 @@ function getURL(){debugger;
             
 }
 
-function reviewSubmit(){debugger;
+function reviewSubmit(){
 
 	var rating_star = $("#mentor_review").val();
 	var mentor_id = $("#mentor_id").val();
@@ -530,7 +589,7 @@ function confirmPasswordVerify(){
         return false;
     }
 }
-function emailVerify(){debugger;
+function emailVerify(){
     
     var userinput = $('#email').val();
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
@@ -577,7 +636,7 @@ function confirmPasswordMessageClear(){
 
 function basicInfoToggle()
 {
-    if(!$("#login-info").is(":visible")){debugger;
+    if(!$("#login-info").is(":visible")){
       if($('#first_name').val()!="" && $('#last_name').val()!="" && $('#date_of_birth').val()!="" && $('#phone_number').val()!="" ){
 
            
@@ -769,6 +828,28 @@ function onlyCharacters(e, t) {
     catch (err) {
         alert(err.Description);
     }
+}
+
+ function subject_cate(){
+
+
+     categories = []; 
+
+      $("#subject_category").val($("#category_select").val());
+
+      $("#segment_category").val($("#segment_select").val());
+
+      return true;
+
+     
+     
+
+
+
+
+      //$("#mentor-register-form").submit();
+     
+    
 }
 
 

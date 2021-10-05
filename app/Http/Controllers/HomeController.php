@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\Input;
 use App\Models\Comment;
 use App\Models\Review;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+
 use Session;
 
 use File;
@@ -39,7 +41,8 @@ class HomeController extends Controller
     {
 
         $view_data = [];
-        $mentor_details = Mentor::all();
+        $user_details = User::where('status','active')->pluck('id')->toArray();
+        $mentor_details = Mentor::whereIn('user_id',$user_details)->get()->all();
 
         $blog_details = Blog::all()->take(4)->sortByDesc('created_at');
 
@@ -64,7 +67,7 @@ class HomeController extends Controller
 
         //$form = $request->input('categories');
         
-        $user_detail = User::whereIn('segment',$form)->pluck('id')->toArray();
+        $user_detail = User::whereIn('segment',$form)->where('status','active')->pluck('id')->toArray();
 
         $mentor_count = sizeof($user_detail);
 
@@ -80,7 +83,7 @@ class HomeController extends Controller
         $category = $request->input('category');
 
         $user_detail = [];
-        $user_detail = User::where('category',$category)->pluck('id')->toArray();
+        $user_detail = User::where([['category',$category],['status','active']])->pluck('id')->toArray();
 
          $mentor_count = sizeof($user_detail);
 
@@ -92,7 +95,7 @@ class HomeController extends Controller
         $segment = $request->input('segment');
 
         $user_detail = [];
-        $user_detail = User::where('segment',$segment)->pluck('id')->toArray();
+        $user_detail = User::where([['segment',$segment],['status','active']])->pluck('id')->toArray();
 
          $mentor_count = sizeof($user_detail);
 
@@ -101,9 +104,11 @@ class HomeController extends Controller
 
     else
     {
-        $mentor_details = Mentor::paginate(2);
+       $user_detail = User::where('status','active')->pluck('id')->toArray(); 
 
-        $mentor_result_count = Mentor::all();
+        $mentor_details = Mentor::whereIn('user_id',$user_detail)->paginate(2);
+
+        $mentor_result_count = Mentor::whereIn('user_id',$user_detail)->get()->all();
 
         $mentor_count = sizeof($mentor_result_count);
     }
@@ -138,7 +143,7 @@ class HomeController extends Controller
                 }
                 else{
                      $appointment_btn = '<div class="mentor-booking">
-                                            <a class="apt-btn" href="/login">Book Appointment</a>
+                                            <a class="apt-btn" href="/login-topclasstutors">Book Appointment</a>
                                         </div>';
                 }
 
@@ -153,7 +158,7 @@ class HomeController extends Controller
                                         </div>
                                         <div class="user-info-cont">
                                             <h4 class="usr-name"><a href="profile/'.$mentor->mentor_id.'">'.$mentor->user->first_name.' &nbsp;'.$mentor->user->last_name.'</a></h4>
-                                            <p class="mentor-type">'.$mentor->user->category_description.'('.$mentor->user->degree.')</p>
+                                            <p class="mentor-type">'.$mentor->user->degree.'</p>
                                             <div class="rating">'.$star.$default_star.'
                                                 
 
@@ -294,28 +299,79 @@ else{
                 'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
             ]);
 
- $user=User::create($request->user_form);
-        
-  $uploads_dir = $user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+  $user=User::create($request->user_form);
+
+   $mentor_details = $request->mentor_form;
+    $mentor_details['user_id']=$user->id;
+    $mentor=Mentor::create($mentor_details);
+   
+//Resume Upload     
+  $resume_dir = $user->first_name.$user->id.'/Resume';
+  $resumePath = Mentor::uploadFilePath($request->content_file,$resume_dir);
+  $user->resume = '/storage/app/public/'.$resumePath;
+
+//Profile Image
+  $profile_file=$request->file('profile_image');
+            $profile_dir = storage_path('app/public/').$user->first_name.$user->id.'/profile';//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            if(!File::isDirectory($profile_dir)){
+            File::makeDirectory($profile_dir);
+
+            
+                }
+   
+          //  $uploads_dir=storage_path('public').'/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
+            // set
+            $filename = $profile_file->hashName();
+            $filename_without_ext = pathinfo($filename, PATHINFO_FILENAME);
+            $original_filename = $content_file->getClientOriginalName();
+            $file_ext = $content_file->getClientOriginalExtension();
+            $file_realpath = $content_file->getRealPath();
+            $thumb_filename = $filename_without_ext.'-thumb.'.$file_ext;
+
+                //dd($uploads_dir)
+
+            // save file
+            //$request->content_file->store($uploads_dir, 'public');
+
+            // read image from temporary file
+            $img = Image::make($profile_file);
+
+            // resize image
+           $img->fit(1280, 720)->save($profile_dir.'/'.$filename);
+
+            $img_path='/storage/app/public/'.$user->first_name.$user->id.'/profile/'.$filename;
+             //$form['profile_image']=$img_path;
+             $user->profile_image = $img_path;
+
+
+
+
+//LessonPlan Upload     
+  $lesson_plan_dir = $user->first_name.$user->id.'/LessonPlan';
+  $lessonPath = Mentor::uploadFilePath($request->lesson_plan_file,$lesson_plan_dir);
+  $mentor->lesson_plan = '/storage/app/public/'.$lessonPath;
+
+//Mileage Upload     
+  $mileage_dir = $user->first_name.$user->id.'/MileageReport';
+  $mileagePath = Mentor::uploadFilePath($request->mileage_report_file,$mileage_dir);
+  $mentor->mileage_report = '/storage/app/public/'.$mileagePath;
+
+ //Resource plan Upload     
+  $resource_lesson_plan_dir = $user->first_name.$user->id.'/Lesson-Resoure-Plan';
+  $resourcePath = Mentor::uploadFilePath($request->resource_lesson_plan_file,$resource_lesson_plan_dir);
+  $mentor->resource_lesson_plan = '/storage/app/public/'.$resourcePath;
+
+
+
+
+
+    $mentor->save();
+    $user->save();
          
-
-        $fileName = time().'_'.$request->content_file->getClientOriginalName();
-            $filePath = $request->file('content_file')->storeAs($uploads_dir, $fileName,'public');
-
-            //$fileModel->name = time().'_'.$request->content_file->getClientOriginalName();
-            $user->resume = '/storage/'.$filePath;
-            $user->save();
-
-
-
-        
-        $mentor_details = $request->mentor_form;
-        $mentor_details['user_id']=$user->id;
-        Mentor::create($mentor_details);
 
         $message ="Thank you for registering. You will get a activation e-mail from the Admin.";
 
-        session()->flash('message-success', $message); 
+        session()->flash('message-success',$message); 
     return  redirect('/mentor-register');
 
       

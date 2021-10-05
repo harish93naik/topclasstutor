@@ -90,7 +90,7 @@
 
                             <div class="col-md-8">
                                <div class="cal-icon">
-                                                        <input type="text" id="date_of_birth" name="mentee_form[dob]" class="form-control datetimepicker" value="">
+                                                        <input type="text" id="date_of_birth" name="mentee_form[dob]" class="form-control menteedatetimepicker" value="">
                                                     </div>
 
                                 @error('dob')
@@ -380,7 +380,7 @@
                             <label for="resume" class="col-md-4 col-form-label text-md-right">{{ __('Upload College Certificate') }}<span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
-                                <input type="file" id="resume" name="content_file" accept="application/pdf" class="upload">
+                                <input type="file" id="resume" name="content_file" accept="application/pdf" class="upload" required>
 
                                 
 

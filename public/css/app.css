@@ -1,5 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+@font-face {
+    font-family: 'Poppins-Regular';
+    src: url('/assets/fonts/poppins-regular/Poppins-Regular.eot');
+    src: url('/assets/fonts/poppins-regular/Poppins-Regular.woff') format('woff'),
+    url('/assets/fonts/poppins-regular/Poppins-Regular.woff2') format('woff2'),
+    url('/assets/fonts/poppins-regular/Poppins-Regular.svg#Poppins-Regular.svg') format('svg');
+    /*font-weight: 700;*/
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Poppins-Semi-Bold';
+    src: url('/assets/fonts/poppins-semi-bold/Poppins-SemiBold.eot');
+    src: url('/assets/fonts/poppins-semi-bold/Poppins-SemiBold.woff') format('woff'),
+    url('/assets/fonts/poppins-semi-bold/Poppins-SemiBold.woff2') format('woff2'),
+    url('/assets/fonts/poppins-semi-bold/Poppins-SemiBold.svg#Poppins-SemiBold.svg') format('svg');
+    /*font-weight: 700;*/
+    font-style: bold;
+}
+
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -34,7 +54,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Nunito", sans-serif;
+  --font-family-sans-serif: "Poppins-Regular", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -66,7 +86,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Poppins-Regular", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -177,7 +197,7 @@ a {
 
 a:hover {
   color: #1d68a7;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:not([href]):not([class]) {
@@ -4524,7 +4544,8 @@ input[type=button].btn-block {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  /*padding: 0.5rem 1rem;*/
+  /*padding: 1% 5%;*/
 }
 
 .navbar .container,
@@ -4547,7 +4568,8 @@ input[type=button].btn-block {
   font-size: 1.125rem;
   line-height: inherit;
   white-space: nowrap;
-  margin-left: 60%;
+  margin-left: 85%;
+
 }
 
 .navbar-brand:hover,
@@ -6418,7 +6440,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Poppins-Regular", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -6543,7 +6565,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Nunito", sans-serif;
+  font-family: "Poppins-Regular", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -10953,5 +10975,10 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+@media only screen and (max-width: 991.98px){
+.nav-link {
+    display: none;
+}
 }
 

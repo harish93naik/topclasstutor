@@ -1,19 +1,24 @@
 @extends('layout.mainlayout')
 
-@section('main-title', 'Security Alert')
 
-@section('main-content')
+@section('content')
 
     <!-- start: page -->
-    <section class="body-error error-inside">
-        <div class="center-error">
+
+               
+    <div class="page-wrapper">
+
+                <div class="content container-fluid">
+
 
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="main-error mb-3">
+                <div class="col-lg-12">
+
+                    <p>We're sorry, but you don't have permission to access this area.</p>
+                    <!-- <div class="main-error mb-3">
                         <h2 class="error-code text-dark text-center font-weight-semibold m-0">Oops! <i class="fas fa-hand-paper"></i></h2>
                         <p class="error-explanation text-center">We're sorry, but you don't have permission to access this area.</p>
-                    </div>
+                    </div> -->
                 </div>
                <!--  <div class="col-lg-4">
                     <h4 class="text">Here are some useful links</h4>
@@ -29,9 +34,10 @@
                         </li>
                     </ul>
                 </div> -->
-            </div>
+            
         </div>
-    </section>
+    </div>
+</div>
     <!-- end: page -->
 
 @endsection

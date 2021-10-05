@@ -36,8 +36,23 @@ use App\Mail\StatusUpdateMail;
 
 use Illuminate\Support\Facades\Validator;
 
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+
+use PayPal\Api\Refund;
+use PayPal\Api\Sale;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\ExecutePayment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\RefundRequest;
+use App\Models\PaymentTransaction;
+
+
+
 class AdminController extends Controller
 {
+
+     private $_api_context;
    
 
     /**
@@ -47,6 +62,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+
+        $user = auth()->user();
+
+        if($user->role=="admin"){
 
         $view_data=[];
         $users = User::where('role','<>','admin')->get();
@@ -67,17 +86,28 @@ class AdminController extends Controller
         
         return view('admin.index_admin',$view_data);
     }
+    else{
+        return view('security');
+    }
+    }
 
     public function mentorList()
     {
 
         $view_data=[];
+         $user = auth()->user();
+
+        if($user->role=="admin"){
 
         $mentor_details=Mentor::all();
 
         $view_data=['mentor_details'=>$mentor_details];
         
         return view('admin.mentor',$view_data);
+         }
+    else{
+        return view('security');
+    }
     }
 
      public function menteeList()
@@ -85,11 +115,19 @@ class AdminController extends Controller
 
         $view_data=[];
 
+        $user = auth()->user();
+
+        if($user->role=="admin"){
+
         $mentee_details=Mentee::all();
 
         $view_data=['mentee_details'=>$mentee_details];
         
         return view('admin.mentee',$view_data);
+    }
+    else{
+        return view('security');
+    }
     }
 
     public function bookingList()
@@ -97,11 +135,19 @@ class AdminController extends Controller
 
         $view_data=[];
 
+          $user = auth()->user();
+
+        if($user->role=="admin"){
+
         $booking_details=Booking::all();
 
         $view_data=['booking_details'=> $booking_details];
         
         return view('admin.booking-list',$view_data);
+          }
+    else{
+        return view('security');
+    }
     }
 
     public function invoiceList()
@@ -109,16 +155,28 @@ class AdminController extends Controller
 
         $view_data=[];
 
+          $user = auth()->user();
+
+        if($user->role=="admin"){
+
         $invoice_details=Invoice::all();
 
         $view_data=['invoice_details'=>$invoice_details];
         
         return view('admin.invoice-report',$view_data);
+         }
+    else{
+        return view('security');
+    }
     }
 
     public function profileView()
     {
         $view_data=[];
+
+         $user = auth()->user();
+
+        if($user->role=="admin"){
 
         $logged_user=auth()->user();
 
@@ -129,12 +187,20 @@ class AdminController extends Controller
         $view_data=['admin_info'=>$admin_info,'user_detail'=>$user_detail];
         
         return view('admin.profile',$view_data);
+
+         }
+    else{
+        return view('security');
+    }
+
     }
 
     public function profileUpdate(Request $request)
     {
 
         $user=auth()->user();
+
+         if($user->role=="admin"){
 
         $user_detail_form = $request->user_form;
 
@@ -197,6 +263,11 @@ class AdminController extends Controller
        
        
         return redirect('/admin/profile');
+         }
+    else{
+        return view('security');
+    }
+
     }
 
     
@@ -204,6 +275,8 @@ class AdminController extends Controller
     public function resetPassword(Request $request){
 
         $user=auth()->user();
+
+          if($user->role=="admin"){
 
          request()->validate([
                 'new_password' => ['required', 'string', 'min:6', 'max:50', 'required_with:confirm_password', 'same:confirm_password'],
@@ -229,12 +302,20 @@ class AdminController extends Controller
 
         // redirect
         return redirect('/admin/profile/');
+         }
+    else{
+        return view('security');
+    }
 
     }
 
     public function menteeProfileView(Request $request,Mentee $mentee){
 
         $view_data = [];
+
+         $user=auth()->user();
+
+       /*  if($user->role=="admin"){*/
 
         $view_data = ['mentee'=>$mentee];
 
@@ -538,5 +619,60 @@ class AdminController extends Controller
     }
 
     /*----Blog functions Ends----*/
+
+    public function bookingStatus(Request $request,Booking $booking,$postdata){
+
+        $form=[];
+
+        $booking->status=$postdata;
+
+        $status = false;
+
+        $user = auth()->user();
+
+        if($user->role=="admin"){
+
+        $booking->save();
+
+        if($postdata == "reject"){
+
+              $stripe = new \Stripe\StripeClient(
+  'sk_test_51JJxjTSA5lh0TiF1uJs4FZud97yTEoUKzIzyGx4tXJY9ZhqEICOXhQnxkAWx7HWgqwP7bSXmWuaVQx7EwHnWJG7500GGAjuFzY'
+);
+
+       $payer_id = PaymentTransaction::where("booking_id",$booking->booking_id)->first();
+
+       if($payer_id->payment_method == "stripe")
+       {
+
+       $response =  $stripe->refunds->create([
+  'charge' =>$payer_id->payer_id,
+]);
+        }
+
+        if($payer_id->payment_method == "paypal")
+       {
+
+        $paypal_configuration = \Config::get('paypal');
+        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_configuration['client_id'], $paypal_configuration['secret']));
+        $this->_api_context->setConfig($paypal_configuration['settings']);
+
+         $sale = Sale::get($sale_id, $this->_api_context);        
+        $refund_request = new RefundRequest();
+        $refund_request->setPayerId($payer_id->payer_id);        
+        $refund_status = $sale->refundSale($refund_request, $this->_api_context);
+        }
+
+    }
+
+    $status = true;
+        // return redirect('/admin/booking-list');
+}
+
+return ($status==true)?redirect('/admin/booking-list'):view('security');
+
+       
+    }
+
 
 }

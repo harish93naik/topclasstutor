@@ -6,8 +6,8 @@
 				<div class="container">
 					<div class="banner-wrapper m-auto text-center">
 						<div class="banner-header">
-							<h1>Search Teacher in <span>Mentoring Appointment</span></h1>
-							<p>Discover the best Mentors & institutions the city nearest to you.</p>
+							<!-- <h1>Search Teacher in <span>Mentoring Appointment</span></h1>
+							<p>Discover the best Mentors & institutions the city nearest to you.</p> -->
 						</div>
                          
 						<!-- Search -->
@@ -33,8 +33,8 @@
 				<div class="container">
 					<div class="section-header text-center">
 						<span>Mentoring Flow</span>
-						<h2>How does it works ?</h2>
-						<p class="sub-title">Are you looking to join online institutions? Now it's very simple, Sign up with mentoring</p>
+						<h2>How does it work?</h2>
+						<p class="sub-title">Are you looking for a TopClassTutor? Sign up with with an Expert Mentor now</p>
 					</div>
 					<div class="row">
 						<div class="col-12 col-md-6 col-lg-4">
@@ -48,7 +48,7 @@
 										<div class="feature-text">Sign up</div>
 									</div>
 								</div>
-								<p class="mb-0">Are you looking to join online Learning? Now it's very simple, Now Sign up</p>
+								<p class="mb-0">Find your Mentor? Sign up today.</p>
 							</div>
 						</div>
 						<div class="col-12 col-md-6 col-lg-4">
@@ -62,7 +62,7 @@
 										<div class="feature-text">Collaborate</div>
 									</div>
 								</div>
-								<p class="mb-0">Collaborate on your own timing, by scheduling with mentor booking</p>
+								<p class="mb-0">Learn with a Specialised Mentor. Reach the top of the class now!</p>
 							</div>
 						</div>
 						<div class="col-12 col-md-6 col-lg-4">
@@ -73,10 +73,10 @@
 										<i><img src="assets/img/icon-3.png" alt=""></i>
 									</div>	
 									<div class="feature-cont">
-										<div class="feature-text">Improve & Get Back</div>
+										<div class="feature-text">Select, Improve and Succeed</div>
 									</div>
 								</div>
-								<p class="mb-0">you can gather different skill set, and you can become mentor too</p>
+								<p class="mb-0">Make a move now. Get your Study, Career and Success sorted out today</p>
 							</div>
 						</div>
 						
@@ -89,7 +89,7 @@
 					<div class="section-header text-center">
 						<span>Mentoring Goals</span>
 						<h2>Popular Mentors</h2>
-						<p class="sub-title">Do you want to move on next step? Choose your most popular leaning mentors, it will help you to achieve your professional goals.</p>
+						<p class="sub-title">Do you want to move to next step? Choose your most popular learning mentors, it will help you to achieve your professional goals.</p>
 					</div>
 					<div class="owl-carousel owl-theme">
 
@@ -252,7 +252,7 @@
 				</div>
 			</section> -->
 
-			<section class="section path-section">
+		<!-- 	<section class="section path-section">
 				<div class="section-header text-center">
 					<div class="container">
 						<span>Choose the</span>
@@ -352,6 +352,44 @@
 						<div class="view-all text-center"><a href="search" class="btn btn-primary">View All</a></div>						
 					</div>
 				</div>
+			</section> -->
+			<section class="section path-section">
+				<div class="section-header text-center">
+					<div class="container">
+						<span>Choose the</span>
+						<h2>Different All Learning Paths</h2>
+						
+					</div>
+				</div>
+				<div class="learning-path-col">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6">
+								<ul class="segment-ul">
+									<li class="segment-li"><a class="segment-text-a"  href="search?segment=primary"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Primary</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+
+									<!-- <li class="segment-li"><a class="segment-text-a"  href="#"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Intermediate</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li> -->
+										
+									<li class="segment-li"><a class="segment-text-a"  href="#"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Secondary</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+									
+									<li class="segment-li"><a class="segment-text-a"  href="search?segment=trade-school"><div class="row col-lg-12"><div class="col-lg-10 segment-primary-div"><h3 class="segment-heading">Trade & Apprenticeships</h3></div><div class="col-lg-2 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+						</ul>
+							</div>
+							<div class="col-lg-6">
+								<ul class="segment-ul">
+										<li class="segment-li"><a class="segment-text-a"  href="#"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Graduate</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+
+										<li class="segment-li"><a class="segment-text-a"  href="#"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Post Graduate</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+
+										<li class="segment-li"><a class="segment-text-a"  href="#"><div class="row col-lg-12"><div class="col-lg-6 segment-primary-div"><h3 class="segment-heading">Doctoral Study</h3></div><div class="col-lg-6 segment-secondary-div"><i class="fas fa-arrow-right segment-icon"></i></div></div></a></li>
+										
+						</ul>
+							</div>
+						</div>
+						
+						<div class="view-all text-center"><a href="search" class="btn btn-primary">View All</a></div>						
+					</div>
+				</div>
 			</section>
 			<!-- Path section end -->
 
@@ -370,6 +408,9 @@
 					<!-- /Section Header -->
 					
 					<div class="row blog-grid-row">
+
+						 <?php if(!(@empty($blog_details))): ?>
+						
 						<?php $__currentLoopData = $blog_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<div class="col-md-6 col-lg-3 col-sm-12">
 						
@@ -402,29 +443,33 @@
 					<div class="view-all text-center"> 
 						<a href="blog-list" class="btn btn-primary">View All</a>
 					</div>
+					<?php else: ?>
+					<div >
+					<h3 style="text-align: center">Sorry There is no Blogs</h3></div>
+					<?php endif; ?>
 				</div>
 			</section>
 			<!-- /Blog Section -->	
 
 			<!-- Statistics Section -->
-			<section class="section statistics-section">
+			<section id="statistics-counter" class="section statistics-section">
 				<div class="container">
 					<div class="row">
 						<div class="col-12 col-md-4">
 							<div class="statistics-list text-center">
-								<span>500+</span>
+								<span class="count" data-count="500">500</span><span>+</span>
 								<h3>Happy Clients</h3>
 							</div>
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="statistics-list text-center">
-								<span>120+</span>
+								<span class="count" data-count="100">100</span><span>+</span>
 								<h3>Online Appointments</h3>
 							</div>
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="statistics-list text-center">
-								<span>100%</span>
+								<span class="count" data-count="100">100</span><span>%</span>
 								<h3>Job Satisfaction</h3>
 							</div>
 						</div>
