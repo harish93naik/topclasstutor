@@ -26,6 +26,8 @@ use App\Models\Review;
 
 use App\Models\Comment;
 
+use App\Models\Event;
+
 use File;
 
 use Intervention\Image\Facades\Image;
@@ -37,6 +39,8 @@ use Stripe;
 use Session;
 
 use App\Models\PaymentTransaction;
+
+use App\Models\MentorScheduleTimings;
 
 class MentorController extends Controller
 {
@@ -51,6 +55,8 @@ class MentorController extends Controller
     {
 
         $logged_user=auth()->user();
+
+        echo $logged_user;
 
         $mentor_details=Mentor::where('user_id',$logged_user->id)->first();
 
@@ -75,10 +81,45 @@ else
 
     /*----Schedule timing functions starts----*/
 
-    public function scheduleTimings()
+    public function scheduleTimings(Request $request)
     {
 
+
+      
+
         $view_data=[];
+
+        $logged_user=auth()->user();
+
+
+         $mentor_details=Mentor::where('user_id',$logged_user->id)->first();
+
+         if($mentor_details)
+         {
+            $schedule_details=ScheduleTimings::where([['mentor_id',$mentor_details->mentor_id],['deleted_at',null]])->get()->all();
+         }
+         else{
+            $schedule_details=[];
+         }
+
+
+        
+
+        $view_data=['schedule_details'=>$schedule_details];
+
+          if($request->ajax()){
+            $data = MentorScheduleTimings::whereDate('start', '>=', $request->start)->whereDate('end', '<=',$request->end)->where('mentor_id',$mentor_details->mentor_id)->get(['event_id','title','start','end']);
+
+            return response()->json($data);
+        }
+
+        
+        return view('mentor.schedule-timings',$view_data);
+    }
+
+    public function eventIndex(Request $request){
+      
+         $view_data=[];
 
         $logged_user=auth()->user();
 
@@ -101,6 +142,36 @@ else
         return view('mentor.schedule-timings',$view_data);
     }
 
+    public function eventAction(Request $request){
+
+        if($request->ajax()){
+
+            if($request->type == "add"){
+
+                $data = Event::where('start',$request->start)->orWhere('end','=',$request->end)->get(['id','title','start','end']);
+
+//2022-02-13 06:00:00
+                // return response()->json($data);
+
+                if(sizeof($data)==0)
+                {
+
+                $event = Event::create([
+
+                    'title' => $request->title,
+                    'start' => $request->start,
+                    'end' =>$request->end
+                ]);
+
+                return 1;
+            }
+            else{
+                return 0;
+            }   
+            }
+        }
+    }
+
     public function scheduleTimingsSave(Request $request)
     {
 
@@ -112,7 +183,9 @@ else
 
         $end_time = $request->form['end_time'];
 
-        $week_day = $request->form['week_day'];
+        $title = $request->form['title'];
+
+       /* $week_day = $request->form['week_day'];*/
 
 
          $mentor_details=Mentor::where('user_id',$logged_user->id)->first();
@@ -121,20 +194,53 @@ else
 
          $form=$request->form;
 
+         
+
+       /* $data = MentorScheduleTimings::where('start',$start_time)->orWhere('end','=',$end_time)->toArray('mentor_id');
+
+
+
+//2022-02-13 06:00:00
+                // return response()->json($data);
+
+                if(sizeof($data)==0)
+                {
+
+                $event = MentorScheduleTimings::create([
+
+                    'title' => $title,
+                    'start' => $start_time,
+                    'end' =>$end_time,
+                    'mentor_id'=>$mentor_id
+                ]);
+
+                 $message = "Slot added successfully"; 
+                    session()->flash('message-success', $message); 
+            }
+            else{
+                $message = "Slot already entered"; 
+                 session()->flash('message-alert', $message); 
+            } */
          //checking for Slots 
 
-        $start_time_check = ScheduleTimings::where([['mentor_id',$mentor_id],['start_time',$start_time],['week_day',$week_day]])->get()->all();
+        $start_time_check = MentorScheduleTimings::where([['mentor_id',$mentor_id],['start',$start_time]])->get()->all();
         if(!$start_time_check){
 
-             $end_time_check = ScheduleTimings::where([['mentor_id',$mentor_id],['end_time',$start_time],['week_day',$week_day]])->get()->all();
+             $end_time_check = MentorScheduleTimings::where([['mentor_id',$mentor_id],['end',$end_time]])->get()->all();
 
              if(!$end_time_check){
-                 $slot_check = ScheduleTimings::where([['mentor_id',$mentor_details->mentor_id],['start_time',$start_time],['end_time',$start_time],['week_day',$week_day]])->get()->all();
+                 $slot_check = MentorScheduleTimings::where([['mentor_id',$mentor_id],['start',$start_time],['end',$start_time]])->get()->all();
                  if(!$slot_check){
 
-                     $form['mentor_id']=$mentor_details->mentor_id;
+                  
 
-                     $schedule_details = ScheduleTimings::create($form);
+                     $event = MentorScheduleTimings::create([
+
+                    'title' => $title,
+                    'start' => $start_time,
+                    'end' =>$end_time,
+                    'mentor_id'=>$mentor_id
+                ]);
 
                     $message = "Slot added successfully"; 
                     session()->flash('message-success', $message); 

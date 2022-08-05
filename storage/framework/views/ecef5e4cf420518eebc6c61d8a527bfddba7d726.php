@@ -15,6 +15,38 @@
 									<p class="text-muted">Access to our dashboard</p> -->
 								</div>
 								<div class="card-body">
+                                     <?php if(session('message-success')): ?>
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-success" role="alert">
+                                <?php echo e(session('message-success')); ?>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                        <?php if(session('message-info')): ?>
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-info" role="alert">
+                                <?php echo e(session('message-info')); ?>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                        <?php if(session('message-alert')): ?>
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo e(session('message-alert')); ?>
+
+                            </div>
+
+                        <?php endif; ?>
                     <?php if(session('error')): ?>
    <div class="alert alert-danger">
         <?php echo e(session('error')); ?>

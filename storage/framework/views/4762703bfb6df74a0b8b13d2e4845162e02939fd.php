@@ -52,10 +52,10 @@
 									</div> -->
 									<div class="custom-sidebar-nav">
 										<ul>
-											<li><a href="dashboard"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
-											<li><a href="bookings-mentee" class="active"><i class="fas fa-clock"></i>Bookings <span><i class="fas fa-chevron-right"></i></span></a></li>
-											<li><a href="chat-mentee"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li>
-											<li><a href="favourites"><i class="fas fa-star"></i>Favourites <span><i class="fas fa-chevron-right"></i></span></a></li>
+											<li><a href="/dashboard"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
+											<li><a href="/bookings-mentee" class="active"><i class="fas fa-clock"></i>Bookings <span><i class="fas fa-chevron-right"></i></span></a></li>
+											<!-- <li><a href="chat-mentee"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li> -->
+											<!-- <li><a href="favourites"><i class="fas fa-star"></i>Favourites <span><i class="fas fa-chevron-right"></i></span></a></li> -->
 											<li><a href="/mentee/mentor"><i class="fas fa-star"></i>Mentors <span><i class="fas fa-chevron-right"></i></span></a></li>
 											<li><a href="/mentee/invoices"><i class="fas fa-file-invoice"></i>Invoices <span><i class="fas fa-chevron-right"></i></span></a></li>
 											<li><a href="profile-mentee"><i class="fas fa-user-cog"></i>Profile <span><i class="fas fa-chevron-right"></i></span></a></li>
@@ -94,7 +94,11 @@
 														</td>
 														<td><?php echo e($row->schedule_date); ?></td>
 														<td class="text-center"><span class="<?php echo e($row->status); ?>"><?php echo e($row->schedule_time); ?></span></td>
+														<?php if($row->status=="accept"): ?> 
+														<td class="text-center"><a href="<?php echo e($row->meeting_url); ?>" target="_blank">&nbsp;Call Here&nbsp;<i class="fas fa-phone-alt"></i></a></span>
+														<?php else: ?>
 														<td class="text-center"><span class="<?php echo e($row->status); ?>"><?php echo e($row->status_description); ?></span></td>
+														<?php endif; ?>
 													</tr>
 													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												</tbody>

@@ -13,7 +13,7 @@
           <div class="btn-group" role="group">
             <button
               type="button"
-              class="btn btn-primary mr-2"
+              class="btn btn-primary mr-2 call-btn"
               v-for="user in allusers"
               :key="user.id"
               @click="placeCall(user.id, user.first_name)"

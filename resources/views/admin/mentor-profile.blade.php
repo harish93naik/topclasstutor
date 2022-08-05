@@ -33,24 +33,7 @@
 										<div class="user-info-left align-items-center">
 											<div class="mentor-img d-flex flex-wrap justify-content-center">
 												<div class="pro-avatar">{{$mentor->user->first_name[0]}}{{$mentor->user->last_name[0]}}</div>
-												<div class="rating text-center">
-													@php
-													$rating = Review::getRating($mentor->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-												</div>
+												
 												<div class="mentor-details m-0">
 													<p class="user-location m-0"><i class="fas fa-map-marker-alt"></i> {{$mentor->state}}, {{$mentor->country}}</p>
 												</div>
@@ -58,18 +41,7 @@
 											<div class="user-info-cont">
 												<h4 class="usr-name">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</h4>
 												<p class="mentor-type">{{$mentor->user->degree}}</p>
-												<!-- <div class="mentor-action">
-													<p class="mentor-type social-title">Contact Me</p>
-													<a href="javascript:void(0)" class="btn-blue">
-														<i class="fas fa-comments"></i>
-													</a>
-													<a href="chat" class="btn-blue">
-														<i class="fas fa-envelope"></i>
-													</a>
-													<a href="javascript:void(0)" class="btn-blue" data-toggle="modal" data-target="#voice_call">
-														<i class="fas fa-phone-alt"></i>
-													</a>
-												</div> -->
+											
 											</div>
 										</div>
 										<div class="user-info-right d-flex align-items-end flex-wrap">

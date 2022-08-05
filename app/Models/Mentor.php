@@ -20,7 +20,7 @@ class Mentor extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\user', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public static function uploadFilePath($file,$path){

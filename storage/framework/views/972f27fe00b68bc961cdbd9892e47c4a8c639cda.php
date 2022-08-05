@@ -149,9 +149,9 @@
 											<thead>
 												<tr>
 													<th>Mentor Name</th>
-													<th>Course</th>
+													<th>Degree</th>
 													<th>Earned</th>
-													<th>Reviews</th>
+													<!-- <th>Reviews</th> -->
 												</tr>
 											</thead>
 											<tbody>
@@ -159,31 +159,16 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/<?php echo e($mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><?php if($mentor->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($mentor->user->profile_image)); ?>" alt="User Image">
+																<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($mentor->user->first_name); ?>">
+																<?php endif; ?></a>
 															<a href="/admin/mentor-profile/<?php echo e($mentor->mentor_id); ?>"><?php echo e($mentor->user->first_name); ?>&nbsp;<?php echo e($mentor->user->last_name); ?></a>
 														</h2>
 													</td>
-													<td><?php echo e($mentor->user->category_description); ?></td>
+													<td><?php echo e($mentor->user->degree); ?></td>
 													<td>$3200.00</td>
-													<td class="rating">
-
-														<?php
-													$rating = Review::getRating($mentor->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													?>
-
-													<?php for($i=0;$i<$avg;$i++): ?>
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													<?php endfor; ?>
-													<?php for($i=0;$i<5-$avg;$i++): ?>
-													<i class="fas fa-star"></i>
-													<?php endfor; ?>
-													</td>
 												</tr>
 												<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 												
@@ -218,7 +203,11 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/<?php echo e($mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><?php if($mentee->user->profile_image!=null): ?>
+									<img class="rounded-circle" src="<?php echo e(asset($mentee->user->profile_image)); ?>" width="31" alt="<?php echo e($mentee->user->first_name); ?>">
+									<?php else: ?>
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="<?php echo e($mentee->user->first_name); ?>">
+									<?php endif; ?></a>
 															<a href="/admin/mentee-profile/<?php echo e($mentee->mentee_id); ?>"><?php echo e($mentee->user->first_name); ?>&nbsp;<?php echo e($mentee->user->last_name); ?></a>
 														</h2>
 													</td>
@@ -262,14 +251,22 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/<?php echo e($booking->mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($booking->mentor->mentor_id); ?>" class="avatar avatar-sm mr-2"><?php if($booking->mentor->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentor->user->profile_image)); ?>" alt="User Image">
+																<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($booking->mentor->user->first_name); ?>">
+																<?php endif; ?></a>
 															<a href="/admin/mentor-profile/<?php echo e($booking->mentor->mentor_id); ?>"><?php echo e($booking->mentor->user->first_name); ?>&nbsp;<?php echo e($booking->mentor->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($booking->mentor->user->category_description); ?></td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/<?php echo e($booking->mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($booking->mentee->mentee_id); ?>" class="avatar avatar-sm mr-2"><?php if($booking->mentee->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($booking->mentee->user->profile_image)); ?>" alt="User Image">
+															<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($booking->mentee->user->first_name); ?>">
+															<?php endif; ?></a>
 															<a href="/admin/mentee-profile/<?php echo e($booking->mentee->mentee_id); ?>"><?php echo e($booking->mentee->user->first_name); ?>&nbsp;<?php echo e($booking->mentee->user->last_name); ?></a>
 														</h2>
 													</td>

@@ -26,9 +26,15 @@ use App\Models\Comment;
 
 use App\Models\Review;
 
+use App\Models\MentorScheduleTimings;
+
+use App\Models\BookingTimings;
+
 use File;
 
 use Intervention\Image\Facades\Image;
+
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 class MenteeController extends Controller
@@ -131,16 +137,38 @@ else
 
 
         $view_data=['mentor_details'=>$mentor_details];
+
+
         
         return view('mentee.map-list',$view_data);*/
-        $user_details = User::where('status','active')->pluck('id')->toArray();
+
+        $user_details = [];
+        $segment_details = User::where('role','mentor')->get()->all();
+
+
+         foreach ($segment_details as $key => $value) {
+
+             $explode_id = explode(",", $value->segment);
+             
+             if (in_array(auth()->user()->segment,$explode_id)) {
+                        
+                        array_push($user_details,$value->id);
+}
+         }
+         
+       // var_dump($user_details);
+        /*$user_details = User::where([['status','active'],['role','mentor']])->pluck('id')->toArray();*/
+
+
+
+
         $no_of_mentors = Mentor::whereIn('user_id',$user_details)->get()->all();
         $count_of_mentors = sizeof($no_of_mentors);
         $mentors = Mentor::whereIn('user_id',$user_details)->paginate(2);        
         $data = '';
         if ($request->ajax()) {
             foreach ($mentors as $mentor) {
-                 $star = '';
+                /* $star = '';
     $default_star = '';
                                                 $rating = Review::getRating($mentor->mentor_id);
                                                     $count = sizeof($rating);
@@ -150,7 +178,7 @@ else
                                                 }
                                                 for ($i=0;$i<5-$avg;$i++) { 
                                                    $default_star.='<i class="fas fa-star"></i>';
-                                                }
+                                                }*/
                 $data.='<div class="card">
                             <div class="card-body">
                                 <div class="mentor-widget">
@@ -162,11 +190,8 @@ else
                                         </div>
                                         <div class="user-info-cont">
                                             <h4 class="usr-name"><a href="/profile/'.$mentor->mentor_id.'">'.$mentor->user->first_name.' &nbsp;'.$mentor->user->last_name.'</a></h4>
-                                            <p class="mentor-type">'.$mentor->user->category_description.'</p>
-                                            <div class="rating">
-                                               '.$star.$default_star.'
-                                                <span class="d-inline-block average-rating">('.$count.')</span>
-                                            </div>
+                                            <p class="mentor-type">'.$mentor->user->degree.'</p>
+                                            
                                             <div class="mentor-details">
                                                 <p class="user-location"><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.' </p>
                                             </div>
@@ -174,12 +199,9 @@ else
                                     </div>
                                     <div class="user-info-right">
                                         <div class="user-infos">
-                                            <ul>
+                                           
                                                 <input type="hidden" value="'.$count_of_mentors.'" id="mentor-result"/>
-                                                <li><i class="far fa-comment"></i> 17 Feedback</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.'</li>
-                                                <li><i class="far fa-money-bill-alt"></i>$500<i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i> </li>
-                                            </ul>
+                                                
                                         </div>
                                         <div class="mentor-booking">
                                             <a class="apt-btn" href="/mentee/booking/'.$mentor->mentor_id.'">Book Appointment</a>
@@ -213,7 +235,11 @@ else
         if($mentee_details)
         {
 
+        
+
         $booking_details=Booking::where('mentee_id',$mentee_details->mentee_id)->get()->all();
+
+      
 
 }
 else
@@ -230,9 +256,38 @@ else
 
         $view_data=[];
 
-        $schedule_details = ScheduleTimings::where('mentor_id',$mentor->mentor_id)->get()->all();
+        if(request()->ajax()) 
+        {
 
-        $view_data = ['schedule_details'=> $schedule_details,'mentor'=>$mentor];
+            $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
+         $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
+
+         $slot_details = BookingTimings::where('mentor_id',$mentor->mentor_id)->pluck('event_id')->toArray();
+ 
+            if(sizeOf($slot_details)>0){
+            $schedule_details = MentorScheduleTimings::whereDate('start', '>=', $start)->whereDate('end', '<=',$end)->where('mentor_id',$mentor->mentor_id)->whereNotIn('event_id',$slot_details)->get(['event_id','title','start','end']);
+
+             return response()->json($schedule_details);
+
+       // $view_data = ['schedule_details'=> $schedule_details,'mentor'=>$mentor];
+
+         /*$start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
+         $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
+ 
+         $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->get(['id','title','start', 'end']);
+         return Response::json($data);*/
+        }
+        else{
+             $schedule_details = MentorScheduleTimings::whereDate('start', '>=', $start)->whereDate('end', '<=',$end)->where('mentor_id',$mentor->mentor_id)->get(['event_id','title','start','end']);
+
+             return response()->json($schedule_details);
+        }
+
+    }
+
+     // $schedule_details = ScheduleTimings::where('mentor_id',$mentor->mentor_id)->get()->all();
+
+        $view_data = ['mentor'=>$mentor];
         
         return view('mentee.booking',$view_data);
     }
@@ -255,6 +310,32 @@ else
         //return view('mentee.booking',$view_data);
     }
 
+    public function bookingBeforeDay($postData,$mentor_id,$postdate)
+    {
+
+        $view_data=[];
+
+
+
+        $schedule_details = ScheduleTimings::getDayNumber($postData,$mentor_id,$postdate);
+
+        //$schedule_details = ScheduleTimings::where('mentor_id',$mentor->mentor_id)->get()->all();
+
+        //$view_data = ['schedule_details'=> $schedule_details];
+
+        if(sizeof($schedule_details)!=0){
+
+                return 1;
+        }
+        else{
+            return 0;
+        }
+
+        
+        
+        //return view('mentee.booking',$view_data);
+    }
+
     public function paymentPage(Request $request)
     {
 
@@ -262,9 +343,13 @@ else
 
         $form=$request->form;
 
+        $logged_user_segment=auth()->user()->segment;
+
+        $payment_amount = User::getPaymentAmount($logged_user_segment);
+
         $mentor_details = Mentor::where('mentor_id',$request->mentor_id)->first();
 
-        $view_data=['scheduled_date'=>$request->scheduled_date,'scheduled_time'=>$request->scheduled_time,'mentor_details'=>$mentor_details,'amount'=>$request->amount,'slot_id'=>$request->slot_id];
+        $view_data=['scheduled_end_time'=>$request->scheduled_end_time,'scheduled_start_time'=>$request->scheduled_start_time,'mentor_details'=>$mentor_details,'event_id'=>$request->event_id,'payment_amount'=>$payment_amount,'duration'=>$request->duration];
 
 
 

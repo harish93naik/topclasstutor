@@ -7,10 +7,13 @@ Version      : 1.0
 
 
 (function($) {
+	let k= 0;
     "use strict";
     $('#login-info').css('display','none');
     $('#address-info').css('display','none');
     $('#qualification-info').css('display','none');
+
+    $("#google-pay-id").hide();
 
    
 function isVisible($el) {
@@ -20,6 +23,221 @@ function isVisible($el) {
   var elBottom = elTop + $el.height();
   return ((elBottom<= winBottom) && (elTop >= winTop));
 }
+
+$.ajaxSetup({
+	headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+var full_calendar_now = new Date();
+var calendar = $("#calendar").fullCalendar({
+	header:{
+		left:'prev,next,today',
+		center: 'title',
+		right: 'month,agendaDay'
+	},
+	/*defaultView:'agendaDay',*/
+	editable:true,
+	events:'/mentor/schedule-timings',
+	selectable:true,
+	aspectRatio: 2.5,
+	minTime: "08:00:00",
+    maxTime: "22:00:00",
+    slotIntervalLable:30,
+	validRange: {
+    start: new Date(full_calendar_now.getFullYear(), full_calendar_now.getMonth(), full_calendar_now.getDate()),
+    //end: '2017-06-01'
+  },
+  /*dayClick: function(date, jsEvent, view) {debugger;
+  if(view.name == 'month' || view.name == 'basicWeek') {
+    $('#calendar').fullCalendar('changeView', 'basicDay');
+    //$('#calendar').fullCalendar('gotoDate', date);      
+  }
+},*/
+ 
+	select:function(start,end,jsEvent,view){
+
+		  if(view.name == 'month' || view.name == 'basicWeek') {
+		  //	var date = new Date();
+		 
+    $('#calendar').fullCalendar('changeView', 'agendaDay');
+    $('#calendar').fullCalendar('gotoDate', start.toDate());      
+  }
+  else{
+
+
+
+		/*var title = prompt('Event Title:');
+		if(title){
+*/
+			var start = $.fullCalendar.formatDate(start,'Y-MM-DD HH:mm:ss');
+
+			var end = $.fullCalendar.formatDate(end,'Y-MM-DD HH:mm:ss');
+
+			$("#start_time_label").text(start);
+
+			$("#end_time_label").text(end);
+
+			$("#start_time_id").val(start);
+
+			$("#end_time_id").val(end);
+
+			$("#add_time_slot").modal('show');
+
+
+
+			
+			/*$.ajax({
+				url: "/mentor/schedule-timings/action",
+				type:"POST",
+				data:{
+					title:title,
+					start:start,
+					end:end,
+					type:'add'
+				},
+				success:function(data){
+					if(data==1)
+					{
+						alert("event added successfully");
+					}
+					else{
+						alert("Overlapped");
+					}
+					calendar.fullCalendar('refetchEvents');
+					
+				}
+			});
+
+
+
+		}*/
+
+		}
+	},
+	eventClick: function(info) {
+    alert('Event: ' + info.title);
+    
+
+    // change the border color just for fun
+    /*info.el.style.borderColor = 'red';*/
+  }
+
+ 
+
+
+});
+
+var calendar = $("#booking-calendar").fullCalendar({
+
+	header:{
+		left:'prev,next,today',
+		center: 'title',
+		right: 'month'
+	},
+	/*defaultView:'agendaDay',*/
+	/*editable:true,*/
+	events:'/mentee/booking/'+window.location.href.substring(window.location.href.lastIndexOf('/') + 1),
+	/*selectable:true,*/
+	aspectRatio: 2.5,
+	/*minTime: "08:00:00",
+    maxTime: "22:00:00",*/
+    slotIntervalLable:30,
+	validRange: {
+    start: new Date(full_calendar_now.getFullYear(), full_calendar_now.getMonth(), full_calendar_now.getDate()),
+    //end: '2017-06-01'
+  },
+  /*dayClick: function(date, jsEvent, view) {debugger;
+  if(view.name == 'month' || view.name == 'basicWeek') {
+    $('#calendar').fullCalendar('changeView', 'basicDay');
+    //$('#calendar').fullCalendar('gotoDate', date);      
+  }
+},*/
+ 
+	select:function(start,end,jsEvent,view){
+
+		  if(view.name == 'month' || view.name == 'basicWeek') {
+		  //	var date = new Date();
+		 
+    $('#booking-calendar').fullCalendar('changeView', 'agendaDay');
+    $('#booking-calendar').fullCalendar('gotoDate', start.toDate());      
+  }
+  else{
+
+
+
+		/*var title = prompt('Event Title:');
+		if(title){
+*/
+			var start = $.fullCalendar.formatDate(start,'Y-MM-DD HH:mm:ss');
+
+			var end = $.fullCalendar.formatDate(end,'Y-MM-DD HH:mm:ss');
+
+			$("#start_time_label").text(start);
+
+			$("#end_time_label").text(end);
+
+			$("#start_time_id").val(start);
+
+			$("#end_time_id").val(end);
+
+			$("#add_time_slot").modal('show');
+
+
+
+			
+			/*$.ajax({
+				url: "/mentor/schedule-timings/action",
+				type:"POST",
+				data:{
+					title:title,
+					start:start,
+					end:end,
+					type:'add'
+				},
+				success:function(data){
+					if(data==1)
+					{
+						alert("event added successfully");
+					}
+					else{
+						alert("Overlapped");
+					}
+					calendar.fullCalendar('refetchEvents');
+					
+				}
+			});
+
+
+
+		}*/
+
+		}
+	},
+	eventClick: function(info) {debugger;
+   
+
+    	$("#scheduled-start-time-id").val(info.start._i);
+    	$("#scheduled-end-time-id").val(info.end._i);
+    	$("#event_id").val(info.event_id);
+    	$("#proceed-btn").prop('disabled', false);
+
+    	let start_date = new Date(info.start._i);
+    	let end_date = new Date(info.end._i);
+     	let Difference_In_Time = (end_date.getTime() - start_date.getTime())/1000;
+
+     	let minutes = Math.floor(Difference_In_Time / 60);
+
+    	$("#duration").val(minutes);
+
+    // change the border color just for fun
+    /*info.el.style.borderColor = 'red';*/
+  }
+
+ 
+
+
+});
 
 
 $(window).scroll(function() {
@@ -172,11 +390,67 @@ $(window).scroll(function() {
 	}
 
 
+	/*var Event = function(text, className) {
+    this.text = text;
+    this.className = className;
+};*/
 
+/*var events = {};
+events[new Date("02/14/2022")] = new Event("Valentines Day", "pink");
+events[new Date("02/18/2022")] = new Event("Payday", "green");
+*/
 	if($('.datepicker').length > 0) {
-		$('.datepicker').datetimepicker({
-			format: 'DD/MM/YYYY',
+		
+		$('.datepicker').datepicker({
+			format: 'dd/mm/yyyy',
 			minDate: new Date(),
+			beforeShowDay: function(date) {debugger;
+				 //var k = $('.datepicker').val();
+    // on date change get current date and format as weekday
+    //
+    //$('#weekDay').val(e.date.format('dddd'));
+
+    //var date = new Date(k);\
+
+    
+
+    var day = date.getDay();
+
+    var mentor_id = $("#mentor-id").val();
+
+    var date_now = date.getDate()+
+          "-"+(date.getMonth()+1)+
+          "-"+date.getFullYear();
+
+    //alert(date);
+
+
+
+    $.ajax({
+				type: "GET",
+				url: '/mentee/booking-before-slot/' + day+'/'+mentor_id+'/'+date_now,
+				dataType: 'json',
+				async:false // This is what I have updated
+
+			}).done(function (view_data) {debugger;
+				if(view_data!=0){
+						
+					k=1;
+					return k;
+				}
+				else{
+					k=0;
+					return k;
+				}
+				
+					// return [true, '', ''];
+			});
+      //var day = date.getDay();
+      if (k == 1) {
+        return [true, "Highlighted", date.toDateString()]; // date.toDateString() or ''
+      }
+      return [true, 'noHighlighted', ''];
+    },
         		
         
 			icons: {
@@ -185,17 +459,27 @@ $(window).scroll(function() {
 				next: 'fas fa-chevron-right',
 				previous: 'fas fa-chevron-left'
 			}
-		}).on('dp.change', function(e) {
+		}).on('change', function(date) {
+
+			
+			
+
+
     //
+     var k = $('.datepicker').val()
     // on date change get current date and format as weekday
     //
     //$('#weekDay').val(e.date.format('dddd'));
 
-    var day = e.date.format('dddd');
+    var date = new Date(k);
+
+    var day = date.getDay();
 
     var mentor_id = $("#mentor-id").val();
 
-    var date= e.date.format('DD-MM-YYYY');
+    var date_now = date.getDate()+
+          "-"+(date.getMonth()+1)+
+          "-"+date.getFullYear();
 
     //alert(date);
 
@@ -203,7 +487,7 @@ $(window).scroll(function() {
 
     $.ajax({
 				type: "GET",
-				url: '/mentee/booking-slot/' + day+'/'+mentor_id+'/'+date,
+				url: '/mentee/booking-slot/' + day+'/'+mentor_id+'/'+date_now,
 				dataType: 'json' // This is what I have updated
 
 			}).done(function (view_data) {
@@ -215,7 +499,7 @@ $(window).scroll(function() {
 					/*$('#select_province').append($('<option>').text(obj.CountryProvinceName).attr('value', obj.CountryProvinceType_ID));
 */					
 					$('#day-slot').append(`<ul class="clearfix"><li><a data-slot=${obj.slot_id} class="timing" onclick="getSelected(this)" href="#" value="${obj.start_time}-${obj.end_time}">
-															<span>${obj.start_time}</span>-<span>${obj.end_time}</span>
+															<span>${obj.start_time}PM</span>-<span>${obj.end_time} PM</span>
 														</a></li></ul>`
                                   );
 				
@@ -234,6 +518,8 @@ $(window).scroll(function() {
 
 });
 	}
+
+
 	
 	
 
@@ -492,8 +778,32 @@ function getSelected(t){
 	
 	}
 
+	function putEndTime(t){debugger;
+
+
+
+		var slot_time = parseInt($("#start_time_id").val());
+
+		var end_time_slot = slot_time+1;
+
+		//$("#slot_id").val($(t)[0].dataset['slot']);
+		$("#end_time_id").val(end_time_slot);
+	
+	
+	}
+
 function getCommentId(t){
 	$("#parent-commentor-id").val($(t).attr('data-comment'));
+}
+
+function hideProceed(){
+	$(".submit-section").hide();
+	$("#google-pay-id").show();
+}
+
+function showProceed(){
+	$(".submit-section").show();
+	$("#google-pay-id").hide();
 }
 
 function getURL(){
@@ -503,7 +813,7 @@ function getURL(){
             	$("#payment-form").submit();
               
             }
-            else{
+            else if(radioValue==""){
 
 
             	$("#payment-form").attr("action","/stripe-payment");
@@ -721,7 +1031,7 @@ function basicInfoToggle()
   function addressInfoNextToggle()
 {
     if($("#address-info").is(":visible")){
-        if($('#address1').val()!="" && $('#address2').val()!="" && $('#city').val()!="" && $('#state').val()!="" && $('#zipcode').val()!="" && $('#country').val()!=""){
+       /* if($('#address1').val()!="" && $('#address2').val()!="" && $('#city').val()!="" && $('#state').val()!="" && $('#zipcode').val()!="" && $('#country').val()!=""){
             
              $('#address-info').css('display', 'none');
                 $('#qualification-info').css('display', 'block');
@@ -730,7 +1040,9 @@ function basicInfoToggle()
             $('.address-fields').text('**Mandatory fields needs to be filled');
             $(".address-fields").css('color','red');
             return false;
-        }
+        }*/
+          $('#address-info').css('display', 'none');
+                $('#qualification-info').css('display', 'block');
     }
     else{
         //$('.mandatory-fields').text('');

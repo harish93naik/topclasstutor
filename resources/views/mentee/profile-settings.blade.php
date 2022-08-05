@@ -74,7 +74,11 @@
 												<div class="form-group">
 													<div class="change-avatar">
 														<div class="profile-img">
-															<img src="{{asset(auth()->user()->profile_image) }}" alt="User Image">
+															@if(auth()->user()->profile_image!=null)
+									<img class="rounded-circle" src="{{asset(auth()->user()->profile_image) }}" width="31" alt="{{auth()->user()->first_name}}">
+									@else
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{auth()->user()->first_name}}">
+									@endif
 														</div>
 														<div class="upload-img">
 															<div class="change-photo-btn">
@@ -146,7 +150,13 @@
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
-													<label>State</label>
+													<label>District</label>
+													<input type="text" name="mentee_form[district]" class="form-control" value="{{$mentee_details->district}}">
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label>Suburb</label>
 													<input type="text" name="mentee_form[state]" class="form-control" value="{{$mentee_details->state}}">
 												</div>
 											</div>

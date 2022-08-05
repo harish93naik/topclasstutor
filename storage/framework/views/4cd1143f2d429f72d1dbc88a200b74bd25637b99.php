@@ -1,16 +1,24 @@
 <!-- jQuery -->
 
 <script src="<?php echo e(asset('assets/js/jquery.min.js')); ?>"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		
 		<!-- Bootstrap Core JS -->
 		<script src="<?php echo e(asset('assets/js/popper.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('assets/js/bootstrap.min.js')); ?>"></script>
 		<!-- Select2 JS -->
 		<script src="<?php echo e(asset('assets/plugins/select2/js/select2.min.js')); ?>"></script>
+
+
 		<!-- Datetimepicker JS -->
 		<script src="<?php echo e(asset('assets/js/moment.min.js')); ?>"></script>
 		<script src="<?php echo e(asset('assets/js/bootstrap-datetimepicker.min.js')); ?>"></script>
+		
+
 		<script src="<?php echo e(asset('assets/plugins/daterangepicker/daterangepicker.js')); ?>"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
 		<!-- Owl Carousel -->
 		<script src="<?php echo e(asset('assets/js/owl.carousel.min.js')); ?>"></script>		
 		<!-- Sticky Sidebar JS -->
@@ -28,6 +36,7 @@
 
 
 
+
 		<script>
         window.Laravel = {
             csrfToken: "<?php echo e(csrf_token()); ?>"
@@ -38,19 +47,19 @@
 		<?php if(Route::is(['video-call','voice-call'])): ?>
 		
 
-		 <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.3.1.js"></script>
+		<!--  <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.3.1.js"></script> -->
 		 
 	
 		<script type="text/javascript">
 
 
-			/*$(document).ready(function(){
+			$(document).ready(function(){
 
 			//$(".call-btn").hide();
 			
-			$(".call-btn")[0].click();
+		//$(".call-btn")[0].click();
 
-		});*/
+		});
 		</script>
 		<?php endif; ?>
 
@@ -81,10 +90,29 @@
 
 		<?php endif; ?>
 
+	<!--google pay integration js file for checkout page-->
+
+	<?php if(\Route::current()->getName() == 'payment-page'): ?>
+
+	<script src="<?php echo e(asset('assets/js/google-pay.js')); ?>"></script>
+
+
+
+	<script src="https://js.stripe.com/v3/"></script>
+
+	<script src="<?php echo e(asset('assets/js/apple-pay.js')); ?>"></script>
+
+	<script src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+
+
+<?php endif; ?>
+	<!--google pay integration js file for checkout page ends-->
+
 <?php if(\Route::current()->getName() == 'search'): ?>
  			
  				
 		<script src="<?php echo e(asset('assets/js/mentor-search.js')); ?>"></script>
+
 
 		<?php endif; ?>
 

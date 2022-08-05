@@ -33,7 +33,7 @@ class LoginController extends Controller
     //$user ="mentor";//auth()->user()->role;
 
     public function authenticated($request , $user){
-          if($user->status=="inactive"){
+          /*if($user->status=="inactive"){
             
            Auth::guard('web')->logout();
 
@@ -44,8 +44,8 @@ class LoginController extends Controller
       
 
         return redirect()->route('login-topclasstutors')->with('error', 'Your Account need to be approved by the Admin');
-}
-    elseif($user->role=='admin'){
+}*/
+    if($user->role=='admin'){
         return redirect('/admin/dashboard');
     }elseif($user->role=='mentor'){
           

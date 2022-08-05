@@ -475,6 +475,36 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="segment" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Segments')); ?><span class="mandatory_fields">*</span></label>
+
+                            <div class="col-md-8">
+                                <input type="hidden" name="user_form[segment]" id="segment_category"/>
+                               <select class="form-control select"  id="segment_select" required multiple> 
+                                                                    <option value="">Select Segment..</option>
+                                                                    <option value="primary">Primary(Y 2-6)</option>
+                                                                    <option value="secondary">Secondary(Y9-Y13)</option>
+                                                                    <option value="under_graduate">Trade School(Y14- Y7)</option>
+                                                                    <option value="graduate">Graduate(Level 4- Level 7)</option>
+                                                                    <option value="post_graduate">Post-Graduate</option>
+                                                                    <option value="doctorate">Doctoral Study to PHD</option>
+                                                                  
+                                                                    
+                                                                </select>
+                                <?php $__errorArgs = ['segments'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                        </div>
                            <div class="form-group row">
                             <label for="category" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Subject Category')); ?><span class="mandatory_fields">*</span></label>
 
@@ -510,36 +540,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                        
 
-                         <div class="form-group row">
-                            <label for="segment" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Segments')); ?><span class="mandatory_fields">*</span></label>
-
-                            <div class="col-md-8">
-                                <input type="hidden" name="user_form[segment]" id="segment_category"/>
-                               <select class="form-control select"  id="segment_select" required multiple> 
-                                                                    <option value="">Select Segment..</option>
-                                                                    <option value="primary">Primary(Y 2-6)</option>
-                                                                    <option value="secondary">Secondary(Y9-Y13)</option>
-                                                                    <option value="under_graduate">Trade School(Y14- Y7)</option>
-                                                                    <option value="graduate">Graduate(Level 4- Level 7)</option>
-                                                                    <option value="post_graduate">Post-Graduate</option>
-                                                                    <option value="doctorate">Doctoral Study to PHD</option>
-                                                                  
-                                                                    
-                                                                </select>
-                                <?php $__errorArgs = ['segments'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($message); ?></strong>
-                                    </span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                        </div>
+                         
                         <div class="form-group row">
                             <label for="trn_no" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Teacher Registration Number')); ?><span class="mandatory_fields">*</span></label>
 
@@ -612,7 +613,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="tutoring_exp" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Tutoring Experience')); ?><span class="mandatory_fields">*</span></label>
+                            <label for="tutoring_exp" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Tutoring Experience(in years)')); ?><span class="mandatory_fields">*</span></label>
 
                             <div class="col-md-8">
                                 <input id="tutoring_exp" type="text" class="form-control <?php $__errorArgs = ['description'];
@@ -757,7 +758,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                          <div class="form-group row">
-                            <label for="mileage_report" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Mileage Report')); ?><span class="mandatory_fields" required>*</span></label>
+                            <label for="mileage_report" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Mileage Report(in pdf)')); ?><span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="mileage_report" name="mileage_report_file" accept="application/pdf" class="upload" required>
@@ -779,7 +780,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="lesson-plan" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Upload Lesson Plan')); ?><span class="mandatory_fields" required>*</span></label>
+                            <label for="lesson-plan" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Upload Lesson Plan(in pdf)')); ?><span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="lesson-plan" name="lesson_plan_file" accept="application/pdf" class="upload" required>
@@ -801,7 +802,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                        <div class="form-group row">
-                            <label for="lesson-plan-resource" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Supporting Resources to Lesson Plan')); ?><span class="mandatory_fields" required>*</span></label>
+                            <label for="lesson-plan-resource" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Supporting Resources to Lesson Plan(in pdf)')); ?><span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="lesson-plan-resource" name="resource_lesson_plan_file" accept="application/pdf" class="upload" required>
@@ -845,7 +846,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="resume" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Upload Resume')); ?><span class="mandatory_fields" required>*</span></label>
+                            <label for="resume" class="col-md-4 col-form-label text-md-left"><?php echo e(__('Upload Resume(in pdf)')); ?><span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="resume" name="content_file" accept="application/pdf" class="upload" required>

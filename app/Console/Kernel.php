@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Models\ZoomMeeting;
+use App\Http\Controllers\ZoomMeetingController;
+
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +27,28 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        /*$schedule->command('inspire')->hourly();*/
+       $zoom_meeting =  $schedule->call(function () {
+        $present_date = date('Y-m-d H:i:s');
+          $zoom_meeting_details = ZoomMeeting::whereDate('end_time', '<', $present_date)
+                ->get()->all();
+
+                //dd($zoom_meeting_details);
+                 
+                   $zoomMeeting_controller = new ZoomMeetingController; 
+
+     
+
+       foreach ($zoom_meeting_details as $key => $value) {
+
+        //dd($value->meeting_id);
+          
+           $zoom_data =  $zoomMeeting_controller->delete($value->meeting_id);
+       }
+       dd($zoom_data);
+        })->everyMinute();
+
+      
     }
 
     /**

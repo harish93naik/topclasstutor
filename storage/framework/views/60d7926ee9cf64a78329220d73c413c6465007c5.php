@@ -1,5 +1,5 @@
 
-<?php use App\Models\Review ?>
+<!-- <?php use App\Models\Review ?> -->
 <?php $__env->startSection('content'); ?>		
 		<!-- Home Banner -->
 		<section class="section section-search">
@@ -91,10 +91,45 @@
 						<h2>Popular Mentors</h2>
 						<p class="sub-title">Do you want to move to next step? Choose your most popular learning mentors, it will help you to achieve your professional goals.</p>
 					</div>
+					<?php if(sizeof($mentor_details)<=4): ?>
+					<div style="display:flex;">
+						<?php $__currentLoopData = $mentor_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<div style="width: 270px; margin-right: 30px;">
+							<div class="course-box">
+							<div class="product">
+								<div class="product-img">
+									<a href="/profile/<?php echo e($row->mentor_id); ?>">
+										<?php if($row->user->profile_image!=null): ?>
+										<img class="img-fluid" alt="" src="<?php echo e(asset($row->user->profile_image)); ?>" width="600" height="300">
+										<?php else: ?>
+									<img class="rounded-circle" src="/assets/img/user/home_page_user.jpg"  alt="<?php echo e($row->user->first_name); ?>">
+									<?php endif; ?>
+									</a>
+								</div>
+								<div class="product-content">
+									<h3 class="title"><a href="/profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a></h3>
+									<div class="author-info">
+										<div class="author-name">
+											<?php echo e($row->user->degree); ?>
+
+										</div>
+									</div>
+								
+									<div class="author-country">
+										<p class="mb-0"><i class="fas fa-map-marker-alt"></i><?php echo e($row->state); ?>, <?php echo e($row->country); ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					</div>
+						
+					<?php else: ?>
 					<div class="owl-carousel owl-theme">
 
 						<?php $__currentLoopData = $mentor_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				
+					
 						<div class="course-box">
 							<div class="product">
 								<div class="product-img">
@@ -106,25 +141,11 @@
 									<h3 class="title"><a href="/profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a></h3>
 									<div class="author-info">
 										<div class="author-name">
-											<?php echo e($row->user->category_description); ?>(<?php echo e($row->user->degree); ?>)
+											<?php echo e($row->user->degree); ?>
+
 										</div>
 									</div>
-									<div class="rating">							
-										<?php
-													$rating = Review::getRating($row->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													?>
-
-													<?php for($i=0;$i<$avg;$i++): ?>
-													<i class="fas fa-star filled"></i>
-													
-													<?php endfor; ?>
-													<?php for($i=0;$i<5-$avg;$i++): ?>
-													<i class="fas fa-star"></i>
-													<?php endfor; ?>
-										<span class="d-inline-block average-rating"><?php echo e($avg); ?></span>
-									</div>
+							
 									<div class="author-country">
 										<p class="mb-0"><i class="fas fa-map-marker-alt"></i><?php echo e($row->state); ?>, <?php echo e($row->country); ?></p>
 									</div>
@@ -135,6 +156,7 @@
 						
 					
 					</div>
+					<?php endif; ?>
 				</div>
 			</section>
 

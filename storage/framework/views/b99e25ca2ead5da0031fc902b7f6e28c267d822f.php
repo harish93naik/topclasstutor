@@ -33,32 +33,15 @@
 										<div class="user-info-left align-items-center">
 											<div class="mentor-img d-flex flex-wrap justify-content-center">
 												<div class="pro-avatar"><?php echo e(auth()->user()->first_name[0]); ?><?php echo e(auth()->user()->last_name[0]); ?></div>
-												<div class="rating text-center">
-														<?php
-													$rating = Review::getRating($mentor_details->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													?>
-
-													<?php for($i=0;$i<$avg;$i++): ?>
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													<?php endfor; ?>
-													<?php for($i=0;$i<5-$avg;$i++): ?>
-													<i class="fas fa-star"></i>
-													<?php endfor; ?>
-												</div>
+											
 												<div class="mentor-details m-0">
 													<p class="user-location m-0"><i class="fas fa-map-marker-alt"></i> <?php echo e($mentor_details->state); ?>,<?php echo e($mentor_details->country); ?></p>
 												</div>
 											</div>
 											<div class="user-info-cont">
 												<h4 class="usr-name"><?php echo e($user_detail->first_name); ?>&nbsp;<?php echo e($user_detail->last_name); ?></h4>
-												<p class="mentor-type"><?php echo e(auth()->user()->category_description); ?>&nbsp;(<?php echo e(auth()->user()->degree); ?>)</p>
-												<div class="mentor-action">
+												<p class="mentor-type"><?php echo e(auth()->user()->degree); ?></p>
+												<!-- <div class="mentor-action">
 													<p class="mentor-type social-title">Contact Me</p>
 													<a href="javascript:void(0)" class="btn-blue">
 														<i class="fas fa-comments"></i>
@@ -69,15 +52,15 @@
 													<a href="javascript:void(0)" class="btn-blue" data-toggle="modal" data-target="#voice_call">
 														<i class="fas fa-phone-alt"></i>
 													</a>
-												</div>
+												</div> -->
 											</div>
 										</div>
-										<div class="user-info-right d-flex align-items-end flex-wrap">
+										<!-- <div class="user-info-right d-flex align-items-end flex-wrap">
 											<div class="hireme-btn text-center">
 												<span class="hire-rate">$500 / Hour</span>
 												<a class="blue-btn-radius" href="booking">Hire Me</a>
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -138,7 +121,7 @@
 								</div>
 							</div>
 							<!-- Qualification Details -->
-							<!-- <div class="card">
+							<div class="card">
 								<div class="card-body custom-border-card pb-0">
 
 									
@@ -150,15 +133,15 @@
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>Undergraduate College</span>
-															<div class="row-result">Coimbatore University</div>
+															<span>Segment</span>
+															<div class="row-result"><?php echo e($mentor_details->user->segment); ?></div>
 														</div>
 													</div>
 												</li>
-												<li>
+												<!-- <li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>Undergraduate Major</span>
+															<span>r</span>
 															<div class="row-result">Mathematics</div>
 														</div>
 													</div>
@@ -178,14 +161,14 @@
 															<div class="row-result">B.Sc (Maths)</div>
 														</div>
 													</div>
-												</li>
+												</li> -->
 											</ul>
 										</div>
 									</div>
 									
 
 								</div>
-							</div> -->
+							</div>
 <!-- /Qualification Details -->
 							<div class="card">
 								<div class="card-body pb-1 custom-border-card">
@@ -231,8 +214,16 @@
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>State</span>
+															<span>Suburb</span>
 															<div class="row-result"><?php echo e($mentor_details->state); ?></div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="experience-content">
+														<div class="timeline-content">
+															<span>District</span>
+															<div class="row-result"><?php echo e($mentor_details->district); ?></div>
 														</div>
 													</div>
 												</li>

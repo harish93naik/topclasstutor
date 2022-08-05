@@ -1,4 +1,11 @@
 <?php return array (
+  'consoletvs/invoices' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ConsoleTVs\\Invoices\\InvoicesServiceProvider',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 

@@ -1,5 +1,5 @@
 @extends('layout.mainlayout')
-@php use App\Models\Review @endphp
+<!-- @php use App\Models\Review @endphp -->
 @section('content')		
 		<!-- Home Banner -->
 		<section class="section section-search">
@@ -91,10 +91,44 @@
 						<h2>Popular Mentors</h2>
 						<p class="sub-title">Do you want to move to next step? Choose your most popular learning mentors, it will help you to achieve your professional goals.</p>
 					</div>
+					@if(sizeof($mentor_details)<=4)
+					<div style="display:flex;">
+						@foreach($mentor_details as $row)
+						<div style="width: 270px; margin-right: 30px;">
+							<div class="course-box">
+							<div class="product">
+								<div class="product-img">
+									<a href="/profile/{{$row->mentor_id}}">
+										@if($row->user->profile_image!=null)
+										<img class="img-fluid" alt="" src="{{asset($row->user->profile_image)}}" width="600" height="300">
+										@else
+									<img class="rounded-circle" src="/assets/img/user/home_page_user.jpg"  alt="{{$row->user->first_name}}">
+									@endif
+									</a>
+								</div>
+								<div class="product-content">
+									<h3 class="title"><a href="/profile/{{$row->mentor_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a></h3>
+									<div class="author-info">
+										<div class="author-name">
+											{{$row->user->degree}}
+										</div>
+									</div>
+								
+									<div class="author-country">
+										<p class="mb-0"><i class="fas fa-map-marker-alt"></i>{{$row->state}}, {{$row->country}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						@endforeach
+					</div>
+						
+					@else
 					<div class="owl-carousel owl-theme">
 
 						@foreach($mentor_details as $row)
-				
+					
 						<div class="course-box">
 							<div class="product">
 								<div class="product-img">
@@ -106,25 +140,10 @@
 									<h3 class="title"><a href="/profile/{{$row->mentor_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a></h3>
 									<div class="author-info">
 										<div class="author-name">
-											{{$row->user->category_description}}({{$row->user->degree}})
+											{{$row->user->degree}}
 										</div>
 									</div>
-									<div class="rating">							
-										@php
-													$rating = Review::getRating($row->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-										<span class="d-inline-block average-rating">{{$avg}}</span>
-									</div>
+							
 									<div class="author-country">
 										<p class="mb-0"><i class="fas fa-map-marker-alt"></i>{{$row->state}}, {{$row->country}}</p>
 									</div>
@@ -135,6 +154,7 @@
 						
 					
 					</div>
+					@endif
 				</div>
 			</section>
 

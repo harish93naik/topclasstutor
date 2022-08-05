@@ -45,7 +45,7 @@
 							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
-								<div class="footer-widget footer-menu">
+							<!-- 	<div class="footer-widget footer-menu">
 									<h2 class="footer-title">For Mentee</h2>
 									<ul>
 										<li><a href="search">Search Mentors</a></li>
@@ -54,7 +54,7 @@
 										<li><a href="booking">Booking</a></li>
 										<li><a href="dashboard-mentee">Mentee Dashboard</a></li>
 									</ul>
-								</div>
+								</div> -->
 								<!-- /Footer Widget -->
 								
 							</div>
@@ -62,7 +62,7 @@
 							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
-								<div class="footer-widget footer-menu">
+								<!-- <div class="footer-widget footer-menu">
 									<h2 class="footer-title">For Mentors</h2>
 									<ul>
 										<li><a href="appointments">Appointments</a></li>
@@ -71,7 +71,7 @@
 										<li><a href="register">Register</a></li>
 										<li><a href="dashboard">Mentor Dashboard</a></li>
 									</ul>
-								</div>
+								</div> -->
 								<!-- /Footer Widget -->
 								
 							</div>
@@ -139,75 +139,66 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body schedule-modal">
 						<form method="POST" action="/mentor/schedule-timings/save">
+
 							<?php echo csrf_field(); ?>
+
 							<div class="hours-info">
 								<div class="row form-row hours-cont">
 									<div class="col-12 col-md-10">
+										<div class="col-lg-12">
+											<div class="form-group">
+													<label>Enter Title</label>
+													<div>
+													
+													<input type="text" class="form-control" name="form[title]" value="">
+												</div>
+													
+												</div> 
+										</div>
 										<div class="row form-row">
 											<div class="col-12 col-md-6">
+												
 												<div class="form-group">
 													<label>Start Time</label>
-													<select class="form-control" name="form[start_time]">
+													<div>
+													<label id="start_time_label">2:00PM</label>
+													<input type="hidden" id="start_time_id" name="form[start_time]" value="">
+												</div>
+													<!-- <select class="form-control" id="start_time_id" onchange="putEndTime(this)" name="form[start_time]">
 														<option>Select</option>
-														<option>12.00 am</option>
-														<option>1.00 am</option>  
-														<option>2.00 am</option>
-														<option>3.00 am</option>
-														<option>4.00 am</option>
-														<option>5.00 am</option>
-														<option>6.00 am</option>
-														<option>7.00 am</option>
-														<option>8.00 am</option>
-														<option>9.00 am</option>
-														<option>10.00 am</option>
-														<option>11.00 am</option>
-														<option>12.00 pm</option>
-														<option>1.00 pm</option> 
-														<option>2.00 pm</option> 
-														<option>3.00 pm</option> 
-														<option>4.00 pm</option> 
-														<option>5.00 pm</option> 
-														<option>6.00 pm</option> 
-														<option>7.00 pm</option> 
-														<option>8.00 pm</option> 
-														<option>9.00 pm</option> 
-														<option>10.00 pm</option> 
-														<option>11.00 pm</option> 
-													</select>
+														 
+														<option value="2">2.00 pm</option> 
+														<option value="3">3.00 pm</option> 
+														<option value="4">4.00 pm</option> 
+														<option value="5">5.00 pm</option> 
+														<option value="6">6.00 pm</option> 
+														<option value="7">7.00 pm</option> 
+														<option value="8">8.00 pm</option> 
+														
+													</select> -->
 												</div> 
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>End Time</label>
-													<select class="form-control" name="form[end_time]">
+													<div>
+													<label id="end_time_label">3:00PM</label>
+													<input type="hidden" id="end_time_id" name="form[end_time]" value="">
+												</div>
+													<!-- <select class="form-control" id="end_time_id"  name="form[end_time]" readOnly>
 														<option>Select</option>
-														<option>12.00 am</option>
-														<option>1.00 am</option>  
-														<option>2.00 am</option>
-														<option>3.00 am</option>
-														<option>4.00 am</option>
-														<option>5.00 am</option>
-														<option>6.00 am</option>
-														<option>7.00 am</option>
-														<option>8.00 am</option>
-														<option>9.00 am</option>
-														<option>10.00 am</option>
-														<option>11.00 am</option>
-														<option>12.00 pm</option>
-														<option>1.00 pm</option> 
-														<option>2.00 pm</option> 
-														<option>3.00 pm</option> 
-														<option>4.00 pm</option> 
-														<option>5.00 pm</option> 
-														<option>6.00 pm</option> 
-														<option>7.00 pm</option> 
-														<option>8.00 pm</option> 
-														<option>9.00 pm</option> 
-														<option>10.00 pm</option> 
-														<option>11.00 pm</option> 
-													</select>
+														
+														<option value="3">3.00 pm</option> 
+														<option value="4">4.00 pm</option> 
+														<option value="5">5.00 pm</option> 
+														<option value="6">6.00 pm</option> 
+														<option value="7">7.00 pm</option> 
+														<option value="8">8.00 pm</option> 
+														<option value="9">9.00 pm</option> 
+														
+													</select> -->
 												</div> 
 											</div>
 											<div class="col-12 col-md-6">
@@ -227,6 +218,7 @@
 								<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
 							</div>
 						</form>
+						<!-- </form> -->
 					</div>
 				</div>
 			</div>

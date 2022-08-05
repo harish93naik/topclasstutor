@@ -71,5 +71,64 @@ class User extends Authenticatable
             return "History";
         }
     }
+
+    public function getSegmentDescriptionAttribute(){
+
+        $segment=$this->segment;
+        if ($segment=='primary'){
+            return 'Primary';
+        }
+        elseif ($segment=='secondary'){
+            return 'Secondary';
+        }
+        elseif ($segment=='trade_school'){
+            return 'Trade & Apprenticeships';
+        }
+         elseif ($segment=='graduate'){
+            return 'Graduate';
+        }
+        elseif ($segment=='post_graduate'){
+            return 'Post Graduate';
+        }
+         elseif ($segment=='doctorate'){
+            return 'Doctorate';
+        }
+       else{
+        return '';
+       }
+    }
+
+    
+
+    public static function getPaymentAmount($segment){
+
+        $segment = strtoupper($segment);
+
+        switch($segment){
+
+
+            case 'PRIMARY': 
+                             return 35;
+                             break;
+            case 'SECONDARY': 
+                            return 45;
+                            break;
+            case 'TRADE_SCHOOL': 
+                            return 50;
+                            break;
+            case 'GRADUATE':
+                            return 58;
+                            break;
+             case 'POST_GRADUATE': 
+                            return 70;
+                            break;
+            case 'DOCTORATE':
+                            return 85;
+                            break;
+
+            default: return 0;
+                    break;
+        }
+    }
    
 }

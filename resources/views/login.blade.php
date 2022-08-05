@@ -15,6 +15,35 @@
 									<p class="text-muted">Access to our dashboard</p> -->
 								</div>
 								<div class="card-body">
+                                     @if(session('message-success'))
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-success" role="alert">
+                                {{ session('message-success') }}
+                            </div>
+
+                        @endif
+
+                        @if(session('message-info'))
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-info" role="alert">
+                                {{ session('message-info') }}
+                            </div>
+
+                        @endif
+
+                        @if(session('message-alert'))
+
+                                <p>&nbsp;</p>
+
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('message-alert') }}
+                            </div>
+
+                        @endif
                     @if (session('error'))
    <div class="alert alert-danger">
         {{ session('error') }}

@@ -32,8 +32,8 @@
 									<div class="success-cont">
 										<i class="fas fa-check"></i>
 										<h3>Appointment booked Successfully!</h3>
-										<p>Appointment booked with <strong>{{$invoice->booking->mentor->user->first_name}}&nbsp;{{$invoice->booking->mentor->user->last_name}}</strong><br> on <strong>{{$invoice->booking->schedule_date}}&nbsp;{{$invoice->booking->schedule_time}}</strong></p>
-										<a href="/invoice-view/{{$invoice->invoice_id}}" class="btn btn-primary view-inv-btn">View Invoice</a>
+										<p>Appointment booked with <strong>{{$invoice->booking_timings->mentor->user->first_name}}&nbsp;{{$invoice->booking_timings->mentor->user->last_name}}</strong><br> on <strong>{{$invoice->booking_timings->events->start}}&nbsp;{{$invoice->booking_timings->events->end}}</strong></p>
+										<a href="/storage/invoices/Margo/Margo-order-11/01/2022.pdf" class="btn btn-primary view-inv-btn">View Invoice</a>
 									</div>
 								</div>
 							</div>

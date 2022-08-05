@@ -36,9 +36,9 @@ class ScheduleTimings extends Model
 
    public static function getDayNumber($day,$mentor,$postdate){
 
-        $day_number=0;
+        $day_number=$day;
 
-        switch($day){
+       /* switch($day){
 
             case 'Sunday': $day_number=1;
                             break;
@@ -58,14 +58,14 @@ class ScheduleTimings extends Model
 
             case 'Saturday': $day_number=7;
                             break;
-        }
+        }*/
 
        $time = strtotime($postdate);
 
        $newformat = date('d/m/Y',$time);
 
 
-
+       //return $newformat;
        $slot_details = Booking::where([['mentor_id',$mentor],['schedule_date',$newformat],['slot_id','<>',null]])->pluck('slot_id')->toArray();
 
        $slots =ScheduleTimings::whereNotIn('slot_id',$slot_details)->where([['mentor_id',$mentor],['week_day',$day_number]])->get();
@@ -73,7 +73,7 @@ class ScheduleTimings extends Model
 
        return $slots;
    }
-    
+   
 
 }
    

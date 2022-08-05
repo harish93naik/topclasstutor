@@ -23,16 +23,16 @@
         
           if(element)
           {
-            curr_url = url+"&page="+page;
+            curr_url = url+'&page='+page;
           }
           else if(segment){
-            curr_url = url+"&page="+page;
+            curr_url = url+'&page='+page;
           }
           else if(category_element){
-            curr_url = url+"&page="+page;
+            curr_url = url+'&page='+page;
           }
           else{
-            curr_url = url+"?page="+page;
+            curr_url = url+'?page='+page;
           }
           
      
@@ -46,7 +46,7 @@
           }
         })
         .done(function(data)
-        {          
+        {debugger;          
           if(data.length == 0){
           $('.ajax-loading').html("No more records!");
           return;
@@ -57,6 +57,8 @@
           result_value = (result==1)?result+' Mentor found':result+' Mentors found';
           
          $("#mentor-result-heading").text(result_value);
+
+
         })
 
         /*.fail(function(jqXHR, ajaxOptions, thrownError)
@@ -64,6 +66,19 @@
           alert('No response from server');
         })*/;
         
+      if(sessionStorage.getItem('categories')){
+       categories_array = sessionStorage.getItem('categories');
+
+       const split_string = categories_array.split(",");
+       
+      for(i=0;i<split_string.length;i++){
+
+          $("#"+split_string[i]).attr('checked','checked');
+      }
+      sessionStorage.clear();
+     
+    
+   }
 
 
     }
@@ -77,6 +92,12 @@
         {
             categories.push($(this).val());
         });
+
+       sessionStorage.setItem('categories',categories);
+
+        
+      
+       
 
         $("#categories").val(categories);
         $("#sidebar-filter-form").submit();

@@ -181,10 +181,10 @@
                     	<h3>Address Info</h3>
 
                          <div class="form-group row">
-                            <label for="address1" class="col-md-4 col-form-label text-md-right">{{ __('Address1') }}<span class="mandatory_fields">*</span></label>
+                            <label for="address1" class="col-md-4 col-form-label text-md-right">{{ __('Address1') }}</label>
 
                             <div class="col-md-8">
-                                <input id="address1" type="text" class="form-control @error('address1') is-invalid @enderror" name="mentee_form[address1]" value="{{ old('address1') }}" required>
+                                <input id="address1" type="text" class="form-control @error('address1') is-invalid @enderror" name="mentee_form[address1]" value="{{ old('address1') }}" >
 
                                 @error('address1')
                                     <span class="invalid-feedback" role="alert">
@@ -195,10 +195,10 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="address2" class="col-md-4 col-form-label text-md-right">{{ __('Address2') }}<span class="mandatory_fields">*</span></label>
+                            <label for="address2" class="col-md-4 col-form-label text-md-right">{{ __('Address2') }}</label>
 
                             <div class="col-md-8">
-                                <input id="address2" type="text" class="form-control @error('address2') is-invalid @enderror" name="mentee_form[address2]" value="{{ old('address2') }}" required>
+                                <input id="address2" type="text" class="form-control @error('address2') is-invalid @enderror" name="mentee_form[address2]" value="{{ old('address2') }}" >
 
                                 @error('address2')
                                     <span class="invalid-feedback" role="alert">
@@ -209,10 +209,10 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}<span class="mandatory_fields">*</span></label>
+                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
 
                             <div class="col-md-8">
-                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="mentee_form[city]" value="{{ old('city') }}" required onkeypress='return onlyCharacters(event,this)'>
+                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="mentee_form[city]" value="{{ old('city') }}"  onkeypress='return onlyCharacters(event,this)'>
 
                                 @error('city')
                                     <span class="invalid-feedback" role="alert">
@@ -223,10 +223,25 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('State') }}<span class="mandatory_fields">*</span></label>
+                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('Suburb') }}</label>
 
                             <div class="col-md-8">
-                                <input id="state" type="text" class="form-control @error('state') is-invalid @enderror" name="mentee_form[state]" value="{{ old('state') }}" required onkeypress='return onlyCharacters(event,this)'>
+                                <input id="state" type="text" class="form-control @error('state') is-invalid @enderror" name="mentee_form[state]" value="{{ old('state') }}"  onkeypress='return onlyCharacters(event,this)'>
+
+                                @error('state')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                         <div class="form-group row">
+                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('District') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="state" type="text" class="form-control @error('state') is-invalid @enderror" name="mentee_form[district]" value="{{ old('district') }}"  onkeypress='return onlyCharacters(event,this)'>
 
                                 @error('state')
                                     <span class="invalid-feedback" role="alert">
@@ -237,10 +252,10 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="Zipcode" class="col-md-4 col-form-label text-md-right">{{ __('Zipcode') }}<span class="mandatory_fields">*</span></label>
+                            <label for="Zipcode" class="col-md-4 col-form-label text-md-right">{{ __('Zipcode') }}</label>
 
                             <div class="col-md-8">
-                                <input id="zipcode" type="text" class="form-control @error('zipcode') is-invalid @enderror" name="mentee_form[zipcode]" value="{{ old('zipcode') }}" required onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                <input id="zipcode" type="text" class="form-control @error('zipcode') is-invalid @enderror" name="mentee_form[zipcode]" value="{{ old('zipcode') }}"  onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
 
                                 @error('zipcode')
                                     <span class="invalid-feedback" role="alert">
@@ -251,10 +266,10 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}<span class="mandatory_fields">*</span></label>
+                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
 
                             <div class="col-md-8">
-                                <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="mentee_form[country]" value="{{ old('country') }}" required onkeypress='return onlyCharacters(event,this)'>
+                                <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="mentee_form[country]" value="{{ old('country') }}" onkeypress='return onlyCharacters(event,this)'>
 
                                 @error('country')
                                     <span class="invalid-feedback" role="alert">
@@ -338,16 +353,15 @@
                         </div> -->
                        
 
-                         <!-- <div class="form-group row">
+                         <div class="form-group row">
                             <label for="segment" class="col-md-4 col-form-label text-md-right">{{ __('Segments') }}<span class="mandatory_fields">*</span></label>
 
                             <div class="col-md-8">
                                <select class="form-control select" name="user_form[segment]" id="segment_select" required> 
                                                                     <option value="">Select Segment..</option>
                                                                     <option value="primary">Primary(Y 2-6)</option>
-                                                                    <option value="intermediate">Intermediate(Y7 & Y8)</option>
                                                                     <option value="secondary">Secondary(Y9-Y13)</option>
-                                                                    <option value="under_graduate">Under Graduate(Y14- Y7)</option>
+                                                                    <option value="under_graduate">Trade School(Y14- Y7)</option>
                                                                     <option value="graduate">Graduate(Level 4- Level 7)</option>
                                                                     <option value="post_graduate">Post-Graduate</option>
                                                                     <option value="doctorate">Doctoral Study to PHD</option>
@@ -360,8 +374,8 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div> -->
-                        <div class="form-group row">
+                        </div>
+                        <!-- <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('About You') }}<span class="mandatory_fields">*</span></label>
 
                             <div class="col-md-8">
@@ -390,7 +404,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                                     <div class="col-sm-4">
                                         <button class="btn btn-primary mt-2" onclick="qualificationPreviousInfoToggle()">Previous</button>

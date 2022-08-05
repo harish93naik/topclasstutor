@@ -130,7 +130,7 @@
 									<h4>Select Segment</h4>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="primary" name="select_segment[]">
+											<input type="checkbox" id="primary" value="primary" name="select_segment[]">
 											<span class="checkmark"></span> Primary
 
 										</label>
@@ -143,31 +143,31 @@
 									</div> -->
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="secondary" name="select_segment[]">
+											<input type="checkbox" id="secondary" value="secondary" name="select_segment[]">
 											<span class="checkmark"></span> Secondary
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="trade_school" name="select_segment[]">
+											<input type="checkbox" id="trade_school" value="trade_school" name="select_segment[]">
 											<span class="checkmark"></span> Trade & Apprenticeships
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="graduate" name="select_segment[]">
+											<input type="checkbox" id="graduate" value="graduate" name="select_segment[]">
 											<span class="checkmark"></span>Graduate
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="post_graduate" name="select_segment[]">
+											<input type="checkbox" id="post_graduate" value="post_graduate" name="select_segment[]">
 											<span class="checkmark"></span>Post Graduate
 										</label>
 									</div>
 									<div>
 										<label class="custom_check">
-											<input type="checkbox" value="doctorate" name="select_segment[]">
+											<input type="checkbox" id="doctorate" value="doctorate" name="select_segment[]">
 											<span class="checkmark"></span>Doctoral Study
 										</label>
 									</div>
@@ -217,7 +217,7 @@
 
 						
 							<div class="load-more text-center">
-						<a class="btn btn-primary btn-sm" href="#" onclick="load_mentor_page()">Load More</a>	
+						<a class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="load_mentor_page()">Load More</a>	
 					</div>
 						</div>
 					</div>

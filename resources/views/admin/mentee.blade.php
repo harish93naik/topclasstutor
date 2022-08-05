@@ -31,7 +31,7 @@
 													<th>Mentee Name</th>
 													<th>E-mail</th>
 													<!-- <th>Member Since</th> -->
-													<th>College Certificate</th>
+													<!-- <th>College Certificate</th> -->
 													<th class="text-center">Account Status</th>
 													
 												</tr>
@@ -41,17 +41,18 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/{{$row->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($row->user->profile_image)}}" alt="User Image"></a>
+
+															<a href="/admin/mentee-profile/{{$row->mentee_id}}" class="avatar avatar-sm mr-2">@if($row->user->profile_image!=null)
+									<img class="rounded-circle" src="{{asset($row->user->profile_image) }}" width="31" alt="{{$row->user->first_name}}">
+									@else
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="{{$row->user->first_name}}">
+									@endif<!-- <img class="avatar-img rounded-circle" src="{{asset($row->user->profile_image)}}" alt="User Image"> --></a>
 															<a href="/admin/mentee-profile/{{$row->mentee_id}}">{{$row->user->first_name}}&nbsp;{{$row->user->last_name}}</a>
 														</h2>
 													</td>
 													<td>{{$row->user->email}}</td>
 
-													@if($row->certificate!=null)
-													<td><a href="{{asset($row->certificate)}}" target="_blank">View|<a href="{{asset($row->certificate)}}" download>Download</td>
-													@else
-													<td>No Preview</td>
-													@endif
+												
 													
 													<!-- <td>{{ $row->created_at->format('M j, Y') }}<br></td> -->
 													

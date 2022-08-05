@@ -311,6 +311,29 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="segment" class="col-md-4 col-form-label text-md-left">{{ __('Segments') }}<span class="mandatory_fields">*</span></label>
+
+                            <div class="col-md-8">
+                                <input type="hidden" name="user_form[segment]" id="segment_category"/>
+                               <select class="form-control select"  id="segment_select" required multiple> 
+                                                                    <option value="">Select Segment..</option>
+                                                                    <option value="primary">Primary(Y 2-6)</option>
+                                                                    <option value="secondary">Secondary(Y9-Y13)</option>
+                                                                    <option value="trade_school">Trade School(Y14- Y7)</option>
+                                                                    <option value="graduate">Graduate(Level 4- Level 7)</option>
+                                                                    <option value="post_graduate">Post-Graduate</option>
+                                                                    <option value="doctorate">Doctoral Study to PHD</option>
+                                                                  
+                                                                    
+                                                                </select>
+                                @error('segments')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                            <div class="form-group row">
                             <label for="category" class="col-md-4 col-form-label text-md-left">{{ __('Subject Category') }}<span class="mandatory_fields">*</span></label>
 
@@ -339,29 +362,7 @@
                         </div>
                        
 
-                         <div class="form-group row">
-                            <label for="segment" class="col-md-4 col-form-label text-md-left">{{ __('Segments') }}<span class="mandatory_fields">*</span></label>
-
-                            <div class="col-md-8">
-                                <input type="hidden" name="user_form[segment]" id="segment_category"/>
-                               <select class="form-control select"  id="segment_select" required multiple> 
-                                                                    <option value="">Select Segment..</option>
-                                                                    <option value="primary">Primary(Y 2-6)</option>
-                                                                    <option value="secondary">Secondary(Y9-Y13)</option>
-                                                                    <option value="under_graduate">Trade School(Y14- Y7)</option>
-                                                                    <option value="graduate">Graduate(Level 4- Level 7)</option>
-                                                                    <option value="post_graduate">Post-Graduate</option>
-                                                                    <option value="doctorate">Doctoral Study to PHD</option>
-                                                                  
-                                                                    
-                                                                </select>
-                                @error('segments')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                         
                         <div class="form-group row">
                             <label for="trn_no" class="col-md-4 col-form-label text-md-left">{{ __('Teacher Registration Number') }}<span class="mandatory_fields">*</span></label>
 
@@ -406,7 +407,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="tutoring_exp" class="col-md-4 col-form-label text-md-left">{{ __('Tutoring Experience') }}<span class="mandatory_fields">*</span></label>
+                            <label for="tutoring_exp" class="col-md-4 col-form-label text-md-left">{{ __('Tutoring Experience(in years)') }}<span class="mandatory_fields">*</span></label>
 
                             <div class="col-md-8">
                                 <input id="tutoring_exp" type="text" class="form-control @error('description') is-invalid @enderror" name="mentor_form[tutoring_exp]" value="{{ old('description') }}" required maxlength="2" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
@@ -481,7 +482,7 @@
                             </div>
                         </div>
                          <div class="form-group row">
-                            <label for="mileage_report" class="col-md-4 col-form-label text-md-left">{{ __('Mileage Report') }}<span class="mandatory_fields" required>*</span></label>
+                            <label for="mileage_report" class="col-md-4 col-form-label text-md-left">{{ __('Mileage Report(in pdf)') }}<span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="mileage_report" name="mileage_report_file" accept="application/pdf" class="upload" required>
@@ -496,7 +497,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="lesson-plan" class="col-md-4 col-form-label text-md-left">{{ __('Upload Lesson Plan') }}<span class="mandatory_fields" required>*</span></label>
+                            <label for="lesson-plan" class="col-md-4 col-form-label text-md-left">{{ __('Upload Lesson Plan(in pdf)') }}<span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="lesson-plan" name="lesson_plan_file" accept="application/pdf" class="upload" required>
@@ -511,7 +512,7 @@
                             </div>
                         </div>
                        <div class="form-group row">
-                            <label for="lesson-plan-resource" class="col-md-4 col-form-label text-md-left">{{ __('Supporting Resources to Lesson Plan') }}<span class="mandatory_fields" required>*</span></label>
+                            <label for="lesson-plan-resource" class="col-md-4 col-form-label text-md-left">{{ __('Supporting Resources to Lesson Plan(in pdf)') }}<span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="lesson-plan-resource" name="resource_lesson_plan_file" accept="application/pdf" class="upload" required>
@@ -541,7 +542,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="resume" class="col-md-4 col-form-label text-md-left">{{ __('Upload Resume') }}<span class="mandatory_fields" required>*</span></label>
+                            <label for="resume" class="col-md-4 col-form-label text-md-left">{{ __('Upload Resume(in pdf)') }}<span class="mandatory_fields" required>*</span></label>
 
                             <div class="col-md-8">
                                 <input type="file" id="resume" name="content_file" accept="application/pdf" class="upload" required>

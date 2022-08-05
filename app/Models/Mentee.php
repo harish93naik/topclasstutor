@@ -12,14 +12,14 @@ class Mentee extends Model
     use SoftDeletes;
     protected $table = 'mentee';
     protected $fillable = [
-                    'dob','address1','address2','city','state','zipcode','country','profile_image','gender','user_id','certificate'
+                    'dob','address1','address2','district','city','state','zipcode','country','profile_image','gender','user_id','certificate'
         ];
    // protected $hidden = ['password'];
     protected $primaryKey = 'mentee_id';
 
     public function user()
     {
-        return $this->belongsTo('App\Models\user', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     

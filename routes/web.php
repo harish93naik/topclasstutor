@@ -16,6 +16,8 @@ use App\Models\User;
 
 $middleware = ['auth'];
 
+Route::get('/meeting-create','ZoomMeetingController@generateZoomToken');
+
 
 
 Route::post('/register', 'Auth\RegisterController@create')->name('register');
@@ -27,12 +29,15 @@ Route::get('/contact','HomeController@contact')->name('contact');
 
 Route::post('/comment-save/{blog}','Guest\CommentController@save');
 
+Route::get('/hash','HomeController@hashGenerator');
+
 /*---------------comment routes ends----------------*/
 
 /*--------------Stripe payment route starts--------------------*/
 
 Route::get('/stripe-payment','Mentee\StripeController@handleGet');
 Route::post('/stripe-payment','Mentee\StripeController@handlePost')->name('stripe.payment');
+Route::post('/create-checkout-session','Mentee\StripeController@demoPayament');
 
 Route::post('user/save','HomeController@mentorSave');
 Route::post('/mentee/save','HomeController@menteeSave');
@@ -55,7 +60,8 @@ Route::get('user/emailcheck/{postdata}','HomeController@emailCheck');
 //Route::middleware($middleware)->get('/video-call','@videoCall')->name('video-call');
 
 //Agora video call
-Route::middleware($middleware)->get('/video-call', 'AgoraVideoController@index')->name('video-call');
+Route::middleware($middleware)->get('/video-call/mentor/{mentor}/{booking}/{user}', 'AgoraVideoController@callMentor')->name('video-call');
+Route::middleware($middleware)->get('/video-call/mentee/{mentee}/{booking}/{user}', 'AgoraVideoController@callMentee')->name('video-call');
     Route::middleware($middleware)->post('/agora/token', 'AgoraVideoController@token');
     Route::middleware($middleware)->post('/agora/call-user', 'AgoraVideoController@callUser');
 
@@ -152,6 +158,8 @@ Route::post('schedule-timings/save','Mentor\MentorController@scheduleTimingsSave
 
 Route::get('schedule-timings/delete/{scheduleTimings}','Mentor\MentorController@scheduleTimingsDelete');
 
+Route::post('schedule-timings/action','Mentor\MentorController@eventAction');
+
 /*-----------Schedule Timings Route Ends---------------*/
 
 
@@ -218,7 +226,9 @@ Route::middleware($middleware)->prefix('mentee')->group(function(){
 
 Route::get('booking-slot/{postdata}/{mentor_id}/{postdate}','Mentee\MenteeController@bookingDay');
 
-Route::post('payment-page','Mentee\MenteeController@paymentPage');
+Route::get('booking-before-slot/{postdata}/{mentor_id}/{postdate}','Mentee\MenteeController@bookingBeforeDay');
+
+Route::post('payment-page','Mentee\MenteeController@paymentPage')->name('payment-page');
 
 Route::get('booking-success/{invoice}','Mentee\MenteeController@bookingSuccess');
 

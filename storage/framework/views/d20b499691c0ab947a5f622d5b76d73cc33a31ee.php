@@ -59,7 +59,11 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2"><?php if($row->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"></a>
+																<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($row->user->first_name); ?>">
+																<?php endif; ?>
 															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
 														</h2>
 													</td>

@@ -40,27 +40,39 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentor->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>" class="avatar avatar-sm mr-2">
+																<?php if($row->mentor->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentor->user->profile_image)); ?>" alt="User Image">
+																<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($row->mentor->user->first_name); ?>">
+																<?php endif; ?>
+																</a>
 															<a href="/admin/mentor-profile/<?php echo e($row->mentor_id); ?>"><?php echo e($row->mentor->user->first_name); ?>&nbsp;<?php echo e($row->mentor->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($row->mentor->user->category_description); ?></td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentee->user->profile_image)); ?>" alt="User Image"></a>
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2">
+																<?php if($row->mentee->user->profile_image!=null): ?>
+																<img class="avatar-img rounded-circle" src="<?php echo e(asset($row->mentee->user->profile_image)); ?>" alt="User Image">
+															<?php else: ?>
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e($row->mentee->user->first_name); ?>">
+															<?php endif; ?>
+															</a>
 															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>"><?php echo e($row->mentee->user->first_name); ?>&nbsp;<?php echo e($row->mentee->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($row->schedule_date); ?> <span class="text-primary d-block"><?php echo e($row->schedule_time); ?></span></td>
 													<td>
 														<div class="appointment-action">
-										<?php if($row->status=="pending"): ?>
+										<?php if($row->status=="accept"): ?>
 										<a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
 											<i class="far fa-eye"></i> View
 										</a>
-										<a href="/admin/appointments/<?php echo e($row->booking_id); ?>/accept" class="btn btn-sm bg-success-light">
+										<!-- <a href="/admin/appointments/<?php echo e($row->booking_id); ?>/accept" class="btn btn-sm bg-success-light">
 											<i class="fas fa-check"></i> Accept
-										</a>
+										</a> -->
 										<a href="/admin/appointments/<?php echo e($row->booking_id); ?>/reject" class="btn btn-sm bg-danger-light">
 											<i class="fas fa-times"></i> Cancel
 										</a>

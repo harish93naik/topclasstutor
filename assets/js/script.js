@@ -94,13 +94,14 @@ Version      : 1.0
 	if($('.datepicker').length > 0) {
 		$('.datepicker').datetimepicker({
 			format: 'DD/MM/YYYY',
+			beforeShowDay:
 			icons: {
 				up: "fas fa-chevron-up",
 				down: "fas fa-chevron-down",
 				next: 'fas fa-chevron-right',
 				previous: 'fas fa-chevron-left'
 			}
-		}).on('dp.change', function(e) {
+		}).on('dp.change', function(e) {debugger;
     //
     // on date change get current date and format as weekday
     //

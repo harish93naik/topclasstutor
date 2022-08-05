@@ -53,11 +53,11 @@
 								<ul>
 									<li><a href="dashboard" class="active"><i class="fas fa-home"></i>Dashboard <span><i class="fas fa-chevron-right"></i></span></a></li>
 									<li><a href="bookings-mentee"><i class="fas fa-clock"></i>Bookings <span><i class="fas fa-chevron-right"></i></span></a></li>
-									<li><a href="chat-mentee"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li>
-									<li><a href="favourites"><i class="fas fa-star"></i>Favourites <span><i class="fas fa-chevron-right"></i></span></a></li>
+									<!-- <li><a href="chat-mentee"><i class="fas fa-comments"></i>Messages <span><i class="fas fa-chevron-right"></i></span></a></li>
+									<li><a href="favourites"><i class="fas fa-star"></i>Favourites <span><i class="fas fa-chevron-right"></i></span></a></li> -->
 									<li><a href="/mentee/mentor"><i class="fas fa-star"></i>Mentors <span><i class="fas fa-chevron-right"></i></span></a></li>
 									<li><a href="/mentee/invoices"><i class="fas fa-file-invoice"></i>Invoices <span><i class="fas fa-chevron-right"></i></span></a></li>
-									<li><a href="/mentee/blog"><i class="fas fa-star"></i>Blog<span><i class="fas fa-chevron-right"></i></span></a></li>
+									<!-- <li><a href="/mentee/blog"><i class="fas fa-star"></i>Blog<span><i class="fas fa-chevron-right"></i></span></a></li> -->
 									<li><a href="profile"><i class="fas fa-user-cog"></i>Profile <span><i class="fas fa-chevron-right"></i></span></a></li>
 									<!-- <li><a href="login"><i class="fas fa-sign-out-alt"></i>Logout <span><i class="fas fa-chevron-right"></i></span></a></li> -->
 								</ul>
@@ -84,7 +84,7 @@
 									</div>
 								</div>
 								
-								<div class="col-md-12 col-lg-4 dash-board-list yellow">
+								<!-- <div class="col-md-12 col-lg-4 dash-board-list yellow">
 									<div class="dash-widget">
 										<div class="circle-bar">
 											<div class="icon-col">
@@ -96,9 +96,9 @@
 											<h6>Mentoring Points</h6>															
 										</div>
 									</div>
-								</div>
+								</div> -->
 								
-								<div class="col-md-12 col-lg-4 dash-board-list pink">
+								<!-- <div class="col-md-12 col-lg-4 dash-board-list pink">
 									<div class="dash-widget">
 										<div class="circle-bar">
 											<div class="icon-col">
@@ -110,7 +110,7 @@
 											<h6>Rank</h6>															
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							
 							<div class="row">
@@ -124,7 +124,7 @@
 													<thead>
 														<tr>
 															<th>BASIC INFO</th>
-															<th>CREATED DATE</th>
+															<th>Scheduled Date</th>
 															<th class="text-center">TAGS</th>
 															<!-- <th class="text-center">ACTION</th> -->
 														</tr>
@@ -138,7 +138,7 @@
 																	<a href="/profile/<?php echo e($row->mentor->mentor_id); ?>"><?php echo e($row->mentor->user->first_name); ?>&nbsp;<?php echo e($row->mentor->user->last_name); ?><span><?php echo e($row->mentor->user->email); ?></span></a>				
 																</h2>
 															</td>
-															<td><?php echo e($row->created_at); ?></td>
+															<td><?php echo e($row->schedule_date); ?></td>
 															<td class="text-center"><span class="<?php echo e($row->status); ?>"><?php echo e($row->status_description); ?></span></td>
 															<!-- <td class="text-center"><a href="profile-mentee" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> View</a></td> -->
 														</tr>

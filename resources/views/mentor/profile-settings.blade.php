@@ -157,7 +157,8 @@
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>Email ID</label>
-													<input type="email" name="user_form[email]" class="form-control" value="{{$user_detail->email}}">
+													<input type="email" id="email" name="user_form[email]" class="form-control" value="{{$user_detail->email}}" onfocusout ='emailVerify()' onkeypress='emailMessageClear()'>
+													 <span id="email-id"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-6">
@@ -186,7 +187,13 @@
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
-													<label>State</label>
+													<label>District</label>
+													<input type="text" name="mentor_form[district]" class="form-control" value="{{$mentor_details->district}}">
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label>Suburb</label>
 													<input type="text" name="mentor_form[state]" class="form-control" value="{{$mentor_details->state}}">
 												</div>
 											</div>

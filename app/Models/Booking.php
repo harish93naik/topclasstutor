@@ -12,7 +12,7 @@ class Booking extends Model
     use SoftDeletes;
     protected $table = 'booking';
     protected $fillable = [
-                    'mentor_id','mentee_id','slot_id','schedule_time','schedule_date','status'
+                    'mentor_id','mentee_id','slot_id','meeting_url','meeting_id','meeting_uuid','status'
         ];
    // protected $hidden = ['password'];
     protected $primaryKey = 'booking_id';
@@ -39,6 +39,23 @@ class Booking extends Model
         else{
             return "Pending";
         }
+    }
+
+    public static function IsCall($schedule_date,$schedule_time){
+
+
+            $currentDate = date('d/m/Y');
+            
+          // $currentDate = 
+            $startDate = $schedule_date;
+           if ($currentDate == $startDate)
+                {
+                    return true;
+                }
+            else{
+                return false;
+            }
+            
     }
 
     

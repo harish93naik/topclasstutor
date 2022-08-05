@@ -149,9 +149,9 @@
 											<thead>
 												<tr>
 													<th>Mentor Name</th>
-													<th>Course</th>
+													<th>Degree</th>
 													<th>Earned</th>
-													<th>Reviews</th>
+													<!-- <th>Reviews</th> -->
 												</tr>
 											</thead>
 											<tbody>
@@ -159,31 +159,16 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/{{$mentor->mentor_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($mentor->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentor-profile/{{$mentor->mentor_id}}" class="avatar avatar-sm mr-2">@if($mentor->user->profile_image!=null)
+																<img class="avatar-img rounded-circle" src="{{asset($mentor->user->profile_image)}}" alt="User Image">
+																@else
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{$mentor->user->first_name}}">
+																@endif</a>
 															<a href="/admin/mentor-profile/{{$mentor->mentor_id}}">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</a>
 														</h2>
 													</td>
-													<td>{{$mentor->user->category_description}}</td>
+													<td>{{$mentor->user->degree}}</td>
 													<td>$3200.00</td>
-													<td class="rating">
-
-														@php
-													$rating = Review::getRating($mentor->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-													</td>
 												</tr>
 												@endforeach
 												
@@ -218,7 +203,11 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/{{$mentee->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($mentee->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentee-profile/{{$mentee->mentee_id}}" class="avatar avatar-sm mr-2">@if($mentee->user->profile_image!=null)
+									<img class="rounded-circle" src="{{asset($mentee->user->profile_image) }}" width="31" alt="{{$mentee->user->first_name}}">
+									@else
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="{{$mentee->user->first_name}}">
+									@endif</a>
 															<a href="/admin/mentee-profile/{{$mentee->mentee_id}}">{{$mentee->user->first_name}}&nbsp;{{$mentee->user->last_name}}</a>
 														</h2>
 													</td>
@@ -262,14 +251,22 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentor-profile/{{$booking->mentor->mentor_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($booking->mentor->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentor-profile/{{$booking->mentor->mentor_id}}" class="avatar avatar-sm mr-2">@if($booking->mentor->user->profile_image!=null)
+																<img class="avatar-img rounded-circle" src="{{asset($booking->mentor->user->profile_image)}}" alt="User Image">
+																@else
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{$booking->mentor->user->first_name}}">
+																@endif</a>
 															<a href="/admin/mentor-profile/{{$booking->mentor->mentor_id}}">{{$booking->mentor->user->first_name}}&nbsp;{{$booking->mentor->user->last_name}}</a>
 														</h2>
 													</td>
 													<td>{{$booking->mentor->user->category_description}}</td>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/{{$booking->mentee->mentee_id}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset($booking->mentee->user->profile_image)}}" alt="User Image"></a>
+															<a href="/admin/mentee-profile/{{$booking->mentee->mentee_id}}" class="avatar avatar-sm mr-2">@if($booking->mentee->user->profile_image!=null)
+																<img class="avatar-img rounded-circle" src="{{asset($booking->mentee->user->profile_image)}}" alt="User Image">
+															@else
+																<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{$booking->mentee->user->first_name}}">
+															@endif</a>
 															<a href="/admin/mentee-profile/{{$booking->mentee->mentee_id}}">{{$booking->mentee->user->first_name}}&nbsp;{{$booking->mentee->user->last_name}}</a>
 														</h2>
 													</td>

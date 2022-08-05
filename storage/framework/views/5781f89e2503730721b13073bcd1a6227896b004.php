@@ -31,7 +31,7 @@
 													<th>Mentee Name</th>
 													<th>E-mail</th>
 													<!-- <th>Member Since</th> -->
-													<th>College Certificate</th>
+													<!-- <th>College Certificate</th> -->
 													<th class="text-center">Account Status</th>
 													
 												</tr>
@@ -41,17 +41,18 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"></a>
+
+															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>" class="avatar avatar-sm mr-2"><?php if($row->user->profile_image!=null): ?>
+									<img class="rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" width="31" alt="<?php echo e($row->user->first_name); ?>">
+									<?php else: ?>
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="<?php echo e($row->user->first_name); ?>">
+									<?php endif; ?><!-- <img class="avatar-img rounded-circle" src="<?php echo e(asset($row->user->profile_image)); ?>" alt="User Image"> --></a>
 															<a href="/admin/mentee-profile/<?php echo e($row->mentee_id); ?>"><?php echo e($row->user->first_name); ?>&nbsp;<?php echo e($row->user->last_name); ?></a>
 														</h2>
 													</td>
 													<td><?php echo e($row->user->email); ?></td>
 
-													<?php if($row->certificate!=null): ?>
-													<td><a href="<?php echo e(asset($row->certificate)); ?>" target="_blank">View|<a href="<?php echo e(asset($row->certificate)); ?>" download>Download</td>
-													<?php else: ?>
-													<td>No Preview</td>
-													<?php endif; ?>
+												
 													
 													<!-- <td><?php echo e($row->created_at->format('M j, Y')); ?><br></td> -->
 													

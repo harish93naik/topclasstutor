@@ -1,6 +1,8 @@
 <meta charset="utf-8">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+         <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 		<title>Mentoring</title>
 		
 		<!-- Favicons -->
@@ -12,12 +14,18 @@
 		<!-- Fontawesome CSS -->
 		<link rel="stylesheet" href="<?php echo e(asset('assets/plugins/fontawesome/css/fontawesome.min.css')); ?>">
 		<link rel="stylesheet" href="<?php echo e(asset('assets/plugins/fontawesome/css/all.min.css')); ?>">
+
+		<link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' />
 		<!-- Daterangepikcer CSS -->
 		<link rel="stylesheet" href="<?php echo e(asset('assets/plugins/daterangepicker/daterangepicker.css')); ?>">
 		<!-- Datetimepicker CSS -->
 		<link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap-datetimepicker.min.css')); ?>">
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" />
+		
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('assets/plugins/select2/css/select2.min.css')); ?>">
+
 		<!-- Owl Carousel CSS -->
 		<link rel="stylesheet" href="<?php echo e(asset('assets/css/owl.carousel.min.css')); ?>">
 		<link rel="stylesheet" href="<?php echo e(asset('assets/css/owl.theme.default.min.css')); ?>">

@@ -8050,3 +8050,23 @@ position: absolute;
 .mentor-category, .mentor-language-known{
 	text-transform: uppercase;
 }
+.Highlighted {
+  background-color: Green !important;
+  background-image: none !important;
+  color: White !important;
+  font-weight: bold !important;
+  font-size: 12pt;
+}
+.noHighlighted{
+		 background-color: Red !important;
+  background-image: none !important;
+  color: White !important;
+  font-weight: bold !important;
+  font-size: 12pt;	
+}
+.ui-datepicker{
+	margin-top:10%;
+}
+.schedule-modal{
+	text-align: center;
+}

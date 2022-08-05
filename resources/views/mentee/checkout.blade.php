@@ -35,10 +35,11 @@
 									<!--Booking Information values -->
 									<input type="hidden" name="mentor_id" value="{{$mentor_details->mentor_id}}">
 									<input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-									<input type="hidden" name="scheduled_date" value="{{$scheduled_date}}">
-									<input type="hidden" name="scheduled_time" value="{{$scheduled_time}}">
-									<input type="hidden" name="slot_id" value="{{$slot_id}}">
-									<input type="hidden" name="amount" value="{{$amount}}">
+									<input type="hidden" name="scheduled_start_time" value="{{$scheduled_start_time}}">
+									<input type="hidden" name="scheduled_end_time" value="{{$scheduled_end_time}}">
+									<input type="hidden" name="event_id" value="{{$event_id}}">
+									<input type="hidden" name="amount" value="{{$payment_amount}}">
+									<input type="hidden" name="duration" value="{{$duration}}">
 
 									<!--Booking information values-->
 									
@@ -82,7 +83,7 @@
 											<!-- Credit Card Payment -->
 											<div class="payment-list">
 												<label class="payment-radio credit-card-option">
-													<input type="radio" name="payment-type" checked value="stripe">
+													<input type="radio" name="payment-type" checked value="stripe" onclick ="showProceed()">
 													<span class="checkmark"></span>
 													Stripe
 												</label>
@@ -128,15 +129,38 @@
 												<!-- <div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>Amount</label>
-														<input class="form-control" type="text" name="amount" value="{{$amount}}">
+														<input class="form-control" type="text" name="amount" value="{{$payment_amount}}">
 													</div>
 												</div> -->
 												<label class="payment-radio paypal-option">
-													<input type="radio" name="payment-type" value="Paypal">
+													<input type="radio" name="payment-type" value="Paypal" onclick ="showProceed()">
 													<span class="checkmark"></span>
 													Paypal
 												</label>
 											</div>
+
+												<div class="payment-list">
+
+												<!-- <div class="col-md-6 col-sm-12">
+													<div class="form-group card-label">
+														<label>Amount</label>
+														<input class="form-control" type="text" name="amount" value="{{$payment_amount}}">
+													</div>
+												</div> -->
+												<label class="payment-radio google-pay-option">
+													<input type="radio" name="payment-type" value="google-pay" onclick ="hideProceed()">
+													<span class="checkmark"></span>
+													Google Pay
+												</label>
+											</div>
+
+											<div id="google-pay-id" class="payment-list"></div>
+
+											<div id="payment-request-button">
+  <!-- A Stripe Element will be inserted here. -->
+</div>
+
+
 											<!-- /Paypal Payment -->
 											
 											<!-- Terms Accept -->
@@ -175,18 +199,16 @@
 									<!-- Booking Mentee Info -->
 									<div class="booking-user-info">
 										<a href="payment-mentee" class="booking-user-img">
-											<img src="assets/img/user/user2.jpg" alt="User Image">
+
+											@if($mentor_details->user->profile_image!=null)
+									<img class="rounded-circle" src="{{asset($mentor_details->user->profile_image) }}" width="31" alt="{{$mentor_details->user->first_name}}">
+									@else
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="{{$mentor_details->user->first_name}}">
+									@endif
 										</a>
 										<div class="booking-info">
 											<h4><a href="payment-mentee">{{$mentor_details->user->first_name}}&nbsp;{{$mentor_details->user->last_name}}</a></h4>
-											<div class="rating">
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star"></i>
-												<span class="d-inline-block average-rating">35</span>
-											</div>
+										
 											<div class="mentor-details">
 												<p class="user-location"><i class="fas fa-map-marker-alt"></i>{{$mentor_details->state}}, {{$mentor_details->country}}</p>
 											</div>
@@ -197,19 +219,19 @@
 									<div class="booking-summary">
 										<div class="booking-item-wrap">
 											<ul class="booking-date">
-												<li>Date <span>{{$scheduled_date}}</span></li>
-												<li>Time <span>{{$scheduled_time}}</span></li>
+												<li>Start Time <span>{{$scheduled_start_time}}</span></li>
+												<li>End Time <span>{{$scheduled_end_time}}</span></li>
 											</ul>
 											<ul class="booking-fee">
-												<li>Consulting Fee <span>$100</span></li>
-												<li>Booking Fee <span>$10</span></li>
-												<li>Video Call <span>$50</span></li>
+												<li>Consulting Fee <span>${{$payment_amount}}</span></li>
+												<!-- <li>Booking Fee <span>$10</span></li>
+												<li>Video Call <span>$50</span></li> -->
 											</ul>
 											<div class="booking-total">
 												<ul class="booking-total-list">
 													<li>
 														<span>Total</span>
-														<span class="total-cost">$160</span>
+														<span class="total-cost">${{$payment_amount}}</span>
 													</li>
 												</ul>
 											</div>

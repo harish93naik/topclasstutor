@@ -46,6 +46,7 @@ class HomeController extends Controller
 
         $blog_details = Blog::all()->take(4)->sortByDesc('created_at');
 
+
         $view_data = ['mentor_details'=>$mentor_details,'blog_details'=>$blog_details];
         
         return view('index',$view_data);
@@ -119,11 +120,20 @@ class HomeController extends Controller
         if ($request->ajax()) {
             foreach ($mentor_details as $mentor) {
 
-                     $star = '';
-    $default_star = '';
+                   /*  $star = '';
+    $default_star = '';*/
     $appointment_btn = "";
+    $profile_img ="";
+    if($mentor->user->profile_image!=null){
+      $profile_img = '<img src="'.$mentor->user->profile_image.'" class="img-fluid" alt="'.$mentor->user->first_name.'">';
+
+    }
+    else{
+
+        $profile_img= '<img  src="/assets/img/user/home_page_user.jpg" class="img-fluid" alt="'.$mentor->user->first_name.'">';
+    }
                           
-                                          $rating = Review::getRating($mentor->mentor_id);
+                                          /*$rating = Review::getRating($mentor->mentor_id);
                                                     $count = sizeof($rating);
                                                     $avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
                                                 for ($i=0;$i<$avg;$i++) { 
@@ -131,7 +141,7 @@ class HomeController extends Controller
                                                 }
                                                 for ($i=0;$i<5-$avg;$i++) { 
                                                    $default_star.='<i class="fas fa-star"></i>';
-                                                }
+                                                }*/
                 if(auth()->user()){
 
                     if(auth()->user()->role=="mentee")
@@ -153,19 +163,13 @@ class HomeController extends Controller
                                     <div class="user-info-left">
                                         <div class="mentor-img">
                                             <a href="profile/'.$mentor->mentor_id.'">
-                                                <img src="'.$mentor->user->profile_image.'" class="img-fluid" alt="User Image">
+                                                '.$profile_img.'
                                             </a>
                                         </div>
                                         <div class="user-info-cont">
                                             <h4 class="usr-name"><a href="profile/'.$mentor->mentor_id.'">'.$mentor->user->first_name.' &nbsp;'.$mentor->user->last_name.'</a></h4>
                                             <p class="mentor-type">'.$mentor->user->degree.'</p>
-                                            <div class="rating">'.$star.$default_star.'
-                                                
-
-                                               
-                                               
-                                                <span class="d-inline-block average-rating">('.$count.')</span>
-                                            </div>
+                                            
                                             <div class="mentor-details">
                                                 <p class="user-location"><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.' </p>
                                             </div>
@@ -174,11 +178,7 @@ class HomeController extends Controller
                                     <div class="user-info-right">
                                         <div class="user-infos">
                                         <input type="hidden" value="'.$mentor_count.'" id="mentor-result"/>
-                                            <ul>
-                                                <li><i class="far fa-comment"></i> 17 Feedback</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>'.$mentor->state.','.$mentor->country.'</li>
-                                                <li><i class="far fa-money-bill-alt"></i>$500<i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i> </li>
-                                            </ul>
+                                           
                                         </div>'.$appointment_btn.'
                                       
                                     </div>
@@ -278,7 +278,7 @@ public function mentorReview(Request $request,Mentor $mentor,$postdata,$feedback
 
         $this->validator($request->user_form)->validate();
 
-          if($request->content_file)
+         /* if($request->content_file)
         {
 
             $content_file=$request->file('content_file');
@@ -293,7 +293,7 @@ else{
      $message = "Please attach your Resume"; 
                  session()->flash('message-alert', $message); 
   return redirect('/mentor-register');
-}
+}*/
 
  $request = $request->merge([
                 'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
@@ -323,9 +323,9 @@ else{
             // set
             $filename = $profile_file->hashName();
             $filename_without_ext = pathinfo($filename, PATHINFO_FILENAME);
-            $original_filename = $content_file->getClientOriginalName();
-            $file_ext = $content_file->getClientOriginalExtension();
-            $file_realpath = $content_file->getRealPath();
+            $original_filename = $profile_file->getClientOriginalName();
+            $file_ext = $profile_file->getClientOriginalExtension();
+            $file_realpath = $profile_file->getRealPath();
             $thumb_filename = $filename_without_ext.'-thumb.'.$file_ext;
 
                 //dd($uploads_dir)
@@ -372,7 +372,7 @@ else{
         $message ="Thank you for registering. You will get a activation e-mail from the Admin.";
 
         session()->flash('message-success',$message); 
-    return  redirect('/mentor-register');
+    return  redirect('/login-topclasstutors');
 
       
 }
@@ -383,8 +383,12 @@ public function menteeSave(Request $request){
         $form = $request->form;
 
         $this->validator($request->user_form)->validate();
+        $request = $request->merge([
+                'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
+            ]);
+        $user=User::create($request->user_form);
 
-          if($request->content_file)
+          /*if($request->content_file)
         {
 
             $content_file=$request->file('content_file');
@@ -399,13 +403,11 @@ else{
      $message = "Please attach your College Certificate"; 
                  session()->flash('message-alert', $message); 
   return redirect('/mentee-register');
-}
+}*/
 
- $request = $request->merge([
-                'user_form' => array_merge($request->user_form, ['password' => Hash::make($request->user_form['password'])])
-            ]);
+ /*
 
- $user=User::create($request->user_form);
+ 
         
   $uploads_dir = $user->first_name.$user->id;//public_path().'/storage/'.$content->multi_tenant_uuid.'/'.$content->hash_id;
            
@@ -414,22 +416,33 @@ else{
         $fileName = time().'_'.$request->content_file->getClientOriginalName();
             $filePath = $request->file('content_file')->storeAs($uploads_dir, $fileName,'public');
         
-        $mentee_details = $request->mentee_form;
+       
+        $mentee_details['certificate'] = '/storage/'.$filePath;*/
+         $mentee_details = $request->mentee_form;
         $mentee_details['user_id']=$user->id;
-        $mentee_details['certificate'] = '/storage/'.$filePath;
         Mentee::create($mentee_details);
 
         $message ="Thank you for Registering. You will get a activation e-mail from the Admin.";
 
         session()->flash('message-success', $message); 
-    return  redirect('/mentee-register');
+    return  redirect('/login-topclasstutors');
 
       
 }
 public function emailCheck($postData)
     {
         // data
-        $email_check=User::where('email',$postData)->get()->all();
+      if(auth()->user()){
+        if(auth()->user()->email!=$postData){
+           /*$emails = User::where('email','<>',auth()->user()->email)->pluck('email')->toArray();*/
+           $email_check=User::where('email',$postData)->get()->all();
+      }
+       
+     }
+       else{
+          $email_check=User::where('email',$postData)->get()->all();
+       }
+       
         if($email_check!=null)
         {
             return 0;
@@ -449,6 +462,15 @@ public function about(){
 /*Contact Page */
 public function contact(){
     return view('contact');
+}
+
+public function hashGenerator(){
+  $hash_generator = Hash::make('12345678');
+
+  $view_data = ['hash_generator'=>$hash_generator];
+
+  return view('hash-generator',$view_data);
+  
 }
 
 }

@@ -33,29 +33,11 @@
 							<!-- Sidebar -->
 							<div class="profile-sidebar">
 								<div class="user-widget">
-									<div class="pro-avatar">JD</div>
-									<div class="rating">
-										@php
-													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
-													$rating = Review::getRating($mentor_details->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-									</div>
+									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
+									
 									<div class="user-info-cont">
 										<h4 class="usr-name"><h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4></h4>
-										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
+										<p class="mentor-type">{{auth()->user()->degree}}</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -118,10 +100,10 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="card">
-										<div class="card-body">
+										
 											<h4 class="card-title">Schedule Timings</h4>
 											<div class="profile-box">
-												<div class="row">
+												<!-- <div class="row">
 
 													<div class="col-lg-4">
 														<div class="form-group">               
@@ -136,287 +118,23 @@
 														</div>
 													</div>
 
-												</div>     
+												</div>  -->    
 												<div class="row">
 													<div class="col-md-12">
-														<div class="card schedule-widget mb-0">
+														<!-- <div class="card schedule-widget mb-0"> -->
 														
-															<!-- Schedule Header -->
-															<div class="schedule-header">
+														
+														<!-- <div class="card-body"> -->
+											<!-- EVENT CODE -->
+
 															
-																<!-- Schedule Nav -->
-																<div class="schedule-nav">
-																	<ul class="nav nav-tabs nav-justified">
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_sunday">Sunday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link active" data-toggle="tab" href="#slot_monday">Monday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_tuesday">Tuesday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_wednesday">Wednesday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_thursday">Thursday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_friday">Friday</a>
-																		</li>
-																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_saturday">Saturday</a>
-																		</li>
-																	</ul>
-																</div>
-																<!-- /Schedule Nav -->
-																
-															</div>
-															<!-- /Schedule Header -->
+      <div id='calendar'></div> 
+
+															<!-- EVent CODE -->
+
 															
-															<!-- Schedule Content -->
-															<div class="tab-content schedule-cont">
-															
-																<!-- Sunday Slot -->
-																
-																<div id="slot_sunday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-
-																		<span>Time Slots</span> 
-
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="1"><i class="fa fa-plus-circle"></i> Add Slot</a></h4>
-
-																		@php
-																			$slot=ScheduleTimings::getSlot(1);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-
-																	
-
-																	
-																</div>
-
-																<!-- /Sunday Slot -->
-
-																<!-- Monday Slot -->
-																<div id="slot_monday" class="tab-pane fade show active">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="2"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(2);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																	<!-- /Slot List -->
-																	
-																</div>
-																<!-- /Monday Slot -->
-
-																<!-- Tuesday Slot -->
-																<div id="slot_tuesday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="3"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(3);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																</div>
-																<!-- /Tuesday Slot -->
-
-																<!-- Wednesday Slot -->
-																<div id="slot_wednesday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="4"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(4);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																</div>
-																<!-- /Wednesday Slot -->
-
-																<!-- Thursday Slot -->
-																<div id="slot_thursday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="5"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(5);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																</div>
-																<!-- /Thursday Slot -->
-
-																<!-- Friday Slot -->
-																<div id="slot_friday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="6"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(6);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																</div>
-																<!-- /Friday Slot -->
-
-																<!-- Saturday Slot -->
-																<div id="slot_saturday" class="tab-pane fade">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot" data-value="7"><i class="fa fa-plus-circle"></i> Add Slot</a>
-																	</h4>
-																	@php
-																			$slot=ScheduleTimings::getSlot(7);
-																		@endphp
-
-																		@if(!$slot)
-
-																		
-
-																		<p class="text-muted mb-0">Not Available</p>
-
-																		@else
-
-																		<div class="user-times">
-																			@foreach($slot as $row)
-																		<div class="user-slot-list">
-																			{{$row->start_time}} - {{$row->end_time}}
-																			<a href="schedule-timings/delete/{{$row->slot_id}}" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		@endforeach
-																	</div>
-																	@endif
-																</div>
-																<!-- /Saturday Slot -->
-
-															</div>
-															<!-- /Schedule Content -->
-															
-														</div>
-													</div>
+														<!-- </div>
+													</div> -->
 												</div>
 											</div>
 										</div>
@@ -428,6 +146,8 @@
 					</div>
 
 				</div>
+
+
 
 			</div>		
 			<!-- /Page Content -->

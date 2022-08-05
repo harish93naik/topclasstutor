@@ -69,11 +69,23 @@ The lines are open.</p></div>
 				Marshall is also an Entrepreneur with over a dozen companies to his credit. From Import/Export, Manufacturing, Mentoring, Education, and Consulting to Hospitality and International Trade.	
 					
 				</p>
+
 				</div>
 			</div>
 			
 				<div class="about-content">
 				
+				<p>
+				For most of my career, I was a Teacher for one category or another. In my early career as a Junior Scientist, I was a trainee teacher Learning and Developing scientific methodologies. From there I moved into commerce as a Business Executive teaching Juniors the ins and outs of Economics and Business strategy. Soon I moved into Marketing and Sales and eventually ventured into my own companies in International Trade, Hospitality, Manufacturing, and Consulting. In between I completed 4 Masters Degrees and PG Diplomas in English Literature, TechnologyEducation, Teaching and Information Technology. A long career in teaching Secondary school students led me to include coaching graduates, Post Graduate and Doctoral students in their respective fields.	
+					
+				</p>
+
+				<p>
+				Finally, I worked with several top Mentoring businesses and thoroughly enjoyed the work and outcome. Starting up TopClasstutors was a dream I nurtured for a few years. With the backing of a strong team, we are ready to take any interested student on their own journey to success.	
+					
+				</p>
+				
+					
 				
 				<p>
 				Further Marshall is also a Novelist and Poet <a href="https://www.marshallgass.com" target="_blank">( www.marshallgass.com) </a>with twenty-five books published to his credit. He is a prolific writer and is well known in literary circles for his quality writing. He has a Social Media presence that is nearing fourteen million viewers on Quora, Facebook, Twitter,  and Linkedin.

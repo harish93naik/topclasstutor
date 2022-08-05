@@ -204,7 +204,15 @@
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>State</span>
+															<span>District</span>
+															<div class="row-result">{{$mentee_details->district}}</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="experience-content">
+														<div class="timeline-content">
+															<span>Suburb</span>
 															<div class="row-result">{{$mentee_details->state}}</div>
 														</div>
 													</div>

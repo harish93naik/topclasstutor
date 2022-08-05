@@ -222,17 +222,22 @@
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 
 								<span class="user-img">
-									<?php if(auth()->user()): ?>
+									<?php if(auth()->user()->profile_image!=null): ?>
 									<img class="rounded-circle" src="<?php echo e(asset(auth()->user()->profile_image)); ?>" width="31" alt="<?php echo e(auth()->user()->first_name); ?>">
 									<?php else: ?>
-									<img class="rounded-circle" src="/assets/img/user/user.jpg" width="31" alt="<?php echo e(auth()->user()->first_name); ?>">
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e(auth()->user()->first_name); ?>">
 									<?php endif; ?>
 								</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<div class="user-header">
 									<div class="avatar avatar-sm">
-										<img src="<?php echo e(asset(auth()->user()->profile_image)); ?>" alt="User Image" class="avatar-img rounded-circle">
+										<?php if(auth()->user()->profile_image!=null): ?>
+									<img class="rounded-circle" src="<?php echo e(asset(auth()->user()->profile_image)); ?>" width="31" alt="<?php echo e(auth()->user()->first_name); ?>">
+									<?php else: ?>
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="<?php echo e(auth()->user()->first_name); ?>">
+									<?php endif; ?>
+										<!-- <img src="<?php echo e(asset(auth()->user()->profile_image)); ?>" alt="User Image" class="avatar-img rounded-circle"> -->
 									</div>
 									<div class="user-text">
 										<h6><?php echo e(auth()->user()->first_name); ?></h6>

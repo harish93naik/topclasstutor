@@ -14,7 +14,7 @@
 									<li class="breadcrumb-item active" aria-current="page">Appointments</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">Appointments</h2>
+							<!-- <h2 class="breadcrumb-title">Appointments</h2> -->
 						</div>
 					</div>
 				</div>
@@ -32,28 +32,10 @@
 							<div class="profile-sidebar">
 								<div class="user-widget">
 									<div class="pro-avatar">{{auth()->user()->first_name[0]}}{{auth()->user()->last_name[0]}}</div>
-									<div class="rating">
-										@php
-													$mentor_details = Mentor::where('user_id',auth()->user()->id)->first();
-													$rating = Review::getRating($mentor_details->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?ceil(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													<!-- <i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i> -->
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-									</div>
+									
 									<div class="user-info-cont">
 										<h4 class="usr-name"><h4 class="usr-name">{{auth()->user()->first_name}}&nbsp;{{auth()->user()->last_name}}</h4></h4>
-										<p class="mentor-type">{{auth()->user()->category_description}}({{auth()->user()->degree}})</p>
+										<p class="mentor-type">{{auth()->user()->degree}}</p>
 									</div>
 								</div>
 								<!-- <div class="progress-bar-custom">
@@ -84,6 +66,7 @@
 						<div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="appointments">
 							
+							@if(sizeof($booking_details)!=0)
 								<!-- Appointment List -->
 								@foreach($booking_details as $row)
 								<div class="appointment-list">
@@ -102,22 +85,15 @@
 										</div>
 									</div>
 									<div class="appointment-action">
-										@if($row->status=="pending")
-										<a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
-											<i class="far fa-eye"></i> View
-										</a>
-										<a href="/mentor/appointments/{{$row->booking_id}}/accept" class="btn btn-sm bg-success-light">
-											<i class="fas fa-check"></i> Accept
-										</a>
-										<a href="/mentor/appointments/{{$row->booking_id}}/reject" class="btn btn-sm bg-danger-light">
-											<i class="fas fa-times"></i> Cancel
-										</a>
-										@else
-										<a class="{{$row->status}}">{{$row->status_description}}</a>
-										@endif
+										@if($row->status=="accept") 
+														<td class="text-center"><a href="{{$row->meeting_url}}"target="_blank">&nbsp;Call Here&nbsp;<i class="fas fa-phone-alt"></i></a></span>
+														@else
+														<td class="text-center"><span class="{{$row->status}}">{{$row->status_description}}</span></td>
+														@endif
 									</div>
 								</div>
 								@endforeach
+
 								<div class="row">
 								<div class="col-md-12">
 									<div class="blog-pagination">
@@ -126,7 +102,11 @@
 										</div>
 									</div>
 								</div>
+								@else
+							<h3>Currently No Bookings</h3>
+							@endif
 							</div>
+							
 								<!-- /Appointment List -->
 							
 								

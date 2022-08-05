@@ -222,17 +222,22 @@
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 
 								<span class="user-img">
-									@if(auth()->user())
+									@if(auth()->user()->profile_image!=null)
 									<img class="rounded-circle" src="{{asset(auth()->user()->profile_image) }}" width="31" alt="{{auth()->user()->first_name}}">
 									@else
-									<img class="rounded-circle" src="/assets/img/user/user.jpg" width="31" alt="{{auth()->user()->first_name}}">
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{auth()->user()->first_name}}">
 									@endif
 								</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<div class="user-header">
 									<div class="avatar avatar-sm">
-										<img src="{{asset(auth()->user()->profile_image) }}" alt="User Image" class="avatar-img rounded-circle">
+										@if(auth()->user()->profile_image!=null)
+									<img class="rounded-circle" src="{{asset(auth()->user()->profile_image) }}" width="31" alt="{{auth()->user()->first_name}}">
+									@else
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="30" alt="{{auth()->user()->first_name}}">
+									@endif
+										<!-- <img src="{{asset(auth()->user()->profile_image) }}" alt="User Image" class="avatar-img rounded-circle"> -->
 									</div>
 									<div class="user-text">
 										<h6>{{auth()->user()->first_name}}</h6>

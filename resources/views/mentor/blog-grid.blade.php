@@ -1,3 +1,4 @@
+
 <?php $page="blog-grid";?>
 @extends('layout.mainlayout')
 @section('content')	

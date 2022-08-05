@@ -87,7 +87,7 @@
 												@foreach($invoice_details as $row)
 												<tr>
 													<td>
-														<a href="invoice-view/{{$row->invoice_id}}">#INV-{{$row->invoice_id}}</a>
+														<a href="asset(/storage/invoices/Margo/Margo-order-11/01/2022.pdf)" target="_blank">#INV-{{$row->invoice_id}}</a>
 													</td>
 													<td>
 														<h2 class="table-avatar">

@@ -34,22 +34,7 @@
 										</a>
 										<div class="booking-info">
 											<h4><a href="/profile/{{$mentor->mentor_id}}">{{$mentor->user->first_name}}&nbsp;{{$mentor->user->last_name}}</a></h4>
-											<div class="rating">
-												@php
-													$rating = Review::getRating($mentor->mentor_id);
-													$count = sizeof($rating);
-													$avg = ($count!=0)?floor(array_sum($rating)/$count):1;
-													@endphp
-
-													@for($i=0;$i<$avg;$i++)
-													<i class="fas fa-star filled"></i>
-													
-													@endfor
-													@for($i=0;$i<5-$avg;$i++)
-													<i class="fas fa-star"></i>
-													@endfor
-												<span class="d-inline-block average-rating">{{$count}}</span>
-											</div>
+											
 											<p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i>{{$mentor->state}},{{$mentor->country}}</p>
 										</div>
 									</div>
@@ -82,13 +67,23 @@
 											<!-- Day Slot -->
 											<div id="booking-slot" class="day-slot">
 											<div class="col-12 col-md-6 justify-content-sm-center justify-content-start">
-												<div class="form-group">
+												<!-- <div class="form-group">
 													<label>Choose the date</label>
 													<div class="cal-icon">
 														<input type="text" name="scheduled_date" class="form-control datepicker" value="">
-													</div>
 
-												</div>
+													</div>
+													
+
+												</div> -->
+
+												<!-- EVENT CODE -->
+
+															
+      <div id='booking-calendar'></div> 
+
+															<!-- EVent CODE -->
+												 
 											</div>
 												
 
@@ -148,11 +143,15 @@
 													
 											<input type="hidden" id="mentor-id" name="mentor_id" value="{{$mentor->mentor_id}}">
 
-											<input type="hidden" id="scheduled-time-id" name="scheduled_time" value="">
+											<input type="hidden" id="scheduled-start-time-id" name="scheduled_start_time" value="">
 
-											<input type="hidden" id="slot_id" name="slot_id" value="">
+											<input type="hidden" id="scheduled-end-time-id" name="scheduled_end_time" value="">
 
-											<input type="hidden" id="amount" name="amount" value="500">
+											<input type="hidden" id="duration" name="duration" value="">
+
+											<input type="hidden" id="event_id" name="event_id" value="">
+
+											<!-- <input type="hidden" id="amount" name="amount" value="500"> -->
 
 											<div id="day-slot" class="time-slot">
 												

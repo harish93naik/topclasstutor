@@ -117,6 +117,10 @@
 													Paypal
 												</label>
 											</div>
+
+											<div id="google-pay-id" class="payment-list">
+												
+											</div>
 											<!-- /Paypal Payment -->
 											
 											<!-- Terms Accept -->

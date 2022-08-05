@@ -70,12 +70,12 @@
 
 								
 									<!-- About Details -->
-									<div class="widget about-widget custom-about mb-0">
+									<!-- <div class="widget about-widget custom-about mb-0">
 										<h4 class="widget-title">About Me</h4>
 										<hr/>
 										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
 										<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
-									</div>
+									</div> -->
 									<!-- /About Details -->
 								</div>
 							</div>
@@ -121,7 +121,7 @@
 								</div>
 							</div>
 
-							<!-- <div class="card">
+							<div class="card">
 								<div class="card-body custom-border-card pb-0">
 
 									 Qualification Details 
@@ -133,20 +133,20 @@
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>Undergraduate College</span>
-															<div class="row-result">Coimbatore University</div>
+															<span>Qualification</span>
+															<div class="row-result">{{$mentee->user->degree}}</div>
 														</div>
 													</div>
 												</li>
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>Undergraduate Major</span>
-															<div class="row-result">Mathematics</div>
+															<span>Segment</span>
+															<div class="row-result">{{$mentee->user->segmentDescription}}</div>
 														</div>
 													</div>
 												</li>
-												<li>
+											<!-- 	<li>
 													<div class="experience-content">
 														<div class="timeline-content">
 															<span>Graduate College</span>
@@ -161,14 +161,14 @@
 															<div class="row-result">B.Sc (Maths)</div>
 														</div>
 													</div>
-												</li>
+												</li> -->
 											</ul>
 										</div>
 									</div>
-									/Qualification Details
+									<!-- /Qualification Details -->
 
 								</div>
-							</div> -->
+							</div>
 
 							<div class="card">
 								<div class="card-body pb-1 custom-border-card">
@@ -203,6 +203,7 @@
 														</div>
 													</div>
 												</li>
+
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
@@ -214,7 +215,15 @@
 												<li>
 													<div class="experience-content">
 														<div class="timeline-content">
-															<span>State</span>
+															<span>District</span>
+															<div class="row-result">{{$mentee->district}}</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="experience-content">
+														<div class="timeline-content">
+															<span>Suburb</span>
 															<div class="row-result">{{$mentee->state}}</div>
 														</div>
 													</div>

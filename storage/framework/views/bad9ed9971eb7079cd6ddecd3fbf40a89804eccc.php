@@ -35,10 +35,11 @@
 									<!--Booking Information values -->
 									<input type="hidden" name="mentor_id" value="<?php echo e($mentor_details->mentor_id); ?>">
 									<input type="hidden" name="user_id" value="<?php echo e(auth()->user()->id); ?>">
-									<input type="hidden" name="scheduled_date" value="<?php echo e($scheduled_date); ?>">
-									<input type="hidden" name="scheduled_time" value="<?php echo e($scheduled_time); ?>">
-									<input type="hidden" name="slot_id" value="<?php echo e($slot_id); ?>">
-									<input type="hidden" name="amount" value="<?php echo e($amount); ?>">
+									<input type="hidden" name="scheduled_start_time" value="<?php echo e($scheduled_start_time); ?>">
+									<input type="hidden" name="scheduled_end_time" value="<?php echo e($scheduled_end_time); ?>">
+									<input type="hidden" name="event_id" value="<?php echo e($event_id); ?>">
+									<input type="hidden" name="amount" value="<?php echo e($payment_amount); ?>">
+									<input type="hidden" name="duration" value="<?php echo e($duration); ?>">
 
 									<!--Booking information values-->
 									
@@ -82,7 +83,7 @@
 											<!-- Credit Card Payment -->
 											<div class="payment-list">
 												<label class="payment-radio credit-card-option">
-													<input type="radio" name="payment-type" checked value="stripe">
+													<input type="radio" name="payment-type" checked value="stripe" onclick ="showProceed()">
 													<span class="checkmark"></span>
 													Stripe
 												</label>
@@ -128,15 +129,38 @@
 												<!-- <div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>Amount</label>
-														<input class="form-control" type="text" name="amount" value="<?php echo e($amount); ?>">
+														<input class="form-control" type="text" name="amount" value="<?php echo e($payment_amount); ?>">
 													</div>
 												</div> -->
 												<label class="payment-radio paypal-option">
-													<input type="radio" name="payment-type" value="Paypal">
+													<input type="radio" name="payment-type" value="Paypal" onclick ="showProceed()">
 													<span class="checkmark"></span>
 													Paypal
 												</label>
 											</div>
+
+												<div class="payment-list">
+
+												<!-- <div class="col-md-6 col-sm-12">
+													<div class="form-group card-label">
+														<label>Amount</label>
+														<input class="form-control" type="text" name="amount" value="<?php echo e($payment_amount); ?>">
+													</div>
+												</div> -->
+												<label class="payment-radio google-pay-option">
+													<input type="radio" name="payment-type" value="google-pay" onclick ="hideProceed()">
+													<span class="checkmark"></span>
+													Google Pay
+												</label>
+											</div>
+
+											<div id="google-pay-id" class="payment-list"></div>
+
+											<div id="payment-request-button">
+  <!-- A Stripe Element will be inserted here. -->
+</div>
+
+
 											<!-- /Paypal Payment -->
 											
 											<!-- Terms Accept -->
@@ -175,18 +199,16 @@
 									<!-- Booking Mentee Info -->
 									<div class="booking-user-info">
 										<a href="payment-mentee" class="booking-user-img">
-											<img src="assets/img/user/user2.jpg" alt="User Image">
+
+											<?php if($mentor_details->user->profile_image!=null): ?>
+									<img class="rounded-circle" src="<?php echo e(asset($mentor_details->user->profile_image)); ?>" width="31" alt="<?php echo e($mentor_details->user->first_name); ?>">
+									<?php else: ?>
+									<img class="rounded-circle" src="/assets/img/user/user.png" width="31" alt="<?php echo e($mentor_details->user->first_name); ?>">
+									<?php endif; ?>
 										</a>
 										<div class="booking-info">
 											<h4><a href="payment-mentee"><?php echo e($mentor_details->user->first_name); ?>&nbsp;<?php echo e($mentor_details->user->last_name); ?></a></h4>
-											<div class="rating">
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star filled"></i>
-												<i class="fas fa-star"></i>
-												<span class="d-inline-block average-rating">35</span>
-											</div>
+										
 											<div class="mentor-details">
 												<p class="user-location"><i class="fas fa-map-marker-alt"></i><?php echo e($mentor_details->state); ?>, <?php echo e($mentor_details->country); ?></p>
 											</div>
@@ -197,19 +219,19 @@
 									<div class="booking-summary">
 										<div class="booking-item-wrap">
 											<ul class="booking-date">
-												<li>Date <span><?php echo e($scheduled_date); ?></span></li>
-												<li>Time <span><?php echo e($scheduled_time); ?></span></li>
+												<li>Start Time <span><?php echo e($scheduled_start_time); ?></span></li>
+												<li>End Time <span><?php echo e($scheduled_end_time); ?></span></li>
 											</ul>
 											<ul class="booking-fee">
-												<li>Consulting Fee <span>$100</span></li>
-												<li>Booking Fee <span>$10</span></li>
-												<li>Video Call <span>$50</span></li>
+												<li>Consulting Fee <span>$<?php echo e($payment_amount); ?></span></li>
+												<!-- <li>Booking Fee <span>$10</span></li>
+												<li>Video Call <span>$50</span></li> -->
 											</ul>
 											<div class="booking-total">
 												<ul class="booking-total-list">
 													<li>
 														<span>Total</span>
-														<span class="total-cost">$160</span>
+														<span class="total-cost">$<?php echo e($payment_amount); ?></span>
 													</li>
 												</ul>
 											</div>
